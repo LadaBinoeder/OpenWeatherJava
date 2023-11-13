@@ -1,8 +1,11 @@
 name: Cancel
 
 on:
+  push:
+    branches-ignore:
+      - 'dependabot/**'
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   cancel:
@@ -13,3 +16,4 @@ jobs:
       - uses: styfle/cancel-workflow-action@0.9.0
         with:
           workflow_id: ci.yml
+          access_token: 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
