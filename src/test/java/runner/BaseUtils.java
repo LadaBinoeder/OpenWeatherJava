@@ -48,8 +48,6 @@ public final class BaseUtils {
                 chromeOptions.addArguments(argument);
             }
         }
-
-        WebDriverManager.chromedriver().setup();
     }
 
     static Properties getProperties() {
