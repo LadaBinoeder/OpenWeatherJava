@@ -48,6 +48,7 @@ public final class BaseUtils {
                 chromeOptions.addArguments(argument);
             }
         }
+
     }
 
     static Properties getProperties() {
