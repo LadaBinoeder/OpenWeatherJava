@@ -12,8 +12,6 @@ public class MainTest extends BaseTest {
 
     private final static String BASE_URL = "https://openweathermap.org/";
 
-
-    @Ignore
     @Test
     public void testURLAndTitle() throws IOException {
 
