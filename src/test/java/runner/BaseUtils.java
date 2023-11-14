@@ -49,6 +49,7 @@ public final class BaseUtils {
             }
         }
 
+        WebDriverManager.chromedriver().setup();
     }
 
     static Properties getProperties() {
