@@ -12,13 +12,12 @@ public class MainTest extends BaseTest {
     private final static String BASE_URL = "https://openweathermap.org/";
 
     @Test
-    public void testURLAndTitle() throws InterruptedException, IOException {
+    public void testURLAndTitle() throws IOException {
 
         final String expectedResultURL = "https://openweathermap.org/";
         final String expectedResultTitle = "Сurrent weather and forecast - OpenWeatherMap";
 
         getDriver().get(BASE_URL);
-        Thread.sleep(7000);
         String actualResultURL = getDriver().getCurrentUrl();
         String actualResultTitle = getDriver().getTitle();
 
