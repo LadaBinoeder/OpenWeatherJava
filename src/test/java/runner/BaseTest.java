@@ -12,8 +12,8 @@ public abstract class BaseTest {
     @BeforeMethod
     protected void beforeMethod() {
         driver = BaseUtils.createDriver();
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--remote-allow-origins=*", "--headless", "--window-size=1920,1080");
+      //  ChromeOptions chromeOptions = new ChromeOptions();
+       // chromeOptions.addArguments("--remote-allow-origins=*", "--headless", "--window-size=1920,1080");
 
     }
     @AfterMethod
