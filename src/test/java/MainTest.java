@@ -32,7 +32,7 @@ public class MainTest extends BaseTest {
         connection.setRequestMethod("GET");
         int responseCode = connection.getResponseCode();
         boolean noErrors = true;
-        if(responseCode >= 400 && responseCode <= 599) {
+        if(responseCode >= 400 && responseCode < 600) {
             noErrors = false;
         }
 

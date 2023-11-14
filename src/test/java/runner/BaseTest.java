@@ -16,13 +16,11 @@ public abstract class BaseTest {
         chromeOptions.addArguments("--remote-allow-origins=*", "--headless", "--window-size=1920,1080");
 
     }
-
     @AfterMethod
     protected void afterMethod() {
         driver.quit();
 
     }
-
     protected WebDriver getDriver() {
         return driver;
 
