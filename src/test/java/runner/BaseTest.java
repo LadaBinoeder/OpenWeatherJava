@@ -13,6 +13,7 @@ public abstract class BaseTest {
     protected void beforeMethod() {
         driver = BaseUtils.createDriver();
         ChromeOptions chromeOptions = new ChromeOptions();
+
         chromeOptions.addArguments("--no-sandbox", "--remote-allow-origins=*", "--headless", "--window-size=1920,1080",
                 "--disable-dev-shm-usage", "--remote-debugging-port=9222");
 
