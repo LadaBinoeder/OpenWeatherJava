@@ -19,6 +19,7 @@ public class MainTest extends BaseTest {
         final String expectedResultTitle = "Сurrent weather and forecast - OpenWeatherMap";
 
         getDriver().get(BASE_URL);
+        //Thread.sleep(3000);
         String actualResultURL = getDriver().getCurrentUrl();
         String actualResultTitle = getDriver().getTitle();
 
