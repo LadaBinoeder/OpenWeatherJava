@@ -43,5 +43,17 @@ public class MainTest extends BaseTest {
         Assert.assertTrue(pageIsNotEmpty);
         Assert.assertTrue(noErrors);
     }
+
+    @Test
+    public void testLogoIsDisplayed() throws InterruptedException {
+
+        getDriver().get(BASE_URL);
+        Thread.sleep(3000);
+
+        WebElement logo = getDriver().findElement(By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']"));
+        boolean logoIsDisplayed = logo.isDisplayed();
+
+        Assert.assertTrue(logoIsDisplayed);
+    }
 }
 
