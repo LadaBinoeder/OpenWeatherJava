@@ -7,6 +7,7 @@ import runner.BaseTest;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 public class MainTest extends BaseTest {
 
@@ -66,6 +67,20 @@ public class MainTest extends BaseTest {
         boolean placeholderIsDisplayed = placeholder.isDisplayed();
 
         Assert.assertTrue(placeholderIsDisplayed);
+    }
+
+    @Test
+    public void testAllTheElementsInDesktopMenuAreDisplayed() throws InterruptedException {
+        final int expectedResultNumber = 12;
+
+        getDriver().get(BASE_URL);
+        Thread.sleep(3000);
+
+        List<WebElement> desktopMenuElements = getDriver().findElements(By.xpath("//div[@id = 'desktop-menu']/ul/li"));
+
+        int actualResultNumber = desktopMenuElements.size();
+
+        Assert.assertEquals(actualResultNumber, expectedResultNumber);
     }
 }
 
