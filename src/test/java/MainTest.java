@@ -4,9 +4,12 @@ import org.testng.Assert;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import runner.BaseTest;
+
+import javax.swing.plaf.TableHeaderUI;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainTest extends BaseTest {
@@ -71,6 +74,7 @@ public class MainTest extends BaseTest {
 
     @Test
     public void testAllTheElementsInDesktopMenuAreDisplayed() throws InterruptedException {
+
         final int expectedResultNumber = 12;
 
         getDriver().get(BASE_URL);
@@ -81,6 +85,37 @@ public class MainTest extends BaseTest {
         int actualResultNumber = desktopMenuElements.size();
 
         Assert.assertEquals(actualResultNumber, expectedResultNumber);
+    }
+
+    @Test
+    public void testNamesOfElementsInDesktopMenu() throws InterruptedException {
+
+        final List<String> expectedDesktopMenuNames = List.of(
+                "Guide",
+                "API",
+                "Dashboard",
+                "Marketplace",
+                "Pricing",
+                "Maps",
+                "Our Initiatives",
+                "Partners",
+                "Blog",
+                "For Business",
+                "Sign in",
+                "Support"
+        );
+
+        getDriver().get(BASE_URL);
+        Thread.sleep(3000);
+
+        List<WebElement> desktopMenuElements = getDriver().findElements(By.xpath("//div[@id = 'desktop-menu']/ul/li"));
+        List<String> actualDesktopMenuNames = new ArrayList<>();
+
+        for(int i = 0; i < desktopMenuElements.size(); i++) {
+            actualDesktopMenuNames.add(desktopMenuElements.get(i).getText());
+        }
+
+        Assert.assertEquals(actualDesktopMenuNames, expectedDesktopMenuNames);
     }
 }
 
