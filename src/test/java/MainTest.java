@@ -55,5 +55,17 @@ public class MainTest extends BaseTest {
 
         Assert.assertTrue(logoIsDisplayed);
     }
+
+    @Test
+    public void testPlaceholderIsDisplayed() throws InterruptedException {
+
+        getDriver().get(BASE_URL);
+        Thread.sleep(3000);
+
+        WebElement placeholder = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//input[@name = 'q']"));
+        boolean placeholderIsDisplayed = placeholder.isDisplayed();
+
+        Assert.assertTrue(placeholderIsDisplayed);
+    }
 }
 
