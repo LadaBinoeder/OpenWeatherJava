@@ -117,5 +117,29 @@ public class MainTest extends BaseTest {
 
         Assert.assertEquals(actualDesktopMenuNames, expectedDesktopMenuNames);
     }
+
+    @Test
+    public void testLogoIsClickable() throws InterruptedException {
+
+        String expectedResultHref = "https://openweathermap.org/";
+        String expectedResultImage = "https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png";
+
+        getDriver().get(BASE_URL);
+        Thread.sleep(5000);
+
+        WebElement logo = getDriver().findElement(By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']"));
+        logo.click();
+
+        WebElement logoLink = getDriver().findElement(By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']/a"));
+        WebElement logoImage = getDriver().findElement(By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']/a/img"));
+
+        String actualResultURL = getDriver().getCurrentUrl();
+        String actualResultHref = logoLink.getAttribute("href");
+        String actualResultImage = logoImage.getAttribute("src");
+
+        Assert.assertEquals(actualResultURL, BASE_URL);
+        Assert.assertEquals(actualResultHref, expectedResultHref);
+        Assert.assertEquals(actualResultImage, expectedResultImage);
+    }
 }
 
