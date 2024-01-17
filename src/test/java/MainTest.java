@@ -30,7 +30,7 @@ public class MainTest extends BaseTest {
 
         WebElement anyElement = getDriver().findElement(By.xpath("//*"));
         boolean pageIsNotEmpty = false;
-        if(anyElement != null) {
+        if (anyElement != null) {
             pageIsNotEmpty = true;
         }
 
@@ -39,9 +39,9 @@ public class MainTest extends BaseTest {
         connection.setRequestMethod("GET");
         int responseCode = connection.getResponseCode();
         boolean noErrors = true;
-        if(responseCode >= 400 && responseCode < 600) {
-           noErrors = false;
-       }
+        if (responseCode >= 400 && responseCode < 600) {
+            noErrors = false;
+        }
 
         Assert.assertEquals(actualResultURL, expectedResultURL);
         Assert.assertEquals(actualResultTitle, expectedResultTitle);
@@ -112,7 +112,7 @@ public class MainTest extends BaseTest {
         List<WebElement> desktopMenuElements = getDriver().findElements(By.xpath("//div[@id = 'desktop-menu']/ul/li"));
         List<String> actualDesktopMenuNames = new ArrayList<>();
 
-        for(int i = 0; i < desktopMenuElements.size(); i++) {
+        for (int i = 0; i < desktopMenuElements.size(); i++) {
             actualDesktopMenuNames.add(desktopMenuElements.get(i).getText());
         }
 
@@ -170,5 +170,27 @@ public class MainTest extends BaseTest {
         Assert.assertEquals(actualResultText, expectedResultText);
         Assert.assertEquals(actualResultPage, expectedResultPage);
     }
-}
 
+    @Test
+    public void testGuideIsClickable() throws InterruptedException {
+
+        String expectedResultLink = "https://openweathermap.org/guide";
+        boolean newPageIsOpened = true;
+
+        getDriver().get(BASE_URL);
+        Thread.sleep(5000);
+
+        WebElement guideMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = \"Guide\"]"));
+
+        String actualResultLink = guideMenu.getAttribute("href");
+
+        guideMenu.click();
+
+        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
+            newPageIsOpened = false;
+        }
+
+        Assert.assertEquals(actualResultLink, expectedResultLink);
+        Assert.assertTrue(newPageIsOpened);
+    }
+}
