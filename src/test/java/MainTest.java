@@ -1,4 +1,5 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Ignore;
@@ -121,7 +122,7 @@ public class MainTest extends BaseTest {
     @Test
     public void testLogoIsClickable() throws InterruptedException {
 
-        String expectedResultHref = "https://openweathermap.org/";
+        String expectedResultLink = "https://openweathermap.org/";
         String expectedResultImage = "https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png";
 
         getDriver().get(BASE_URL);
@@ -138,8 +139,36 @@ public class MainTest extends BaseTest {
         String actualResultImage = logoImage.getAttribute("src");
 
         Assert.assertEquals(actualResultURL, BASE_URL);
-        Assert.assertEquals(actualResultHref, expectedResultHref);
+        Assert.assertEquals(actualResultHref, expectedResultLink);
         Assert.assertEquals(actualResultImage, expectedResultImage);
+    }
+
+    @Test
+    public void testPlaceholderIsClickable() throws InterruptedException {
+
+        final String city = "Rome";
+        String expectedResultLink = "https://openweathermap.org/find";
+        String expectedResultText = "Weather in your city";
+        String expectedResultPage = expectedResultLink + "?q=" + city;
+
+        getDriver().get(BASE_URL);
+        Thread.sleep(5000);
+
+        WebElement placeholderLink = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']/form"));
+        WebElement placeholderText = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']/form/input[@type = 'text']"));
+
+        String actualResultLink = placeholderLink.getAttribute("action");
+        String actualResultText = placeholderText.getAttribute("placeholder");
+
+        placeholderLink.click();
+        placeholderText.sendKeys(city);
+        placeholderText.sendKeys(Keys.ENTER);
+
+        String actualResultPage = getDriver().getCurrentUrl();
+
+        Assert.assertEquals(actualResultLink, expectedResultLink);
+        Assert.assertEquals(actualResultText, expectedResultText);
+        Assert.assertEquals(actualResultPage, expectedResultPage);
     }
 }
 
