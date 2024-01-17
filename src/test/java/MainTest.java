@@ -1,3 +1,4 @@
+import com.beust.ah.A;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -192,5 +193,28 @@ public class MainTest extends BaseTest {
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpened);
+    }
+
+    @Test
+    public void testApiIsClickable() throws InterruptedException{
+
+        String expectedResultLink = "https://openweathermap.org/api";
+        boolean newPageisOpened = true;
+
+        getDriver().get(BASE_URL);
+        Thread.sleep(5000);
+
+        WebElement apiMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = \"API\"]"));
+
+        String actualResultLink = apiMenu.getAttribute("href");
+
+        apiMenu.click();
+
+        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+            newPageisOpened = false;
+        }
+
+        Assert.assertEquals(actualResultLink, expectedResultLink);
+        Assert.assertTrue(newPageisOpened);
     }
 }
