@@ -240,4 +240,30 @@ public class MainTest extends BaseTest {
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
     }
+
+    @Test
+    public void testMarketplaceIsClickable() throws InterruptedException {
+
+        String expectedResultLink = "https://home.openweathermap.org/marketplace";
+        boolean newPageIsOpen = true;
+
+        getDriver().get(BASE_URL);
+        Thread.sleep(5000);
+
+        WebElement marketplaceMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = 'Marketplace']"));
+
+        String actualResultLink = marketplaceMenu.getAttribute("href");
+
+        marketplaceMenu.click();
+
+        String handle = getDriver().getWindowHandles().toArray()[1].toString();
+        getDriver().switchTo().window(handle);
+
+        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+            newPageIsOpen = false;
+        }
+
+        Assert.assertEquals(actualResultLink, expectedResultLink);
+        Assert.assertTrue(newPageIsOpen);
+    }
 }
