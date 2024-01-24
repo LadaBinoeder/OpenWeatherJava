@@ -266,4 +266,27 @@ public class MainTest extends BaseTest {
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
     }
+
+    @Test
+    public void testPricingIsClickable() throws InterruptedException {
+
+        String expectedResultLink = "https://openweathermap.org/price";
+        boolean newPageOpen = true;
+
+        getDriver().get(BASE_URL);
+        Thread.sleep(5000);
+
+        WebElement pricingMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = \"Pricing\"]"));
+
+        String actualResultLink = pricingMenu.getAttribute("href");
+
+        pricingMenu.click();
+
+        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+            newPageOpen = false;
+        }
+
+        Assert.assertEquals(actualResultLink, expectedResultLink);
+        Assert.assertTrue(newPageOpen);
+    }
 }
