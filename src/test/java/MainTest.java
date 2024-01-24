@@ -1,4 +1,5 @@
 import com.beust.ah.A;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -288,5 +289,28 @@ public class MainTest extends BaseTest {
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageOpen);
+    }
+
+    @Test
+    public void testMapsIsClickable() throws InterruptedException {
+
+        String expectedResultLink = "https://openweathermap.org/weathermap";
+        boolean newPageIsOpen = true;
+
+        getDriver().get(BASE_URL);
+        Thread.sleep(5000);
+
+        WebElement mapsMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = \"Maps\"]"));
+
+        String actualResultLink = mapsMenu.getAttribute("href");
+
+        mapsMenu.click();
+
+        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+            newPageIsOpen = false;
+        }
+
+        Assert.assertEquals(actualResultLink, expectedResultLink);
+        Assert.assertTrue(newPageIsOpen);
     }
 }
