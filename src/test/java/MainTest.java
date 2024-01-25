@@ -451,4 +451,30 @@ public class MainTest extends BaseTest {
         Assert.assertEquals(actualResultClass, expectedResultClass);
         Assert.assertEquals(actualResultNumberOfSubmenus, expectedResultNumberOfSubmenus);
     }
+
+    @Test
+    public void testFaqIsClickable() throws InterruptedException {
+
+        String expectedResultLink = "https://openweathermap.org/faq";
+        boolean newPageIsOpen = true;
+
+        getDriver().get(BASE_URL);
+        Thread.sleep(5000);
+
+        WebElement supportMenu = getDriver().findElement(By.id("support-dropdown"));
+        supportMenu.click();
+
+        WebElement faqSubmenu = getDriver().findElement(By.linkText("FAQ"));
+
+        String actualResultLink = faqSubmenu.getAttribute("href");
+
+        faqSubmenu.click();
+
+        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+            newPageIsOpen = false;
+        }
+
+        Assert.assertEquals(actualResultLink, expectedResultLink);
+        Assert.assertTrue(newPageIsOpen);
+    }
 }
