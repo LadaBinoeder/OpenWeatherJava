@@ -313,4 +313,27 @@ public class MainTest extends BaseTest {
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
     }
+
+    @Test
+    public void testOurInitiativesIsClickable() throws InterruptedException {
+
+        String expectedResultLink = "https://openweathermap.org/our-initiatives";
+        boolean newPageIsOpen = true;
+
+        getDriver().get(BASE_URL);
+        Thread.sleep(5000);
+
+        WebElement ourInitiativesMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = 'Our Initiatives']"));
+
+        String actualResultLink = ourInitiativesMenu.getAttribute("href");
+
+        ourInitiativesMenu.click();
+
+        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+            newPageIsOpen = false;
+        }
+
+        Assert.assertEquals(actualResultLink, expectedResultLink);
+        Assert.assertTrue(newPageIsOpen);
+    }
 }
