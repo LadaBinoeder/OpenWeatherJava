@@ -477,4 +477,30 @@ public class MainTest extends BaseTest {
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
     }
+
+    @Test
+    public void testHowToStartIsClickable() throws InterruptedException {
+
+        String expectedResultLink = "https://openweathermap.org/appid";
+        boolean newPageIsOpen = true;
+
+        getDriver().get(BASE_URL);
+        Thread.sleep(5000);
+
+        WebElement supportMenu = getDriver().findElement(By.id("support-dropdown"));
+        supportMenu.click();
+
+        WebElement howToStartSubmenu = getDriver().findElement(By.linkText("How to start"));
+
+        String actualResultLink = howToStartSubmenu.getAttribute("href");
+
+        howToStartSubmenu.click();
+
+        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+            newPageIsOpen = false;
+        }
+
+        Assert.assertEquals(actualResultLink, expectedResultLink);
+        Assert.assertTrue(newPageIsOpen);
+    }
 }
