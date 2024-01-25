@@ -1,14 +1,9 @@
-import com.beust.ah.A;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import runner.BaseTest;
-
-import javax.swing.plaf.TableHeaderUI;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -433,5 +428,27 @@ public class MainTest extends BaseTest {
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
+    }
+
+    @Test
+    public void testSupportIsClickableAndHasThreeSubmenus() throws InterruptedException {
+
+        String expectedResultClass = "dropdown-menu dropdown-visible";
+        int expectedResultNumberOfSubmenus = 3;
+
+        getDriver().get(BASE_URL);
+        Thread.sleep(5000);
+
+        WebElement supportMenu = getDriver().findElement(By.id("support-dropdown"));
+        WebElement supportDropdownMenu = getDriver().findElement(By.id("support-dropdown-menu"));
+        supportMenu.click();
+
+        List<WebElement> submenus = getDriver().findElements(By.xpath("//ul[@class = \"dropdown-menu dropdown-visible\"]/li"));
+
+        String actualResultClass = supportDropdownMenu.getAttribute("class");
+        int actualResultNumberOfSubmenus = submenus.size();
+
+        Assert.assertEquals(actualResultClass, expectedResultClass);
+        Assert.assertEquals(actualResultNumberOfSubmenus, expectedResultNumberOfSubmenus);
     }
 }
