@@ -359,4 +359,30 @@ public class MainTest extends BaseTest {
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
     }
+
+    @Test
+    public void testBlogIsClickable() throws InterruptedException {
+
+        String expectedResultLink = "https://openweather.co.uk/blog/category/weather";
+        boolean newPageIsOpen = true;
+
+        getDriver().get(BASE_URL);
+        Thread.sleep(5000);
+
+        WebElement blogMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = 'Blog']"));
+
+        String actualResultLink = blogMenu.getAttribute("href");
+
+        blogMenu.click();
+
+        String handle = getDriver().getWindowHandles().toArray()[1].toString();
+        getDriver().switchTo().window(handle);
+
+        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+            newPageIsOpen = false;
+        }
+
+        Assert.assertEquals(actualResultLink, expectedResultLink);
+        Assert.assertTrue(newPageIsOpen);
+    }
 }
