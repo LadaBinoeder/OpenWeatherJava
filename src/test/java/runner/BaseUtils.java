@@ -1,5 +1,6 @@
 package runner;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -14,7 +15,23 @@ public final class BaseUtils {
     private static final String ENV_CHROME_OPTIONS = "CHROME_OPTIONS";
     static final String PREFIX_PROP = "default.";
     private static final String PROP_CHROME_OPTIONS = PREFIX_PROP + ENV_CHROME_OPTIONS.toLowerCase();
+    private static final ChromeOptions chromeOptions;
     private static Properties properties;
+
+    static {
+        initProperties();
+
+        chromeOptions = new ChromeOptions();
+        String options = properties.getProperty(PROP_CHROME_OPTIONS);
+        if (options != null) {
+            for (String argument : options.split(";")) {
+                chromeOptions.addArguments(argument);
+            }
+        }
+
+        WebDriverManager.chromedriver().setup();
+    }
+
     private static void initProperties() {
         if (properties == null) {
             properties = new Properties();
@@ -35,19 +52,21 @@ public final class BaseUtils {
         }
     }
 
-    private static final ChromeOptions chromeOptions;
-    static {
-        initProperties();
-
-        chromeOptions = new ChromeOptions();
-        String options = properties.getProperty(PROP_CHROME_OPTIONS);
-
-        if(options != null) {
-            for(String argument: options.split(";")) {
-                chromeOptions.addArguments(argument);
-            }
-        }
-    }
+//    private static final ChromeOptions chromeOptions;
+//    static {
+//        initProperties();
+//
+//        chromeOptions = new ChromeOptions();
+//        String options = properties.getProperty(PROP_CHROME_OPTIONS);
+//
+//        if(options != null) {
+//            for(String argument: options.split(";")) {
+//                chromeOptions.addArguments(argument);
+//            }
+//        }
+//
+//        WebDriverManager.chromedriver().setup();
+//    }
 
     static Properties getProperties() {
         return properties;
@@ -59,7 +78,7 @@ public final class BaseUtils {
 
     static WebDriver createDriver() {
         WebDriver driver = new ChromeDriver(chromeOptions);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+      //   driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         return driver;
     }
