@@ -15,7 +15,23 @@ public final class BaseUtils {
     private static final String ENV_CHROME_OPTIONS = "CHROME_OPTIONS";
     static final String PREFIX_PROP = "default.";
     private static final String PROP_CHROME_OPTIONS = PREFIX_PROP + ENV_CHROME_OPTIONS.toLowerCase();
+    private static final ChromeOptions chromeOptions;
     private static Properties properties;
+
+    static {
+        initProperties();
+
+        chromeOptions = new ChromeOptions();
+        String options = properties.getProperty(PROP_CHROME_OPTIONS);
+        if (options != null) {
+            for (String argument : options.split(";")) {
+                chromeOptions.addArguments(argument);
+            }
+        }
+
+        WebDriverManager.chromedriver().setup();
+    }
+
     private static void initProperties() {
         if (properties == null) {
             properties = new Properties();
@@ -36,21 +52,21 @@ public final class BaseUtils {
         }
     }
 
-    private static final ChromeOptions chromeOptions;
-    static {
-        initProperties();
-
-        chromeOptions = new ChromeOptions();
-        String options = properties.getProperty(PROP_CHROME_OPTIONS);
-
-        if(options != null) {
-            for(String argument: options.split(";")) {
-                chromeOptions.addArguments(argument);
-            }
-        }
-
-        WebDriverManager.chromedriver().setup();
-    }
+//    private static final ChromeOptions chromeOptions;
+//    static {
+//        initProperties();
+//
+//        chromeOptions = new ChromeOptions();
+//        String options = properties.getProperty(PROP_CHROME_OPTIONS);
+//
+//        if(options != null) {
+//            for(String argument: options.split(";")) {
+//                chromeOptions.addArguments(argument);
+//            }
+//        }
+//
+//        WebDriverManager.chromedriver().setup();
+//    }
 
     static Properties getProperties() {
         return properties;
