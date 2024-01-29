@@ -1,5 +1,6 @@
 package runner;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -47,6 +48,8 @@ public final class BaseUtils {
                 chromeOptions.addArguments(argument);
             }
         }
+
+        WebDriverManager.chromedriver().setup();
     }
 
     static Properties getProperties() {
@@ -59,7 +62,7 @@ public final class BaseUtils {
 
     static WebDriver createDriver() {
         WebDriver driver = new ChromeDriver(chromeOptions);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         return driver;
     }
