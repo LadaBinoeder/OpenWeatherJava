@@ -7,7 +7,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.Duration;
 import java.util.Properties;
 
 public final class BaseUtils {
@@ -52,22 +51,6 @@ public final class BaseUtils {
         }
     }
 
-//    private static final ChromeOptions chromeOptions;
-//    static {
-//        initProperties();
-//
-//        chromeOptions = new ChromeOptions();
-//        String options = properties.getProperty(PROP_CHROME_OPTIONS);
-//
-//        if(options != null) {
-//            for(String argument: options.split(";")) {
-//                chromeOptions.addArguments(argument);
-//            }
-//        }
-//
-//        WebDriverManager.chromedriver().setup();
-//    }
-
     static Properties getProperties() {
         return properties;
     }
@@ -78,8 +61,7 @@ public final class BaseUtils {
 
     static WebDriver createDriver() {
         WebDriver driver = new ChromeDriver(chromeOptions);
-      //   driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
         return driver;
+
     }
 }
