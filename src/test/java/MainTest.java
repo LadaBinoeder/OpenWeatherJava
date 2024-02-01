@@ -513,7 +513,7 @@ public class MainTest extends BaseTest {
         boolean newPageIsOpen = true;
 
         getDriver().get(BASE_URL);
-        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement supportMenu = getDriver().findElement(By.id("support-dropdown"));
         supportMenu.click();
