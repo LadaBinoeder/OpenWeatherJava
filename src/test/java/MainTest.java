@@ -575,4 +575,15 @@ public class MainTest extends BaseTest {
 
         Assert.assertTrue(greyContainer.isDisplayed());
     }
+
+    @Test
+    public void testVerifySectionContentIsDisplayed() {
+
+        getDriver().get(BASE_URL);
+        getWait5();
+
+        WebElement sectionContent = getDriver().findElement(By.xpath("//div[@id = 'weather-widget']//div[@class = 'section-content']"));
+
+        Assert.assertTrue(sectionContent.isDisplayed());
+    }
 }
