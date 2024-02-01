@@ -534,4 +534,19 @@ public class MainTest extends BaseTest {
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
     }
+
+    @Test
+    public void testVerifyHeader() {
+
+        String expectedResultHeader = "OpenWeather";
+
+        getDriver().get(BASE_URL);
+        getWait5();
+
+        WebElement header = getDriver().findElement(By.xpath("//div[@class = 'mobile-padding main-page']/h1/span"));
+
+        String actualResultHeader = header.getText();
+
+        Assert.assertEquals(actualResultHeader, expectedResultHeader);
+    }
 }
