@@ -22,7 +22,7 @@ public class MainTest extends BaseTest {
         final String expectedResultTitle = "Сurrent weather and forecast - OpenWeatherMap";
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         String actualResultURL = getDriver().getCurrentUrl();
         String actualResultTitle = getDriver().getTitle();
@@ -52,7 +52,7 @@ public class MainTest extends BaseTest {
     public void testLogoIsDisplayed() {
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement logo = getDriver().findElement(By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']"));
         boolean logoIsDisplayed = logo.isDisplayed();
@@ -64,7 +64,7 @@ public class MainTest extends BaseTest {
     public void testPlaceholderIsDisplayed() {
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement placeholder = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//input[@name = 'q']"));
         boolean placeholderIsDisplayed = placeholder.isDisplayed();
@@ -78,7 +78,7 @@ public class MainTest extends BaseTest {
         final int expectedResultNumber = 12;
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         List<WebElement> desktopMenuElements = getDriver().findElements(By.xpath("//div[@id = 'desktop-menu']/ul/li"));
 
@@ -106,7 +106,7 @@ public class MainTest extends BaseTest {
         );
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         List<WebElement> desktopMenuElements = getDriver().findElements(By.xpath("//div[@id = 'desktop-menu']/ul/li"));
         List<String> actualDesktopMenuNames = new ArrayList<>();
@@ -125,7 +125,7 @@ public class MainTest extends BaseTest {
         String expectedResultImage = "https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png";
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement logo = getDriver().findElement(By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']"));
         logo.click();
@@ -151,7 +151,7 @@ public class MainTest extends BaseTest {
         String expectedResultPage = expectedResultLink + "?q=" + city;
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement placeholderLink = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']/form"));
         WebElement placeholderText = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']/form/input[@type = 'text']"));
@@ -177,7 +177,7 @@ public class MainTest extends BaseTest {
         boolean newPageIsOpened = true;
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement guideMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = \"Guide\"]"));
 
@@ -200,7 +200,7 @@ public class MainTest extends BaseTest {
         boolean newPageisOpened = true;
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement apiMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = \"API\"]"));
 
@@ -223,7 +223,7 @@ public class MainTest extends BaseTest {
         boolean newPageIsOpen = true;
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement dashboardMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = \"Dashboard\"]"));
 
@@ -246,7 +246,7 @@ public class MainTest extends BaseTest {
         boolean newPageIsOpen = true;
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement marketplaceMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = 'Marketplace']"));
 
@@ -272,7 +272,7 @@ public class MainTest extends BaseTest {
         boolean newPageOpen = true;
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement pricingMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = \"Pricing\"]"));
 
@@ -295,7 +295,7 @@ public class MainTest extends BaseTest {
         boolean newPageIsOpen = true;
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement mapsMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = \"Maps\"]"));
 
@@ -318,7 +318,7 @@ public class MainTest extends BaseTest {
         boolean newPageIsOpen = true;
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement ourInitiativesMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = 'Our Initiatives']"));
 
@@ -341,7 +341,7 @@ public class MainTest extends BaseTest {
         boolean newPageIsOpen = true;
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement partnersMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = 'Partners']"));
 
@@ -364,7 +364,7 @@ public class MainTest extends BaseTest {
         boolean newPageIsOpen = true;
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement blogMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = 'Blog']"));
 
@@ -390,7 +390,7 @@ public class MainTest extends BaseTest {
         boolean newPageIsOpen = true;
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement forBusinessMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = 'For Business']"));
 
@@ -416,7 +416,7 @@ public class MainTest extends BaseTest {
         boolean newPageIsOpen = true;
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement signInMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = 'Sign in']"));
 
@@ -439,7 +439,7 @@ public class MainTest extends BaseTest {
         int expectedResultNumberOfSubmenus = 3;
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement supportMenu = getDriver().findElement(By.id("support-dropdown"));
         WebElement supportDropdownMenu = getDriver().findElement(By.id("support-dropdown-menu"));
@@ -461,7 +461,7 @@ public class MainTest extends BaseTest {
         boolean newPageIsOpen = true;
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement supportMenu = getDriver().findElement(By.id("support-dropdown"));
         supportMenu.click();
@@ -487,7 +487,7 @@ public class MainTest extends BaseTest {
         boolean newPageIsOpen = true;
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement supportMenu = getDriver().findElement(By.id("support-dropdown"));
         supportMenu.click();
@@ -513,7 +513,7 @@ public class MainTest extends BaseTest {
         boolean newPageIsOpen = true;
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement supportMenu = getDriver().findElement(By.id("support-dropdown"));
         supportMenu.click();
