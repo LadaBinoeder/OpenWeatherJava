@@ -549,4 +549,19 @@ public class MainTest extends BaseTest {
 
         Assert.assertEquals(actualResultHeader, expectedResultHeader);
     }
+
+    @Test
+    public void testVerifySubtitle() {
+
+        String expectedResultSurtitle = "Weather forecasts, nowcasts and history in a fast and elegant way";
+
+        getDriver().get(BASE_URL);
+        getWait5();
+
+        WebElement header = getDriver().findElement(By.xpath("//div[@class = 'mobile-padding main-page']/h2/span"));
+
+        String actualResultSubtitle = header.getText();
+
+        Assert.assertEquals(actualResultSubtitle, expectedResultSurtitle);
+    }
 }
