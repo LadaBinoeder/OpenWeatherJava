@@ -564,4 +564,15 @@ public class MainTest extends BaseTest {
 
         Assert.assertEquals(actualResultSubtitle, expectedResultSurtitle);
     }
+
+    @Test
+    public void testVerifyGreyContainerIsDisplayed() {
+
+        getDriver().get(BASE_URL);
+        getWait5();
+
+        WebElement greyContainer = getDriver().findElement(By.xpath("//div[@id = 'weather-widget']//div[@class = 'page-container']"));
+
+        Assert.assertTrue(greyContainer.isDisplayed());
+    }
 }
