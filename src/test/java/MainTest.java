@@ -66,7 +66,7 @@ public class MainTest extends BaseTest {
         getDriver().get(BASE_URL);
         getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
-        WebElement placeholder = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//input[@name = 'q']"));
+        WebElement placeholder = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//input[@name = 'q']"));
         boolean placeholderIsDisplayed = placeholder.isDisplayed();
 
         Assert.assertTrue(placeholderIsDisplayed);
@@ -80,7 +80,7 @@ public class MainTest extends BaseTest {
         getDriver().get(BASE_URL);
         getWait20().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
-        List<WebElement> desktopMenuElements = getDriver().findElements(By.xpath("//div[@id = 'desktop-menu']/ul/li"));
+        List<WebElement> desktopMenuElements = getDriver().findElements(By.xpath("//li[@id = 'desktop-menu']/ul/li"));
 
         int actualResultNumber = desktopMenuElements.size();
 
@@ -108,7 +108,7 @@ public class MainTest extends BaseTest {
         getDriver().get(BASE_URL);
         getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
-        List<WebElement> desktopMenuElements = getDriver().findElements(By.xpath("//div[@id = 'desktop-menu']/ul/li"));
+        List<WebElement> desktopMenuElements = getDriver().findElements(By.xpath("//li[@id = 'desktop-menu']/ul/li"));
         List<String> actualDesktopMenuNames = new ArrayList<>();
 
         for (int i = 0; i < desktopMenuElements.size(); i++) {
@@ -153,8 +153,8 @@ public class MainTest extends BaseTest {
         getDriver().get(BASE_URL);
         getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
-        WebElement placeholderLink = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']/form"));
-        WebElement placeholderText = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']/form/input[@type = 'text']"));
+        WebElement placeholderLink = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']/form"));
+        WebElement placeholderText = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']/form/input[@type = 'text']"));
 
         String actualResultLink = placeholderLink.getAttribute("action");
         String actualResultText = placeholderText.getAttribute("placeholder");
@@ -179,7 +179,7 @@ public class MainTest extends BaseTest {
         getDriver().get(BASE_URL);
         getWait20().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
-        WebElement guideMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = \"Guide\"]"));
+        WebElement guideMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = \"Guide\"]"));
 
         String actualResultLink = guideMenu.getAttribute("href");
 
@@ -202,7 +202,7 @@ public class MainTest extends BaseTest {
         getDriver().get(BASE_URL);
         getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
-        WebElement apiMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = \"API\"]"));
+        WebElement apiMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = \"API\"]"));
 
         String actualResultLink = apiMenu.getAttribute("href");
 
@@ -225,7 +225,7 @@ public class MainTest extends BaseTest {
         getDriver().get(BASE_URL);
         getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
-        WebElement dashboardMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = \"Dashboard\"]"));
+        WebElement dashboardMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = \"Dashboard\"]"));
 
         String actualResultLink = dashboardMenu.getAttribute("href");
 
@@ -248,7 +248,7 @@ public class MainTest extends BaseTest {
         getDriver().get(BASE_URL);
         getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
-        WebElement marketplaceMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = 'Marketplace']"));
+        WebElement marketplaceMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Marketplace']"));
 
         String actualResultLink = marketplaceMenu.getAttribute("href");
 
@@ -274,7 +274,7 @@ public class MainTest extends BaseTest {
         getDriver().get(BASE_URL);
         getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
-        WebElement pricingMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = \"Pricing\"]"));
+        WebElement pricingMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = \"Pricing\"]"));
 
         String actualResultLink = pricingMenu.getAttribute("href");
 
@@ -297,7 +297,7 @@ public class MainTest extends BaseTest {
         getDriver().get(BASE_URL);
         getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
-        WebElement mapsMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = \"Maps\"]"));
+        WebElement mapsMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = \"Maps\"]"));
 
         String actualResultLink = mapsMenu.getAttribute("href");
 
@@ -320,7 +320,7 @@ public class MainTest extends BaseTest {
         getDriver().get(BASE_URL);
         getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
-        WebElement ourInitiativesMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = 'Our Initiatives']"));
+        WebElement ourInitiativesMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Our Initiatives']"));
 
         String actualResultLink = ourInitiativesMenu.getAttribute("href");
 
@@ -343,7 +343,7 @@ public class MainTest extends BaseTest {
         getDriver().get(BASE_URL);
         getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
-        WebElement partnersMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = 'Partners']"));
+        WebElement partnersMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Partners']"));
 
         String actualResultLink = partnersMenu.getAttribute("href");
 
@@ -366,7 +366,7 @@ public class MainTest extends BaseTest {
         getDriver().get(BASE_URL);
         getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
-        WebElement blogMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = 'Blog']"));
+        WebElement blogMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Blog']"));
 
         String actualResultLink = blogMenu.getAttribute("href");
 
@@ -392,7 +392,7 @@ public class MainTest extends BaseTest {
         getDriver().get(BASE_URL);
         getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
-        WebElement forBusinessMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = 'For Business']"));
+        WebElement forBusinessMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = 'For Business']"));
 
         String actualResultLink = forBusinessMenu.getAttribute("href");
 
@@ -418,7 +418,7 @@ public class MainTest extends BaseTest {
         getDriver().get(BASE_URL);
         getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
-        WebElement signInMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = 'Sign in']"));
+        WebElement signInMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Sign in']"));
 
         String actualResultLink = signInMenu.getAttribute("href");
 
@@ -541,7 +541,6 @@ public class MainTest extends BaseTest {
         String expectedResultHeader = "OpenWeather";
 
         getDriver().get(BASE_URL);
-        getWait5();
 
         WebElement header = getDriver().findElement(By.xpath("//div[@class = 'mobile-padding main-page']/h1/span"));
 
@@ -556,7 +555,6 @@ public class MainTest extends BaseTest {
         String expectedResultSurtitle = "Weather forecasts, nowcasts and history in a fast and elegant way";
 
         getDriver().get(BASE_URL);
-        getWait5();
 
         WebElement header = getDriver().findElement(By.xpath("//div[@class = 'mobile-padding main-page']/h2/span"));
 
@@ -569,7 +567,6 @@ public class MainTest extends BaseTest {
     public void testVerifyGreyContainerIsDisplayed() {
 
         getDriver().get(BASE_URL);
-        getWait5();
 
         WebElement greyContainer = getDriver().findElement(By.xpath("//div[@id = 'weather-widget']//div[@class = 'page-container']"));
 
@@ -580,7 +577,6 @@ public class MainTest extends BaseTest {
     public void testVerifySectionContentIsDisplayed() {
 
         getDriver().get(BASE_URL);
-        getWait5();
 
         WebElement sectionContent = getDriver().findElement(By.xpath("//div[@id = 'weather-widget']//div[@class = 'section-content']"));
 
