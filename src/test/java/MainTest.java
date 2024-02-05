@@ -1,9 +1,6 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -81,7 +78,7 @@ public class MainTest extends BaseTest {
         final int expectedResultNumber = 12;
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait20().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         List<WebElement> desktopMenuElements = getDriver().findElements(By.xpath("//div[@id = 'desktop-menu']/ul/li"));
 
@@ -180,7 +177,7 @@ public class MainTest extends BaseTest {
         boolean newPageIsOpened = true;
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait20().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement guideMenu = getDriver().findElement(By.xpath("//div[@id = 'desktop-menu']//a[text() = \"Guide\"]"));
 
@@ -596,12 +593,14 @@ public class MainTest extends BaseTest {
         String expectedResultCityCountry = "Georgensgmünd, DE";
 
         getDriver().get(BASE_URL);
-        getWait20();
+        getWait20().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+
+        WebElement cityCountryName = getDriver().findElement(By.xpath("//div[@class = 'section-content']//h2"));
+        String defaultCity = cityCountryName.getText();
 
         WebElement locationButton = getDriver().findElement(By.className("icon-current-location"));
         locationButton.click();
-
-        WebElement cityCountryName = getDriver().findElement(By.xpath("//div[@class = 'section-content']//h2"));
+        getWait5().until(ExpectedConditions.not(ExpectedConditions.textToBe(By.xpath("//div[@class = 'section-content']//h2"), defaultCity)));
 
         String actualResultCityCountry = cityCountryName.getText();
 
