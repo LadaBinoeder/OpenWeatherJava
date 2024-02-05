@@ -1,10 +1,15 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import runner.BaseTest;
+import runner.BaseUtils;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -584,22 +589,29 @@ public class MainTest extends BaseTest {
     }
 
     @Test
-    public void testLocationButtonGeoPermitted() {
+    public void testLocationButtonGeoForbidden() {
 
-        String expectedResultCityCountry = "Georgensgmünd, DE";
+        String expectedResultNotificationMessage = "Location unavailable. Displaying default location: London";
+        String expectedResultCityCountry = "London, GB";
+
+        ChromeOptions options = BaseUtils.chromeOptions;
+        options.addArguments("--disable-geolocation");
 
         getDriver().get(BASE_URL);
         getWait20().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement cityCountryName = getDriver().findElement(By.xpath("//div[@class = 'section-content']//h2"));
-        String defaultCity = cityCountryName.getText();
 
         WebElement locationButton = getDriver().findElement(By.className("icon-current-location"));
         locationButton.click();
-        getWait5().until(ExpectedConditions.not(ExpectedConditions.textToBe(By.xpath("//div[@class = 'section-content']//h2"), defaultCity)));
 
+        getWait10().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class = 'widget-notification']/span")));
+
+        WebElement notification = getDriver().findElement(By.xpath("//div[@class = 'widget-notification']/span"));
         String actualResultCityCountry = cityCountryName.getText();
+        String actualResultNotificationMessage = notification.getText();
 
         Assert.assertEquals(actualResultCityCountry, expectedResultCityCountry);
+        Assert.assertEquals(actualResultNotificationMessage, expectedResultNotificationMessage);
     }
 }
