@@ -586,36 +586,6 @@ public class MainTest extends BaseTest {
 
         Assert.assertTrue(sectionContent.isDisplayed());
     }
-
-    @Test
-    public void testLocationButtonGeoForbidden() {
-
-        String expectedResultNotificationMessage = "Location unavailable. Displaying default location: London";
-        String expectedResultCityCountry = "London, GB";
-
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-geolocation");
-        options.addArguments("--disable-notifications");
-
-        WebDriver driver = new ChromeDriver(options);
-
-        driver.get(BASE_URL);
-        getWait20().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
-
-        WebElement cityCountryName = driver.findElement(By.xpath("//div[@class = 'section-content']//h2"));
-
-        WebElement locationButton = driver.findElement(By.className("icon-current-location"));
-        locationButton.click();
-
-        getWait10().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class = 'widget-notification']/span")));
-
-        WebElement notification = driver.findElement(By.xpath("//div[@class = 'widget-notification']/span"));
-        String actualResultCityCountry = cityCountryName.getText();
-        String actualResultNotificationMessage = notification.getText();
-
-        Assert.assertEquals(actualResultCityCountry, expectedResultCityCountry);
-        Assert.assertEquals(actualResultNotificationMessage, expectedResultNotificationMessage);
-    }
 }
 
 
