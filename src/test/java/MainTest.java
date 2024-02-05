@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import runner.BaseTest;
@@ -13,6 +14,7 @@ import runner.BaseUtils;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -213,7 +215,7 @@ public class MainTest extends BaseTest {
 
         apiMenu.click();
 
-        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageisOpened = false;
         }
 
@@ -236,7 +238,7 @@ public class MainTest extends BaseTest {
 
         dashboardMenu.click();
 
-        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageIsOpen = false;
         }
 
@@ -262,7 +264,7 @@ public class MainTest extends BaseTest {
         String handle = getDriver().getWindowHandles().toArray()[1].toString();
         getDriver().switchTo().window(handle);
 
-        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageIsOpen = false;
         }
 
@@ -285,7 +287,7 @@ public class MainTest extends BaseTest {
 
         pricingMenu.click();
 
-        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageOpen = false;
         }
 
@@ -308,7 +310,7 @@ public class MainTest extends BaseTest {
 
         mapsMenu.click();
 
-        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageIsOpen = false;
         }
 
@@ -331,7 +333,7 @@ public class MainTest extends BaseTest {
 
         ourInitiativesMenu.click();
 
-        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageIsOpen = false;
         }
 
@@ -354,7 +356,7 @@ public class MainTest extends BaseTest {
 
         partnersMenu.click();
 
-        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageIsOpen = false;
         }
 
@@ -380,7 +382,7 @@ public class MainTest extends BaseTest {
         String handle = getDriver().getWindowHandles().toArray()[1].toString();
         getDriver().switchTo().window(handle);
 
-        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageIsOpen = false;
         }
 
@@ -406,7 +408,7 @@ public class MainTest extends BaseTest {
         String handle = getDriver().getWindowHandles().toArray()[1].toString();
         getDriver().switchTo().window(handle);
 
-        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageIsOpen = false;
         }
 
@@ -429,7 +431,7 @@ public class MainTest extends BaseTest {
 
         signInMenu.click();
 
-        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageIsOpen = false;
         }
 
@@ -477,7 +479,7 @@ public class MainTest extends BaseTest {
 
         faqSubmenu.click();
 
-        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageIsOpen = false;
         }
 
@@ -503,7 +505,7 @@ public class MainTest extends BaseTest {
 
         howToStartSubmenu.click();
 
-        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageIsOpen = false;
         }
 
@@ -532,7 +534,7 @@ public class MainTest extends BaseTest {
         String handle = getDriver().getWindowHandles().toArray()[1].toString();
         getDriver().switchTo().window(handle);
 
-        if(getDriver().getCurrentUrl().equals(BASE_URL)) {
+        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageIsOpen = false;
         }
 
@@ -594,20 +596,23 @@ public class MainTest extends BaseTest {
         String expectedResultNotificationMessage = "Location unavailable. Displaying default location: London";
         String expectedResultCityCountry = "London, GB";
 
-        ChromeOptions options = BaseUtils.chromeOptions;
+        ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-geolocation");
+        options.addArguments("--disable-notifications");
 
-        getDriver().get(BASE_URL);
+        WebDriver driver = new ChromeDriver(options);
+
+        driver.get(BASE_URL);
         getWait20().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
-        WebElement cityCountryName = getDriver().findElement(By.xpath("//div[@class = 'section-content']//h2"));
+        WebElement cityCountryName = driver.findElement(By.xpath("//div[@class = 'section-content']//h2"));
 
-        WebElement locationButton = getDriver().findElement(By.className("icon-current-location"));
+        WebElement locationButton = driver.findElement(By.className("icon-current-location"));
         locationButton.click();
 
         getWait10().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class = 'widget-notification']/span")));
 
-        WebElement notification = getDriver().findElement(By.xpath("//div[@class = 'widget-notification']/span"));
+        WebElement notification = driver.findElement(By.xpath("//div[@class = 'widget-notification']/span"));
         String actualResultCityCountry = cityCountryName.getText();
         String actualResultNotificationMessage = notification.getText();
 
@@ -615,3 +620,7 @@ public class MainTest extends BaseTest {
         Assert.assertEquals(actualResultNotificationMessage, expectedResultNotificationMessage);
     }
 }
+
+
+
+
