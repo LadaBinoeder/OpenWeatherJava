@@ -26,6 +26,7 @@ public class MainTestWithoutBeforeTest {
         Map<String, Object> prefs = new HashMap<String, Object>();
         prefs.put("profile.managed_default_content_settings.geolocation", 2);
         options.setExperimentalOption("prefs", prefs);
+        options.addArguments("--window-size=1920,1080", "--headless");
 
         WebDriver driver = new ChromeDriver(options);
 
