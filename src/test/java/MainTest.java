@@ -1,6 +1,9 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -585,5 +588,23 @@ public class MainTest extends BaseTest {
         WebElement sectionContent = getDriver().findElement(By.xpath("//div[@id = 'weather-widget']//div[@class = 'section-content']"));
 
         Assert.assertTrue(sectionContent.isDisplayed());
+    }
+
+    @Test
+    public void testLocationButtonGeoPermitted() {
+
+        String expectedResultCityCountry = "Georgensgmünd, DE";
+
+        getDriver().get(BASE_URL);
+        getWait20();
+
+        WebElement locationButton = getDriver().findElement(By.className("icon-current-location"));
+        locationButton.click();
+
+        WebElement cityCountryName = getDriver().findElement(By.xpath("//div[@class = 'section-content']//h2"));
+
+        String actualResultCityCountry = cityCountryName.getText();
+
+        Assert.assertEquals(actualResultCityCountry, expectedResultCityCountry);
     }
 }
