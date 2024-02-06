@@ -1,7 +1,7 @@
 package runner;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
@@ -9,7 +9,7 @@ import java.time.Duration;
 
 public abstract class BaseTest {
 
-    private WebDriver driver;
+    private ChromeDriver driver;
     private WebDriverWait webDriverWait;
 
     @BeforeMethod
@@ -23,7 +23,7 @@ public abstract class BaseTest {
         webDriverWait = null;
 
     }
-    protected WebDriver getDriver() {
+    protected ChromeDriver getDriver() {
         return driver;
 
     }

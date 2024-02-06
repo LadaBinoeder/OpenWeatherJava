@@ -1,9 +1,6 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -19,14 +16,24 @@ public class MainTest extends BaseTest {
 
     private final static String BASE_URL = "https://openweathermap.org/";
 
+    private void openBaseUrl() {
+        getDriver().get(BASE_URL);
+
+    }
+
+    private void waitTillGreyContainerDisappears() {
+        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+
+    }
+
     @Test
     public void testURLAndTitle() throws IOException {
 
         final String expectedResultURL = "https://openweathermap.org/";
         final String expectedResultTitle = "Сurrent weather and forecast - OpenWeatherMap";
 
-        getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
 
         String actualResultURL = getDriver().getCurrentUrl();
         String actualResultTitle = getDriver().getTitle();
@@ -55,8 +62,8 @@ public class MainTest extends BaseTest {
     @Test
     public void testLogoIsDisplayed() {
 
-        getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
 
         WebElement logo = getDriver().findElement(By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']"));
         boolean logoIsDisplayed = logo.isDisplayed();
@@ -68,7 +75,7 @@ public class MainTest extends BaseTest {
     public void testPlaceholderIsDisplayed() {
 
         getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        waitTillGreyContainerDisappears();
 
         WebElement placeholder = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//input[@name = 'q']"));
         boolean placeholderIsDisplayed = placeholder.isDisplayed();
@@ -81,8 +88,8 @@ public class MainTest extends BaseTest {
 
         final int expectedResultNumber = 12;
 
-        getDriver().get(BASE_URL);
-        getWait20().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
 
         List<WebElement> desktopMenuElements = getDriver().findElements(By.xpath("//li[@id = 'desktop-menu']/ul/li"));
 
@@ -109,8 +116,8 @@ public class MainTest extends BaseTest {
                 "Support"
         );
 
-        getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
 
         List<WebElement> desktopMenuElements = getDriver().findElements(By.xpath("//li[@id = 'desktop-menu']/ul/li"));
         List<String> actualDesktopMenuNames = new ArrayList<>();
@@ -125,11 +132,11 @@ public class MainTest extends BaseTest {
     @Test
     public void testLogoIsClickable() {
 
-        String expectedResultLink = "https://openweathermap.org/";
-        String expectedResultImage = "https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png";
+        final String expectedResultLink = "https://openweathermap.org/";
+        final String expectedResultImage = "https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png";
 
-        getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
 
         WebElement logo = getDriver().findElement(By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']"));
         logo.click();
@@ -150,12 +157,12 @@ public class MainTest extends BaseTest {
     public void testPlaceholderIsClickable() {
 
         final String city = "Rome";
-        String expectedResultLink = "https://openweathermap.org/find";
-        String expectedResultText = "Weather in your city";
-        String expectedResultPage = expectedResultLink + "?q=" + city;
+        final String expectedResultLink = "https://openweathermap.org/find";
+        final String expectedResultText = "Weather in your city";
+        final String expectedResultPage = expectedResultLink + "?q=" + city;
 
-        getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
 
         WebElement placeholderLink = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']/form"));
         WebElement placeholderText = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']/form/input[@type = 'text']"));
@@ -177,10 +184,10 @@ public class MainTest extends BaseTest {
     @Test
     public void testGuideIsClickable() {
 
-        String expectedResultLink = "https://openweathermap.org/guide";
+        final String expectedResultLink = "https://openweathermap.org/guide";
         boolean newPageIsOpened = true;
 
-        getDriver().get(BASE_URL);
+        openBaseUrl();
         getWait20().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
         WebElement guideMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = \"Guide\"]"));
@@ -200,11 +207,11 @@ public class MainTest extends BaseTest {
     @Test
     public void testApiIsClickable() {
 
-        String expectedResultLink = "https://openweathermap.org/api";
+        final String expectedResultLink = "https://openweathermap.org/api";
         boolean newPageisOpened = true;
 
-        getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
 
         WebElement apiMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = \"API\"]"));
 
@@ -223,11 +230,11 @@ public class MainTest extends BaseTest {
     @Test
     public void testDashboardIsClickable() {
 
-        String expectedResultLink = "https://openweathermap.org/weather-dashboard";
+        final String expectedResultLink = "https://openweathermap.org/weather-dashboard";
         boolean newPageIsOpen = true;
 
-        getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
 
         WebElement dashboardMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = \"Dashboard\"]"));
 
@@ -246,11 +253,11 @@ public class MainTest extends BaseTest {
     @Test
     public void testMarketplaceIsClickable() {
 
-        String expectedResultLink = "https://home.openweathermap.org/marketplace";
+        final String expectedResultLink = "https://home.openweathermap.org/marketplace";
         boolean newPageIsOpen = true;
 
-        getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
 
         WebElement marketplaceMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Marketplace']"));
 
@@ -272,11 +279,11 @@ public class MainTest extends BaseTest {
     @Test
     public void testPricingIsClickable() {
 
-        String expectedResultLink = "https://openweathermap.org/price";
+        final String expectedResultLink = "https://openweathermap.org/price";
         boolean newPageOpen = true;
 
-        getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
 
         WebElement pricingMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = \"Pricing\"]"));
 
@@ -295,11 +302,11 @@ public class MainTest extends BaseTest {
     @Test
     public void testMapsIsClickable() {
 
-        String expectedResultLink = "https://openweathermap.org/weathermap";
+        final String expectedResultLink = "https://openweathermap.org/weathermap";
         boolean newPageIsOpen = true;
 
-        getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
 
         WebElement mapsMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = \"Maps\"]"));
 
@@ -318,11 +325,11 @@ public class MainTest extends BaseTest {
     @Test
     public void testOurInitiativesIsClickable() {
 
-        String expectedResultLink = "https://openweathermap.org/our-initiatives";
+        final String expectedResultLink = "https://openweathermap.org/our-initiatives";
         boolean newPageIsOpen = true;
 
-        getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
 
         WebElement ourInitiativesMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Our Initiatives']"));
 
@@ -341,11 +348,11 @@ public class MainTest extends BaseTest {
     @Test
     public void testPartnersIsClickable() {
 
-        String expectedResultLink = "https://openweathermap.org/examples";
+        final String expectedResultLink = "https://openweathermap.org/examples";
         boolean newPageIsOpen = true;
 
-        getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
 
         WebElement partnersMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Partners']"));
 
@@ -364,11 +371,11 @@ public class MainTest extends BaseTest {
     @Test
     public void testBlogIsClickable() {
 
-        String expectedResultLink = "https://openweather.co.uk/blog/category/weather";
+        final String expectedResultLink = "https://openweather.co.uk/blog/category/weather";
         boolean newPageIsOpen = true;
 
-        getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
 
         WebElement blogMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Blog']"));
 
@@ -390,11 +397,11 @@ public class MainTest extends BaseTest {
     @Test
     public void testForBusinessIsClickable() {
 
-        String expectedResultLink = "https://openweather.co.uk/";
+        final String expectedResultLink = "https://openweather.co.uk/";
         boolean newPageIsOpen = true;
 
-        getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
 
         WebElement forBusinessMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = 'For Business']"));
 
@@ -416,11 +423,11 @@ public class MainTest extends BaseTest {
     @Test
     public void testSignInIsClickable() {
 
-        String expectedResultLink = "https://openweathermap.org/home/sign_in";
+        final String expectedResultLink = "https://openweathermap.org/home/sign_in";
         boolean newPageIsOpen = true;
 
-        getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
 
         WebElement signInMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Sign in']"));
 
@@ -439,11 +446,11 @@ public class MainTest extends BaseTest {
     @Test
     public void testSupportIsClickableAndHasThreeSubmenus() {
 
-        String expectedResultClass = "dropdown-menu dropdown-visible";
-        int expectedResultNumberOfSubmenus = 3;
+        final String expectedResultClass = "dropdown-menu dropdown-visible";
+        final int expectedResultNumberOfSubmenus = 3;
 
-        getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
 
         WebElement supportMenu = getDriver().findElement(By.id("support-dropdown"));
         WebElement supportDropdownMenu = getDriver().findElement(By.id("support-dropdown-menu"));
@@ -461,11 +468,11 @@ public class MainTest extends BaseTest {
     @Test
     public void testFaqIsClickable() {
 
-        String expectedResultLink = "https://openweathermap.org/faq";
+        final String expectedResultLink = "https://openweathermap.org/faq";
         boolean newPageIsOpen = true;
 
-        getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
 
         WebElement supportMenu = getDriver().findElement(By.id("support-dropdown"));
         supportMenu.click();
@@ -487,11 +494,11 @@ public class MainTest extends BaseTest {
     @Test
     public void testHowToStartIsClickable() {
 
-        String expectedResultLink = "https://openweathermap.org/appid";
+        final String expectedResultLink = "https://openweathermap.org/appid";
         boolean newPageIsOpen = true;
 
-        getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
 
         WebElement supportMenu = getDriver().findElement(By.id("support-dropdown"));
         supportMenu.click();
@@ -513,11 +520,11 @@ public class MainTest extends BaseTest {
     @Test
     public void testAskAQuestionIsClickable() {
 
-        String expectedResultLink = "https://home.openweathermap.org/questions";
+        final String expectedResultLink = "https://home.openweathermap.org/questions";
         boolean newPageIsOpen = true;
 
-        getDriver().get(BASE_URL);
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
 
         WebElement supportMenu = getDriver().findElement(By.id("support-dropdown"));
         supportMenu.click();
@@ -542,9 +549,9 @@ public class MainTest extends BaseTest {
     @Test
     public void testVerifyHeader() {
 
-        String expectedResultHeader = "OpenWeather";
+        final String expectedResultHeader = "OpenWeather";
 
-        getDriver().get(BASE_URL);
+        openBaseUrl();
 
         WebElement header = getDriver().findElement(By.xpath("//div[@class = 'mobile-padding main-page']/h1/span"));
 
@@ -556,9 +563,9 @@ public class MainTest extends BaseTest {
     @Test
     public void testVerifySubtitle() {
 
-        String expectedResultSurtitle = "Weather forecasts, nowcasts and history in a fast and elegant way";
+        final String expectedResultSurtitle = "Weather forecasts, nowcasts and history in a fast and elegant way";
 
-        getDriver().get(BASE_URL);
+        openBaseUrl();
 
         WebElement header = getDriver().findElement(By.xpath("//div[@class = 'mobile-padding main-page']/h2/span"));
 
@@ -570,7 +577,7 @@ public class MainTest extends BaseTest {
     @Test
     public void testVerifyGreyContainerIsDisplayed() {
 
-        getDriver().get(BASE_URL);
+        openBaseUrl();
 
         WebElement greyContainer = getDriver().findElement(By.xpath("//div[@id = 'weather-widget']//div[@class = 'page-container']"));
 
@@ -580,7 +587,7 @@ public class MainTest extends BaseTest {
     @Test
     public void testVerifySectionContentIsDisplayed() {
 
-        getDriver().get(BASE_URL);
+        openBaseUrl();
 
         WebElement sectionContent = getDriver().findElement(By.xpath("//div[@id = 'weather-widget']//div[@class = 'section-content']"));
 
