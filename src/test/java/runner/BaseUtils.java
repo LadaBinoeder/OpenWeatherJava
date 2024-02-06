@@ -59,8 +59,8 @@ public final class BaseUtils {
         return System.getenv("CI_RUN") != null;
     }
 
-    static WebDriver createDriver() {
-        WebDriver driver = new ChromeDriver(chromeOptions);
+    static ChromeDriver createDriver() {
+        ChromeDriver driver = new ChromeDriver(chromeOptions);
         return driver;
 
     }
