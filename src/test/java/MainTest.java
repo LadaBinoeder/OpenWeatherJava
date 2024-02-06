@@ -351,7 +351,7 @@ public class MainTest extends BaseTest {
         final String expectedResultLink = "https://openweathermap.org/examples";
         boolean newPageIsOpen = true;
 
-        gopenBaseUrl();
+        openBaseUrl();
         waitTillGreyContainerDisappears();
 
         WebElement partnersMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Partners']"));
