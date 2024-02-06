@@ -1,6 +1,7 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -15,7 +16,29 @@ import java.util.List;
 public class MainTest extends BaseTest {
 
     private final static String BASE_URL = "https://openweathermap.org/";
-
+    private final By LOGO = By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']");
+    private final By LOGO_LINK = By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']/a");
+    private final By LOGO_IMAGE = By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']/a/img");
+    private final By PLACEHOLDER_LINK = By.xpath("//li[@id = 'desktop-menu']/form");
+    private final By PLACEHOLDER_TEXT = By.xpath("//li[@id = 'desktop-menu']/form/input[@type = 'text']");
+    private final By GUIDE_MENU = By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Guide']");
+    private final By API_MENU = By.xpath("//li[@id = 'desktop-menu']//a[text() = 'API']");
+    private final By DASHBOARD_MENU = By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Dashboard']");
+    private final By MARKETPLACE_MENU = By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Marketplace']");
+    private final By PRICING_MENU = By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Pricing']");
+    private final By OUR_INITIATIVES_MENU = By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Our Initiatives']");
+    private final By MAPS_MENU = By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Maps']");
+    private final By PARTNERS_MENU = By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Partners']");
+    private final By BLOG_MENU = By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Blog']");
+    private final By FOR_BUSINESS_MENU = By.xpath("//li[@id = 'desktop-menu']//a[text() = 'For Business']");
+    private final By SIGN_IN_MENU = By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Sign in']");
+    private final By SUPPORT_MENU = By.id("support-dropdown");
+    private final By SUPPORT_DROPDOWN_MENU = By.id("support-dropdown-menu");
+    private final By FAQ_SUBMENU = By.linkText("FAQ");
+    private final By HOW_TO_START_SUBMENU = By.linkText("How to start");
+    private final By ASK_A_QUESTION_SUBMENU = By.linkText("Ask a question");
+    private final By HEADER = By.xpath("//div[@class = 'mobile-padding main-page']/h1/span");
+    private final By SUBTITLE = By.xpath("//div[@class = 'mobile-padding main-page']/h2/span");
     private void openBaseUrl() {
         getDriver().get(BASE_URL);
 
@@ -24,6 +47,26 @@ public class MainTest extends BaseTest {
     private void waitTillGreyContainerDisappears() {
         getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
+    }
+
+    private String getAttribute(By by, String attribute, ChromeDriver driver) {
+
+        return driver.findElement(by).getAttribute(attribute);
+    }
+    private String getText(By by, ChromeDriver driver) {
+        return driver.findElement(by).getText();
+
+    }
+
+    private void clickElement(By by, ChromeDriver driver) {
+        driver.findElement(by).click();
+
+    }
+
+    private void enterValue(By by, String value, ChromeDriver driver) {
+
+        driver.findElement(by).sendKeys(value);
+        driver.findElement(by).sendKeys(Keys.ENTER);
     }
 
     @Test
@@ -137,16 +180,11 @@ public class MainTest extends BaseTest {
 
         openBaseUrl();
         waitTillGreyContainerDisappears();
-
-        WebElement logo = getDriver().findElement(By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']"));
-        logo.click();
-
-        WebElement logoLink = getDriver().findElement(By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']/a"));
-        WebElement logoImage = getDriver().findElement(By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']/a/img"));
+        clickElement(LOGO, getDriver());
 
         String actualResultURL = getDriver().getCurrentUrl();
-        String actualResultHref = logoLink.getAttribute("href");
-        String actualResultImage = logoImage.getAttribute("src");
+        String actualResultHref = getAttribute(LOGO_LINK, "href", getDriver());
+        String actualResultImage = getAttribute(LOGO_IMAGE, "src", getDriver());
 
         Assert.assertEquals(actualResultURL, BASE_URL);
         Assert.assertEquals(actualResultHref, expectedResultLink);
@@ -164,15 +202,11 @@ public class MainTest extends BaseTest {
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        WebElement placeholderLink = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']/form"));
-        WebElement placeholderText = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']/form/input[@type = 'text']"));
+        String actualResultLink = getAttribute(PLACEHOLDER_LINK,"action", getDriver());
+        String actualResultText = getAttribute(PLACEHOLDER_TEXT, "placeholder", getDriver());
 
-        String actualResultLink = placeholderLink.getAttribute("action");
-        String actualResultText = placeholderText.getAttribute("placeholder");
-
-        placeholderLink.click();
-        placeholderText.sendKeys(city);
-        placeholderText.sendKeys(Keys.ENTER);
+        clickElement(PLACEHOLDER_LINK, getDriver());
+        enterValue(PLACEHOLDER_TEXT, city, getDriver());
 
         String actualResultPage = getDriver().getCurrentUrl();
 
@@ -188,13 +222,11 @@ public class MainTest extends BaseTest {
         boolean newPageIsOpened = true;
 
         openBaseUrl();
-        getWait20().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        waitTillGreyContainerDisappears();
 
-        WebElement guideMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = \"Guide\"]"));
+        String actualResultLink = getAttribute(GUIDE_MENU, "href", getDriver());
 
-        String actualResultLink = guideMenu.getAttribute("href");
-
-        guideMenu.click();
+        clickElement(GUIDE_MENU, getDriver());
 
         if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageIsOpened = false;
@@ -213,11 +245,9 @@ public class MainTest extends BaseTest {
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        WebElement apiMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = \"API\"]"));
+        String actualResultLink = getAttribute(API_MENU, "href", getDriver());
 
-        String actualResultLink = apiMenu.getAttribute("href");
-
-        apiMenu.click();
+        clickElement(API_MENU, getDriver());
 
         if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageisOpened = false;
@@ -236,11 +266,9 @@ public class MainTest extends BaseTest {
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        WebElement dashboardMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = \"Dashboard\"]"));
+        String actualResultLink = getAttribute(DASHBOARD_MENU, "href", getDriver());
 
-        String actualResultLink = dashboardMenu.getAttribute("href");
-
-        dashboardMenu.click();
+        clickElement(DASHBOARD_MENU, getDriver());
 
         if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageIsOpen = false;
@@ -259,11 +287,9 @@ public class MainTest extends BaseTest {
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        WebElement marketplaceMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Marketplace']"));
+        String actualResultLink = getAttribute(MARKETPLACE_MENU, "href", getDriver());
 
-        String actualResultLink = marketplaceMenu.getAttribute("href");
-
-        marketplaceMenu.click();
+        clickElement(MARKETPLACE_MENU, getDriver());
 
         String handle = getDriver().getWindowHandles().toArray()[1].toString();
         getDriver().switchTo().window(handle);
@@ -285,11 +311,9 @@ public class MainTest extends BaseTest {
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        WebElement pricingMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = \"Pricing\"]"));
+        String actualResultLink = getAttribute(PRICING_MENU, "href", getDriver());
 
-        String actualResultLink = pricingMenu.getAttribute("href");
-
-        pricingMenu.click();
+        clickElement(PRICING_MENU, getDriver());
 
         if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageOpen = false;
@@ -308,11 +332,9 @@ public class MainTest extends BaseTest {
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        WebElement mapsMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = \"Maps\"]"));
+        String actualResultLink = getAttribute(MAPS_MENU, "href", getDriver());
 
-        String actualResultLink = mapsMenu.getAttribute("href");
-
-        mapsMenu.click();
+        clickElement(MAPS_MENU, getDriver());
 
         if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageIsOpen = false;
@@ -331,11 +353,9 @@ public class MainTest extends BaseTest {
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        WebElement ourInitiativesMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Our Initiatives']"));
+        String actualResultLink = getAttribute(OUR_INITIATIVES_MENU, "href", getDriver());
 
-        String actualResultLink = ourInitiativesMenu.getAttribute("href");
-
-        ourInitiativesMenu.click();
+        clickElement(OUR_INITIATIVES_MENU, getDriver());
 
         if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageIsOpen = false;
@@ -354,11 +374,9 @@ public class MainTest extends BaseTest {
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        WebElement partnersMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Partners']"));
+        String actualResultLink = getAttribute(PARTNERS_MENU, "href", getDriver());
 
-        String actualResultLink = partnersMenu.getAttribute("href");
-
-        partnersMenu.click();
+        clickElement(PARTNERS_MENU, getDriver());
 
         if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageIsOpen = false;
@@ -377,11 +395,9 @@ public class MainTest extends BaseTest {
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        WebElement blogMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Blog']"));
+        String actualResultLink = getAttribute(BLOG_MENU, "href", getDriver());
 
-        String actualResultLink = blogMenu.getAttribute("href");
-
-        blogMenu.click();
+        clickElement(BLOG_MENU, getDriver());
 
         String handle = getDriver().getWindowHandles().toArray()[1].toString();
         getDriver().switchTo().window(handle);
@@ -403,11 +419,9 @@ public class MainTest extends BaseTest {
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        WebElement forBusinessMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = 'For Business']"));
+        String actualResultLink = getAttribute(FOR_BUSINESS_MENU, "href", getDriver());
 
-        String actualResultLink = forBusinessMenu.getAttribute("href");
-
-        forBusinessMenu.click();
+        clickElement(FOR_BUSINESS_MENU, getDriver());
 
         String handle = getDriver().getWindowHandles().toArray()[1].toString();
         getDriver().switchTo().window(handle);
@@ -429,11 +443,9 @@ public class MainTest extends BaseTest {
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        WebElement signInMenu = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Sign in']"));
+        String actualResultLink = getAttribute(SIGN_IN_MENU, "href", getDriver());
 
-        String actualResultLink = signInMenu.getAttribute("href");
-
-        signInMenu.click();
+        clickElement(SIGN_IN_MENU, getDriver());
 
         if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageIsOpen = false;
@@ -452,13 +464,12 @@ public class MainTest extends BaseTest {
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        WebElement supportMenu = getDriver().findElement(By.id("support-dropdown"));
-        WebElement supportDropdownMenu = getDriver().findElement(By.id("support-dropdown-menu"));
-        supportMenu.click();
+        clickElement(SUPPORT_MENU, getDriver());
 
         List<WebElement> submenus = getDriver().findElements(By.xpath("//ul[@class = \"dropdown-menu dropdown-visible\"]/li"));
 
-        String actualResultClass = supportDropdownMenu.getAttribute("class");
+        String actualResultClass = getAttribute(SUPPORT_DROPDOWN_MENU, "class", getDriver());
+
         int actualResultNumberOfSubmenus = submenus.size();
 
         Assert.assertEquals(actualResultClass, expectedResultClass);
@@ -474,14 +485,11 @@ public class MainTest extends BaseTest {
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        WebElement supportMenu = getDriver().findElement(By.id("support-dropdown"));
-        supportMenu.click();
+        clickElement(SUPPORT_MENU, getDriver());
 
-        WebElement faqSubmenu = getDriver().findElement(By.linkText("FAQ"));
+        String actualResultLink = getAttribute(FAQ_SUBMENU, "href", getDriver());
 
-        String actualResultLink = faqSubmenu.getAttribute("href");
-
-        faqSubmenu.click();
+        clickElement(FAQ_SUBMENU, getDriver());
 
         if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageIsOpen = false;
@@ -500,14 +508,11 @@ public class MainTest extends BaseTest {
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        WebElement supportMenu = getDriver().findElement(By.id("support-dropdown"));
-        supportMenu.click();
+        clickElement(SUPPORT_MENU, getDriver());
 
-        WebElement howToStartSubmenu = getDriver().findElement(By.linkText("How to start"));
+        String actualResultLink = getAttribute(HOW_TO_START_SUBMENU, "href", getDriver());
 
-        String actualResultLink = howToStartSubmenu.getAttribute("href");
-
-        howToStartSubmenu.click();
+        clickElement(HOW_TO_START_SUBMENU, getDriver());
 
         if (getDriver().getCurrentUrl().equals(BASE_URL)) {
             newPageIsOpen = false;
@@ -526,14 +531,11 @@ public class MainTest extends BaseTest {
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        WebElement supportMenu = getDriver().findElement(By.id("support-dropdown"));
-        supportMenu.click();
+        clickElement(SUPPORT_MENU, getDriver());
 
-        WebElement askAQuestionSubmenu = getDriver().findElement(By.linkText("Ask a question"));
+        String actualResultLink = getAttribute(ASK_A_QUESTION_SUBMENU, "href", getDriver());
 
-        String actualResultLink = askAQuestionSubmenu.getAttribute("href");
-
-        askAQuestionSubmenu.click();
+        clickElement(ASK_A_QUESTION_SUBMENU, getDriver());
 
         String handle = getDriver().getWindowHandles().toArray()[1].toString();
         getDriver().switchTo().window(handle);
@@ -553,9 +555,7 @@ public class MainTest extends BaseTest {
 
         openBaseUrl();
 
-        WebElement header = getDriver().findElement(By.xpath("//div[@class = 'mobile-padding main-page']/h1/span"));
-
-        String actualResultHeader = header.getText();
+        String actualResultHeader = getText(HEADER, getDriver());
 
         Assert.assertEquals(actualResultHeader, expectedResultHeader);
     }
@@ -563,15 +563,13 @@ public class MainTest extends BaseTest {
     @Test
     public void testVerifySubtitle() {
 
-        final String expectedResultSurtitle = "Weather forecasts, nowcasts and history in a fast and elegant way";
+        final String expectedResultSubtitle = "Weather forecasts, nowcasts and history in a fast and elegant way";
 
         openBaseUrl();
 
-        WebElement header = getDriver().findElement(By.xpath("//div[@class = 'mobile-padding main-page']/h2/span"));
+        String actualResultSubtitle = getText(SUBTITLE, getDriver());
 
-        String actualResultSubtitle = header.getText();
-
-        Assert.assertEquals(actualResultSubtitle, expectedResultSurtitle);
+        Assert.assertEquals(actualResultSubtitle, expectedResultSubtitle);
     }
 
     @Test
