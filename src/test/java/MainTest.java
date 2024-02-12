@@ -1,5 +1,6 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -40,6 +41,9 @@ public class MainTest extends BaseTest {
     private final By HEADER = By.xpath("//div[@class = 'mobile-padding main-page banner-content main-website']/h1/span");
     private final By SUBTITLE = By.xpath("//div[@class = 'mobile-padding main-page banner-content main-website']/h2/span");
     private final By PLACEHOLDER = By.xpath("//li[@id = 'desktop-menu']//input[@name = 'q']");
+    private final By DIFFERENT_WEATHER_BUTTON = By.xpath("//span[@class = 'control-el owm-switch']");
+    private final By DIFFERENT_WEATHER_POPUP = By.className("pop-up-container");
+    private final By CLOSE_ICON_DIFFERENT_WEATHER_POPUP = By.xpath("//div[@class = 'pop-up-container']/*[local-name() = 'svg']");
     private void openBaseUrl() {
         getDriver().get(BASE_URL);
 
@@ -56,24 +60,34 @@ public class MainTest extends BaseTest {
         return driver.findElement(by).getText();
 
     }
-
     private void clickElement(By by) {
         getWait5().until(ExpectedConditions.visibilityOfElementLocated(by));
         getWait5().until(ExpectedConditions.elementToBeClickable(by)).click();
 
     }
-
     private void enterValue(By by, String value, ChromeDriver driver) {
 
         driver.findElement(by).sendKeys(value);
         driver.findElement(by).sendKeys(Keys.ENTER);
     }
-    private boolean isDisplayed(By by, ChromeDriver driver) {
+    private boolean elementIsDisplayed(By by, ChromeDriver driver) {
 
         boolean isDisplayed = driver.findElement(by).isDisplayed();
         return isDisplayed;
 
     }
+
+    private boolean elementIsNotDisplayed(By by, ChromeDriver driver) {
+        try {
+            driver.findElement(by);
+            return true;
+
+        } catch (NoSuchElementException e) {
+            return false;
+
+        }
+    }
+
     private boolean verifyNewPageOpen(ChromeDriver driver) {
         boolean newPageIsOpened = true;
         if (getDriver().getCurrentUrl().equals(BASE_URL)) {
@@ -83,7 +97,6 @@ public class MainTest extends BaseTest {
         return newPageIsOpened;
 
     }
-
     private void switchToSecondWindow(ChromeDriver driver) {
         String handle = getDriver().getWindowHandles().toArray()[1].toString();
         getDriver().switchTo().window(handle);
@@ -129,7 +142,7 @@ public class MainTest extends BaseTest {
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        boolean logoIsDisplayed = isDisplayed(LOGO, getDriver());
+        boolean logoIsDisplayed = elementIsDisplayed(LOGO, getDriver());
 
         Assert.assertTrue(logoIsDisplayed);
     }
@@ -140,7 +153,7 @@ public class MainTest extends BaseTest {
         getDriver().get(BASE_URL);
         waitTillGreyContainerDisappears();
 
-        boolean placeholderIsDisplayed = isDisplayed(PLACEHOLDER, getDriver());
+        boolean placeholderIsDisplayed = elementIsDisplayed(PLACEHOLDER, getDriver());
 
         Assert.assertTrue(placeholderIsDisplayed);
     }
@@ -559,6 +572,24 @@ public class MainTest extends BaseTest {
         WebElement sectionContent = getDriver().findElement(By.xpath("//div[@id = 'weather-widget']//div[@class = 'section-content']"));
 
         Assert.assertTrue(sectionContent.isDisplayed());
+    }
+
+    @Test
+    public void testDifferentWeatherPopupOpensAndCloses() throws NoSuchElementException {
+
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
+        clickElement(DIFFERENT_WEATHER_BUTTON);
+
+        boolean isVisible = elementIsDisplayed(DIFFERENT_WEATHER_POPUP, getDriver());
+
+        clickElement(CLOSE_ICON_DIFFERENT_WEATHER_POPUP);
+        getWait5().until(ExpectedConditions.invisibilityOfElementLocated(DIFFERENT_WEATHER_POPUP));
+
+        boolean isNotVisible = elementIsNotDisplayed(DIFFERENT_WEATHER_POPUP, getDriver());
+
+        Assert.assertTrue(isVisible);
+        Assert.assertFalse(isNotVisible);
     }
 }
 
