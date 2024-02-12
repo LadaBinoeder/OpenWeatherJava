@@ -37,18 +37,17 @@ public class MainTest extends BaseTest {
     private final By FAQ_SUBMENU = By.linkText("FAQ");
     private final By HOW_TO_START_SUBMENU = By.linkText("How to start");
     private final By ASK_A_QUESTION_SUBMENU = By.linkText("Ask a question");
-    private final By HEADER = By.xpath("//div[@class = 'mobile-padding main-page']/h1/span");
-    private final By SUBTITLE = By.xpath("//div[@class = 'mobile-padding main-page']/h2/span");
+    private final By HEADER = By.xpath("//div[@class = 'mobile-padding main-page banner-content main-website']/h1/span");
+    private final By SUBTITLE = By.xpath("//div[@class = 'mobile-padding main-page banner-content main-website']/h2/span");
+    private final By PLACEHOLDER = By.xpath("//li[@id = 'desktop-menu']//input[@name = 'q']");
     private void openBaseUrl() {
         getDriver().get(BASE_URL);
 
     }
-
     private void waitTillGreyContainerDisappears() {
         getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
     }
-
     private String getAttribute(By by, String attribute, ChromeDriver driver) {
 
         return driver.findElement(by).getAttribute(attribute);
@@ -58,8 +57,9 @@ public class MainTest extends BaseTest {
 
     }
 
-    private void clickElement(By by, ChromeDriver driver) {
-        driver.findElement(by).click();
+    private void clickElement(By by) {
+        getWait5().until(ExpectedConditions.visibilityOfElementLocated(by));
+        getWait5().until(ExpectedConditions.elementToBeClickable(by)).click();
 
     }
 
@@ -67,6 +67,27 @@ public class MainTest extends BaseTest {
 
         driver.findElement(by).sendKeys(value);
         driver.findElement(by).sendKeys(Keys.ENTER);
+    }
+    private boolean isDisplayed(By by, ChromeDriver driver) {
+
+        boolean isDisplayed = driver.findElement(by).isDisplayed();
+        return isDisplayed;
+
+    }
+    private boolean verifyNewPageOpen(ChromeDriver driver) {
+        boolean newPageIsOpened = true;
+        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
+            newPageIsOpened = false;
+
+        }
+        return newPageIsOpened;
+
+    }
+
+    private void switchToSecondWindow(ChromeDriver driver) {
+        String handle = getDriver().getWindowHandles().toArray()[1].toString();
+        getDriver().switchTo().window(handle);
+
     }
 
     @Test
@@ -108,8 +129,7 @@ public class MainTest extends BaseTest {
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        WebElement logo = getDriver().findElement(By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']"));
-        boolean logoIsDisplayed = logo.isDisplayed();
+        boolean logoIsDisplayed = isDisplayed(LOGO, getDriver());
 
         Assert.assertTrue(logoIsDisplayed);
     }
@@ -120,8 +140,7 @@ public class MainTest extends BaseTest {
         getDriver().get(BASE_URL);
         waitTillGreyContainerDisappears();
 
-        WebElement placeholder = getDriver().findElement(By.xpath("//li[@id = 'desktop-menu']//input[@name = 'q']"));
-        boolean placeholderIsDisplayed = placeholder.isDisplayed();
+        boolean placeholderIsDisplayed = isDisplayed(PLACEHOLDER, getDriver());
 
         Assert.assertTrue(placeholderIsDisplayed);
     }
@@ -180,7 +199,7 @@ public class MainTest extends BaseTest {
 
         openBaseUrl();
         waitTillGreyContainerDisappears();
-        clickElement(LOGO, getDriver());
+        clickElement(LOGO);
 
         String actualResultURL = getDriver().getCurrentUrl();
         String actualResultHref = getAttribute(LOGO_LINK, "href", getDriver());
@@ -205,7 +224,7 @@ public class MainTest extends BaseTest {
         String actualResultLink = getAttribute(PLACEHOLDER_LINK,"action", getDriver());
         String actualResultText = getAttribute(PLACEHOLDER_TEXT, "placeholder", getDriver());
 
-        clickElement(PLACEHOLDER_LINK, getDriver());
+        clickElement(PLACEHOLDER_LINK);
         enterValue(PLACEHOLDER_TEXT, city, getDriver());
 
         String actualResultPage = getDriver().getCurrentUrl();
@@ -219,18 +238,15 @@ public class MainTest extends BaseTest {
     public void testGuideIsClickable() {
 
         final String expectedResultLink = "https://openweathermap.org/guide";
-        boolean newPageIsOpened = true;
 
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
         String actualResultLink = getAttribute(GUIDE_MENU, "href", getDriver());
 
-        clickElement(GUIDE_MENU, getDriver());
+        clickElement(GUIDE_MENU);
 
-        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
-            newPageIsOpened = false;
-        }
+        boolean newPageIsOpened = verifyNewPageOpen(getDriver());
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpened);
@@ -240,39 +256,33 @@ public class MainTest extends BaseTest {
     public void testApiIsClickable() {
 
         final String expectedResultLink = "https://openweathermap.org/api";
-        boolean newPageisOpened = true;
 
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
         String actualResultLink = getAttribute(API_MENU, "href", getDriver());
 
-        clickElement(API_MENU, getDriver());
+        clickElement(API_MENU);
 
-        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
-            newPageisOpened = false;
-        }
+        boolean newPageIsOpened = verifyNewPageOpen(getDriver());
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
-        Assert.assertTrue(newPageisOpened);
+        Assert.assertTrue(newPageIsOpened);
     }
 
     @Test
     public void testDashboardIsClickable() {
 
         final String expectedResultLink = "https://openweathermap.org/weather-dashboard";
-        boolean newPageIsOpen = true;
 
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
         String actualResultLink = getAttribute(DASHBOARD_MENU, "href", getDriver());
 
-        clickElement(DASHBOARD_MENU, getDriver());
+        clickElement(DASHBOARD_MENU);
 
-        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
-            newPageIsOpen = false;
-        }
+        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -282,21 +292,16 @@ public class MainTest extends BaseTest {
     public void testMarketplaceIsClickable() {
 
         final String expectedResultLink = "https://home.openweathermap.org/marketplace";
-        boolean newPageIsOpen = true;
 
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
         String actualResultLink = getAttribute(MARKETPLACE_MENU, "href", getDriver());
 
-        clickElement(MARKETPLACE_MENU, getDriver());
+        clickElement(MARKETPLACE_MENU);
+        switchToSecondWindow(getDriver());
 
-        String handle = getDriver().getWindowHandles().toArray()[1].toString();
-        getDriver().switchTo().window(handle);
-
-        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
-            newPageIsOpen = false;
-        }
+        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -306,39 +311,33 @@ public class MainTest extends BaseTest {
     public void testPricingIsClickable() {
 
         final String expectedResultLink = "https://openweathermap.org/price";
-        boolean newPageOpen = true;
 
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
         String actualResultLink = getAttribute(PRICING_MENU, "href", getDriver());
 
-        clickElement(PRICING_MENU, getDriver());
+        clickElement(PRICING_MENU);
 
-        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
-            newPageOpen = false;
-        }
+        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
-        Assert.assertTrue(newPageOpen);
+        Assert.assertTrue(newPageIsOpen);
     }
 
     @Test
     public void testMapsIsClickable() {
 
         final String expectedResultLink = "https://openweathermap.org/weathermap";
-        boolean newPageIsOpen = true;
 
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
         String actualResultLink = getAttribute(MAPS_MENU, "href", getDriver());
 
-        clickElement(MAPS_MENU, getDriver());
+        clickElement(MAPS_MENU);
 
-        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
-            newPageIsOpen = false;
-        }
+        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -348,18 +347,15 @@ public class MainTest extends BaseTest {
     public void testOurInitiativesIsClickable() {
 
         final String expectedResultLink = "https://openweathermap.org/our-initiatives";
-        boolean newPageIsOpen = true;
 
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
         String actualResultLink = getAttribute(OUR_INITIATIVES_MENU, "href", getDriver());
 
-        clickElement(OUR_INITIATIVES_MENU, getDriver());
+        clickElement(OUR_INITIATIVES_MENU);
 
-        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
-            newPageIsOpen = false;
-        }
+        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -369,18 +365,15 @@ public class MainTest extends BaseTest {
     public void testPartnersIsClickable() {
 
         final String expectedResultLink = "https://openweathermap.org/examples";
-        boolean newPageIsOpen = true;
 
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
         String actualResultLink = getAttribute(PARTNERS_MENU, "href", getDriver());
 
-        clickElement(PARTNERS_MENU, getDriver());
+        clickElement(PARTNERS_MENU);
 
-        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
-            newPageIsOpen = false;
-        }
+        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -390,21 +383,16 @@ public class MainTest extends BaseTest {
     public void testBlogIsClickable() {
 
         final String expectedResultLink = "https://openweather.co.uk/blog/category/weather";
-        boolean newPageIsOpen = true;
 
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
         String actualResultLink = getAttribute(BLOG_MENU, "href", getDriver());
 
-        clickElement(BLOG_MENU, getDriver());
+        clickElement(BLOG_MENU);
+        switchToSecondWindow(getDriver());
 
-        String handle = getDriver().getWindowHandles().toArray()[1].toString();
-        getDriver().switchTo().window(handle);
-
-        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
-            newPageIsOpen = false;
-        }
+        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -414,21 +402,16 @@ public class MainTest extends BaseTest {
     public void testForBusinessIsClickable() {
 
         final String expectedResultLink = "https://openweather.co.uk/";
-        boolean newPageIsOpen = true;
 
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
         String actualResultLink = getAttribute(FOR_BUSINESS_MENU, "href", getDriver());
 
-        clickElement(FOR_BUSINESS_MENU, getDriver());
+        clickElement(FOR_BUSINESS_MENU);
+        switchToSecondWindow(getDriver());
 
-        String handle = getDriver().getWindowHandles().toArray()[1].toString();
-        getDriver().switchTo().window(handle);
-
-        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
-            newPageIsOpen = false;
-        }
+        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -438,18 +421,15 @@ public class MainTest extends BaseTest {
     public void testSignInIsClickable() {
 
         final String expectedResultLink = "https://openweathermap.org/home/sign_in";
-        boolean newPageIsOpen = true;
 
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
         String actualResultLink = getAttribute(SIGN_IN_MENU, "href", getDriver());
 
-        clickElement(SIGN_IN_MENU, getDriver());
+        clickElement(SIGN_IN_MENU);
 
-        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
-            newPageIsOpen = false;
-        }
+        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -464,7 +444,7 @@ public class MainTest extends BaseTest {
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        clickElement(SUPPORT_MENU, getDriver());
+        clickElement(SUPPORT_MENU);
 
         List<WebElement> submenus = getDriver().findElements(By.xpath("//ul[@class = \"dropdown-menu dropdown-visible\"]/li"));
 
@@ -480,20 +460,17 @@ public class MainTest extends BaseTest {
     public void testFaqIsClickable() {
 
         final String expectedResultLink = "https://openweathermap.org/faq";
-        boolean newPageIsOpen = true;
 
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        clickElement(SUPPORT_MENU, getDriver());
+        clickElement(SUPPORT_MENU);
 
         String actualResultLink = getAttribute(FAQ_SUBMENU, "href", getDriver());
 
-        clickElement(FAQ_SUBMENU, getDriver());
+        clickElement(FAQ_SUBMENU);
 
-        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
-            newPageIsOpen = false;
-        }
+        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -503,20 +480,17 @@ public class MainTest extends BaseTest {
     public void testHowToStartIsClickable() {
 
         final String expectedResultLink = "https://openweathermap.org/appid";
-        boolean newPageIsOpen = true;
 
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        clickElement(SUPPORT_MENU, getDriver());
+        clickElement(SUPPORT_MENU);
 
         String actualResultLink = getAttribute(HOW_TO_START_SUBMENU, "href", getDriver());
 
-        clickElement(HOW_TO_START_SUBMENU, getDriver());
+        clickElement(HOW_TO_START_SUBMENU);
 
-        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
-            newPageIsOpen = false;
-        }
+        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -526,23 +500,18 @@ public class MainTest extends BaseTest {
     public void testAskAQuestionIsClickable() {
 
         final String expectedResultLink = "https://home.openweathermap.org/questions";
-        boolean newPageIsOpen = true;
 
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        clickElement(SUPPORT_MENU, getDriver());
+        clickElement(SUPPORT_MENU);
 
         String actualResultLink = getAttribute(ASK_A_QUESTION_SUBMENU, "href", getDriver());
 
-        clickElement(ASK_A_QUESTION_SUBMENU, getDriver());
+        clickElement(ASK_A_QUESTION_SUBMENU);
+        switchToSecondWindow(getDriver());
 
-        String handle = getDriver().getWindowHandles().toArray()[1].toString();
-        getDriver().switchTo().window(handle);
-
-        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
-            newPageIsOpen = false;
-        }
+        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
