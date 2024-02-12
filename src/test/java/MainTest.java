@@ -37,8 +37,8 @@ public class MainTest extends BaseTest {
     private final By FAQ_SUBMENU = By.linkText("FAQ");
     private final By HOW_TO_START_SUBMENU = By.linkText("How to start");
     private final By ASK_A_QUESTION_SUBMENU = By.linkText("Ask a question");
-    private final By HEADER = By.xpath("//div[@class = 'mobile-padding main-page']/h1/span");
-    private final By SUBTITLE = By.xpath("//div[@class = 'mobile-padding main-page']/h2/span");
+    private final By HEADER = By.xpath("//div[@class = 'mobile-padding main-page banner-content main-website']/h1/span");
+    private final By SUBTITLE = By.xpath("//div[@class = 'mobile-padding main-page banner-content main-website']/h2/span");
     private final By PLACEHOLDER = By.xpath("//li[@id = 'desktop-menu']//input[@name = 'q']");
     private void openBaseUrl() {
         getDriver().get(BASE_URL);
