@@ -670,6 +670,27 @@ public class MainTest extends BaseTest {
         Assert.assertEquals(actualResultCelsiusSelected, expectedResultCelsiusSelected);
         Assert.assertEquals(actualResultFahrenheitSelected, expectedResultFahrenheitSelected);
     }
+
+    @Test
+    public void testUnitsSwitcherChangesCurrentWeather() {
+
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
+
+        boolean unitsDisplayedInCelsius = verifyNeededUnitsDisplayed(CURRENT_TEMPERATURE, "C", getDriver());
+        int valueDisplayedInCelsius = getTemperatureFigureFromText(CURRENT_TEMPERATURE);
+
+        clickElement(FAHRENHEIT_UNIT);
+        waitTillTextChanges(CURRENT_TEMPERATURE, String.valueOf(valueDisplayedInCelsius));
+
+        boolean unitsDisplayedInFahrenheit = verifyNeededUnitsDisplayed(CURRENT_TEMPERATURE, "F", getDriver());
+        int valueDisplayedInFahrenheit = getTemperatureFigureFromText(CURRENT_TEMPERATURE);
+        boolean temperatureHasChanged = celsiusToFahrenheitConvertingCorresponds(valueDisplayedInCelsius, valueDisplayedInFahrenheit);
+
+        Assert.assertTrue(unitsDisplayedInCelsius);
+        Assert.assertTrue(unitsDisplayedInFahrenheit);
+        Assert.assertTrue(temperatureHasChanged);
+    }
 }
 
 
