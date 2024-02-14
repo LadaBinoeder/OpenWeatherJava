@@ -691,6 +691,25 @@ public class MainTest extends BaseTest {
         Assert.assertTrue(unitsDisplayedInFahrenheit);
         Assert.assertTrue(temperatureHasChanged);
     }
+
+    @Test
+    public void testUnitsSwitcherChangesEightDayForecast() {
+
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
+
+        List<WebElement> eightDayForecast = getDriver().findElements(By.xpath("//div[@class = 'day-list-values']/div/span"));
+
+        boolean unitsDisplayedInCelsius = verifyArrayContainsNeededUnits(eightDayForecast, "C");
+
+        clickElement(FAHRENHEIT_UNIT);
+
+        boolean unitsDisplayedInFahrenheit = verifyArrayContainsNeededUnits(eightDayForecast, "F");;
+
+        Assert.assertTrue(unitsDisplayedInCelsius);
+        Assert.assertTrue(unitsDisplayedInFahrenheit);
+    }
+
 }
 
 
