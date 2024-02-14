@@ -1,3 +1,4 @@
+import org.bouncycastle.tsp.TSPUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
@@ -44,12 +45,20 @@ public class MainTest extends BaseTest {
     private final By DIFFERENT_WEATHER_BUTTON = By.xpath("//span[@class = 'control-el owm-switch']");
     private final By DIFFERENT_WEATHER_POPUP = By.className("pop-up-container");
     private final By CLOSE_ICON_DIFFERENT_WEATHER_POPUP = By.xpath("//div[@class = 'pop-up-container']/*[local-name() = 'svg']");
+    private final By SELECTED_UNIT = By.id("selected");
+    private final By CELSIUS_UNIT = By.xpath("//div[@class = 'switch-container']//*[text() = 'Metric: °C, m/s']");
+    private final By FAHRENHEIT_UNIT = By.xpath("//div[@class = 'switch-container']//*[text() = 'Imperial: °F, mph']");
+    private final By CURRENT_TEMPERATURE = By.xpath("//div[@class = 'current-temp']/span[@class = 'heading']");
     private void openBaseUrl() {
         getDriver().get(BASE_URL);
 
     }
     private void waitTillGreyContainerDisappears() {
         getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+
+    }
+    private void waitTillTextChanges(By by, String text) {
+        getWait5().until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElementLocated(by, text)));
 
     }
     private String getAttribute(By by, String attribute, ChromeDriver driver) {
@@ -100,6 +109,56 @@ public class MainTest extends BaseTest {
     private void switchToSecondWindow(ChromeDriver driver) {
         String handle = getDriver().getWindowHandles().toArray()[1].toString();
         getDriver().switchTo().window(handle);
+
+    }
+    private boolean verifyNeededUnitsDisplayed(By by, String units, ChromeDriver driver) {
+        String text = getText(by, driver);
+        if(text.contains(units)){
+            return true;
+
+        };
+        return false;
+
+    }
+    public boolean verifyArrayContainsNeededUnits(List<WebElement> array, String units) {
+
+        for(int i = 0; i < array.size(); i++) {
+            if(array.get(i).getText().contains(units)) {
+                return true;
+
+            }
+        }
+        return false;
+
+    }
+    private int convertCelsiusToFahrenheit(int temperatureInCelsius) {
+
+        int temperatureInFahrenheit = (int)(temperatureInCelsius * 1.8 + 32);
+        return temperatureInFahrenheit;
+
+    }
+    private boolean celsiusToFahrenheitConvertingCorresponds(int temperatureInCelsius, int temperatureInFahrenheit) {
+
+        if(temperatureInFahrenheit == convertCelsiusToFahrenheit(temperatureInCelsius)
+                || temperatureInFahrenheit == convertCelsiusToFahrenheit(temperatureInCelsius) + 1)
+        {
+            return true;
+
+        }
+        return false;
+
+    }
+
+    public int getTemperatureFigureFromText(By by) {
+
+        String currentTemp = getText(by, getDriver());
+        char[] arrayCurrentTemp = currentTemp.toCharArray();
+        currentTemp = "";
+
+        for(int i = 0; i < arrayCurrentTemp.length - 2; i++) {
+            currentTemp = currentTemp + arrayCurrentTemp[i];
+        }
+        return Integer.valueOf(currentTemp);
 
     }
 
@@ -590,6 +649,26 @@ public class MainTest extends BaseTest {
 
         Assert.assertTrue(isVisible);
         Assert.assertFalse(isNotVisible);
+    }
+
+    @Test
+    public void testUnitsSwitcher() {
+
+        final String expectedResultCelsiusSelected = "left: 2pt;";
+        final String expectedResultFahrenheitSelected = "slideRight";
+
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
+
+        String actualResultCelsiusSelected = getAttribute(SELECTED_UNIT, "style", getDriver());
+
+        clickElement(FAHRENHEIT_UNIT);
+
+        String actualResultFahrenheitSelected = getAttribute(SELECTED_UNIT, "className",
+                getDriver());
+
+        Assert.assertEquals(actualResultCelsiusSelected, expectedResultCelsiusSelected);
+        Assert.assertEquals(actualResultFahrenheitSelected, expectedResultFahrenheitSelected);
     }
 }
 
