@@ -53,7 +53,8 @@ public class MainTest extends BaseTest {
     private final By SEARCH_DROPDOWN_MENU = By.xpath("//ul[@class = 'search-dropdown-menu']");
     private final By LOCATION_DISPLAYED = By.xpath("//div[@class = 'section-content']//h2");
     private final By ERROR_CITY_NOT_FOUND = By.xpath("//div[@class = 'search-block']/div[@class = 'sub not-found notFoundOpen']");
-    private final By ERROR_WIDGET_CITY_NIT_FOUND = By.xpath("//div[@class = 'widget-notification']");
+    private final By ERROR_WIDGET_CITY_NOT_FOUND = By.xpath("//div[@class = 'widget-notification']");
+    private final By ERROR_WIDGET_CITY_NOT_FOUND_ICON_CLOSE = By.xpath("//div[@class = 'widget-notification']//*[local-name() = 'svg']");
 
     private void openBaseUrl() {
         getDriver().get(BASE_URL);
@@ -839,13 +840,28 @@ public class MainTest extends BaseTest {
 
         enterValue(SEARCH_BLOCK_INPUT, invalidInput, getDriver());
 
-        waitTillElementIsVisible(ERROR_WIDGET_CITY_NIT_FOUND);
+        waitTillElementIsVisible(ERROR_WIDGET_CITY_NOT_FOUND);
 
         String actualResultErrorText = getText(ERROR_CITY_NOT_FOUND, getDriver());
-        String actualResultErrorWidgetText = getText(ERROR_WIDGET_CITY_NIT_FOUND, getDriver());
+        String actualResultErrorWidgetText = getText(ERROR_WIDGET_CITY_NOT_FOUND, getDriver());
 
         Assert.assertEquals(actualResultErrorText, expectedResultErrorText);
         Assert.assertEquals(actualResultErrorWidgetText, expectedResultErrorWidgetText);
+    }
+
+    @Test
+    public void testErrorWidgetCloses() {
+
+        String invalidInput = "lmmslg";
+
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
+
+        enterValue(SEARCH_BLOCK_INPUT, invalidInput, getDriver());
+        waitTillElementIsVisible(ERROR_WIDGET_CITY_NOT_FOUND);
+        clickElement(ERROR_WIDGET_CITY_NOT_FOUND_ICON_CLOSE);
+
+        Assert.assertFalse(elementIsNotDisplayed(ERROR_WIDGET_CITY_NOT_FOUND, getDriver()));
     }
 }
 
