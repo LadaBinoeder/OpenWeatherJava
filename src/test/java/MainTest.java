@@ -48,37 +48,55 @@ public class MainTest extends BaseTest {
     private final By CELSIUS_UNIT = By.xpath("//div[@class = 'switch-container']//*[text() = 'Metric: °C, m/s']");
     private final By FAHRENHEIT_UNIT = By.xpath("//div[@class = 'switch-container']//*[text() = 'Imperial: °F, mph']");
     private final By CURRENT_TEMPERATURE = By.xpath("//div[@class = 'current-temp']/span[@class = 'heading']");
-    private final By SEARCH_BLOCK_PLACEHOLDER = By.xpath("//input[@placeholder = 'Search city']");
+    private final By SEARCH_BLOCK_INPUT = By.xpath("//div[@class = 'search-container']//input");
+    private final By SEARCH_BUTTON = By.xpath("//div[@class = 'search']//button");
+    private final By SEARCH_DROPDOWN_MENU = By.xpath("//ul[@class = 'search-dropdown-menu']");
 
     private void openBaseUrl() {
         getDriver().get(BASE_URL);
 
     }
+
     private void waitTillGreyContainerDisappears() {
         getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
     }
+
     private void waitTillTextChanges(By by, String text) {
         getWait5().until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElementLocated(by, text)));
 
     }
+
+    private void waitTillElementIsVisible(By by) {
+
+        getWait5().until(ExpectedConditions.visibilityOfElementLocated(by));
+    }
+
     private String getAttribute(By by, String attribute, ChromeDriver driver) {
 
         return driver.findElement(by).getAttribute(attribute);
     }
+
     private String getText(By by, ChromeDriver driver) {
         return driver.findElement(by).getText();
 
     }
+
     private void clickElement(By by) {
         getWait5().until(ExpectedConditions.visibilityOfElementLocated(by));
         getWait5().until(ExpectedConditions.elementToBeClickable(by)).click();
 
     }
+
     private void enterValue(By by, String value, ChromeDriver driver) {
 
         driver.findElement(by).sendKeys(value);
         driver.findElement(by).sendKeys(Keys.ENTER);
+    }
+
+    private void putInValue(By by, String value, ChromeDriver driver) {
+
+        driver.findElement(by).sendKeys(value);
     }
     private boolean elementIsDisplayed(By by, ChromeDriver driver) {
 
@@ -107,11 +125,13 @@ public class MainTest extends BaseTest {
         return newPageIsOpened;
 
     }
+
     private void switchToSecondWindow(ChromeDriver driver) {
         String handle = getDriver().getWindowHandles().toArray()[1].toString();
         getDriver().switchTo().window(handle);
 
     }
+
     private boolean verifyNeededUnitsDisplayed(By by, String units, ChromeDriver driver) {
         String text = getText(by, driver);
         if(text.contains(units)){
@@ -121,6 +141,7 @@ public class MainTest extends BaseTest {
         return false;
 
     }
+
     public boolean verifyArrayContainsNeededUnits(List<WebElement> array, String units) {
 
         for(int i = 0; i < array.size(); i++) {
@@ -132,12 +153,14 @@ public class MainTest extends BaseTest {
         return false;
 
     }
+
     private int convertCelsiusToFahrenheit(int temperatureInCelsius) {
 
         int temperatureInFahrenheit = (int)(temperatureInCelsius * 1.8 + 32);
         return temperatureInFahrenheit;
 
     }
+
     private boolean celsiusToFahrenheitConvertingCorresponds(int temperatureInCelsius, int temperatureInFahrenheit) {
 
         if(temperatureInFahrenheit == convertCelsiusToFahrenheit(temperatureInCelsius)
@@ -719,9 +742,27 @@ public class MainTest extends BaseTest {
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        String actualResultPlaceholderText = getAttribute(SEARCH_BLOCK_PLACEHOLDER, "placeholder", getDriver());
+        String actualResultPlaceholderText = getAttribute(SEARCH_BLOCK_INPUT, "placeholder", getDriver());
 
         Assert.assertEquals(actualResultPlaceholderText, expectedResultPlaceholderText);
+    }
+
+    @Test
+    public void testVerifySearchButtonIsClickable() {
+
+        final String cityName = "Madrid";
+
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
+
+        putInValue(SEARCH_BLOCK_INPUT, cityName, getDriver());
+        clickElement(SEARCH_BUTTON);
+
+        waitTillElementIsVisible(SEARCH_DROPDOWN_MENU);
+
+        List<WebElement> searchDropdownList = getDriver().findElements(By.xpath("//ul[@class = 'search-dropdown-menu']/li"));
+
+        Assert.assertFalse(searchDropdownList.isEmpty());
     }
 }
 
