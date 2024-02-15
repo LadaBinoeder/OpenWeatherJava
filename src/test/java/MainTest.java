@@ -1,4 +1,3 @@
-import org.bouncycastle.tsp.TSPUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
@@ -21,8 +20,8 @@ public class MainTest extends BaseTest {
     private final By LOGO = By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']");
     private final By LOGO_LINK = By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']/a");
     private final By LOGO_IMAGE = By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']/a/img");
-    private final By PLACEHOLDER_LINK = By.xpath("//li[@id = 'desktop-menu']/form");
-    private final By PLACEHOLDER_TEXT = By.xpath("//li[@id = 'desktop-menu']/form/input[@type = 'text']");
+    private final By WEATHER_IN_YOUR_CITY_PLACEHOLDER_LINK = By.xpath("//li[@id = 'desktop-menu']/form");
+    private final By WEATHER_IN_YOUR_CITY_PLACEHOLDER_TEXT = By.xpath("//li[@id = 'desktop-menu']/form/input[@type = 'text']");
     private final By GUIDE_MENU = By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Guide']");
     private final By API_MENU = By.xpath("//li[@id = 'desktop-menu']//a[text() = 'API']");
     private final By DASHBOARD_MENU = By.xpath("//li[@id = 'desktop-menu']//a[text() = 'Dashboard']");
@@ -49,6 +48,8 @@ public class MainTest extends BaseTest {
     private final By CELSIUS_UNIT = By.xpath("//div[@class = 'switch-container']//*[text() = 'Metric: °C, m/s']");
     private final By FAHRENHEIT_UNIT = By.xpath("//div[@class = 'switch-container']//*[text() = 'Imperial: °F, mph']");
     private final By CURRENT_TEMPERATURE = By.xpath("//div[@class = 'current-temp']/span[@class = 'heading']");
+    private final By SEARCH_BLOCK_PLACEHOLDER = By.xpath("//input[@placeholder = 'Search city']");
+
     private void openBaseUrl() {
         getDriver().get(BASE_URL);
 
@@ -293,11 +294,11 @@ public class MainTest extends BaseTest {
         openBaseUrl();
         waitTillGreyContainerDisappears();
 
-        String actualResultLink = getAttribute(PLACEHOLDER_LINK,"action", getDriver());
-        String actualResultText = getAttribute(PLACEHOLDER_TEXT, "placeholder", getDriver());
+        String actualResultLink = getAttribute(WEATHER_IN_YOUR_CITY_PLACEHOLDER_LINK,"action", getDriver());
+        String actualResultText = getAttribute(WEATHER_IN_YOUR_CITY_PLACEHOLDER_TEXT, "placeholder", getDriver());
 
-        clickElement(PLACEHOLDER_LINK);
-        enterValue(PLACEHOLDER_TEXT, city, getDriver());
+        clickElement(WEATHER_IN_YOUR_CITY_PLACEHOLDER_LINK);
+        enterValue(WEATHER_IN_YOUR_CITY_PLACEHOLDER_TEXT, city, getDriver());
 
         String actualResultPage = getDriver().getCurrentUrl();
 
@@ -710,6 +711,18 @@ public class MainTest extends BaseTest {
         Assert.assertTrue(unitsDisplayedInFahrenheit);
     }
 
+    @Test
+    public void testVerifySearchBlockPlaceholder() {
+
+        final String expectedResultPlaceholderText = "Search city";
+
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
+
+        String actualResultPlaceholderText = getAttribute(SEARCH_BLOCK_PLACEHOLDER, "placeholder", getDriver());
+
+        Assert.assertEquals(actualResultPlaceholderText, expectedResultPlaceholderText);
+    }
 }
 
 
