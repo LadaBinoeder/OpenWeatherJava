@@ -52,6 +52,8 @@ public class MainTest extends BaseTest {
     private final By SEARCH_BUTTON = By.xpath("//div[@class = 'search']//button");
     private final By SEARCH_DROPDOWN_MENU = By.xpath("//ul[@class = 'search-dropdown-menu']");
     private final By LOCATION_DISPLAYED = By.xpath("//div[@class = 'section-content']//h2");
+    private final By ERROR_CITY_NOT_FOUND = By.xpath("//div[@class = 'search-block']/div[@class = 'sub not-found notFoundOpen']");
+    private final By ERROR_WIDGET_CITY_NIT_FOUND = By.xpath("//div[@class = 'widget-notification']");
 
     private void openBaseUrl() {
         getDriver().get(BASE_URL);
@@ -822,6 +824,28 @@ public class MainTest extends BaseTest {
         clickElement(SEARCH_BUTTON);
 
         Assert.assertFalse(elementIsNotDisplayed(SEARCH_DROPDOWN_MENU, getDriver()));
+    }
+
+    @Test
+    public void testVerifySearchButtonInvalidInput() {
+
+        String invalidInput = "lmmslg";
+
+        final String expectedResultErrorText = "Not found. To make search more precise put the city's name, comma, 2-letter country code (ISO3166).";
+        final String expectedResultErrorWidgetText = "No results for " + invalidInput;
+
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
+
+        enterValue(SEARCH_BLOCK_INPUT, invalidInput, getDriver());
+
+        waitTillElementIsVisible(ERROR_WIDGET_CITY_NIT_FOUND);
+
+        String actualResultErrorText = getText(ERROR_CITY_NOT_FOUND, getDriver());
+        String actualResultErrorWidgetText = getText(ERROR_WIDGET_CITY_NIT_FOUND, getDriver());
+
+        Assert.assertEquals(actualResultErrorText, expectedResultErrorText);
+        Assert.assertEquals(actualResultErrorWidgetText, expectedResultErrorWidgetText);
     }
 }
 
