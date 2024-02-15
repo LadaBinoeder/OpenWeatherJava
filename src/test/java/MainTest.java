@@ -863,7 +863,40 @@ public class MainTest extends BaseTest {
 
         Assert.assertFalse(elementIsNotDisplayed(ERROR_WIDGET_CITY_NOT_FOUND, getDriver()));
     }
+
+    @Test
+    public void testVerifySearchButtonShowsCorrespondingResults() {
+
+        final String cityName = "Madrid";
+
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
+
+        putInValue(SEARCH_BLOCK_INPUT, cityName, getDriver());
+        clickElement(SEARCH_BUTTON);
+
+        waitTillElementIsVisible(SEARCH_DROPDOWN_MENU);
+
+        List<WebElement> searchDropdownList = getDriver().findElements(By.xpath("//ul[@class = 'search-dropdown-menu']/li"));
+
+        int correspondingCityNameCount = 0;
+
+        for(int i = 0; i < searchDropdownList.size(); i++) {
+            if(searchDropdownList.get(i).getText().contains(cityName)) {
+                correspondingCityNameCount++;
+            }
+        }
+
+        boolean cityNameCorresponds = false;
+
+        if(correspondingCityNameCount == searchDropdownList.size()) {
+            cityNameCorresponds = true;
+        }
+
+        Assert.assertTrue(cityNameCorresponds);
+    }
 }
+
 
 
 
