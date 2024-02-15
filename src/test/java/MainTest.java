@@ -51,6 +51,7 @@ public class MainTest extends BaseTest {
     private final By SEARCH_BLOCK_INPUT = By.xpath("//div[@class = 'search-container']//input");
     private final By SEARCH_BUTTON = By.xpath("//div[@class = 'search']//button");
     private final By SEARCH_DROPDOWN_MENU = By.xpath("//ul[@class = 'search-dropdown-menu']");
+    private final By LOCATION_DISPLAYED = By.xpath("//div[@class = 'section-content']//h2");
 
     private void openBaseUrl() {
         getDriver().get(BASE_URL);
@@ -86,6 +87,11 @@ public class MainTest extends BaseTest {
         getWait5().until(ExpectedConditions.visibilityOfElementLocated(by));
         getWait5().until(ExpectedConditions.elementToBeClickable(by)).click();
 
+    }
+
+    private void clickListElement(List<WebElement> elements, int index) {
+
+        elements.get(index).click();
     }
 
     private void enterValue(By by, String value, ChromeDriver driver) {
@@ -781,6 +787,30 @@ public class MainTest extends BaseTest {
         List<WebElement> searchDropdownList = getDriver().findElements(By.xpath("//ul[@class = 'search-dropdown-menu']/li"));
 
         Assert.assertFalse(searchDropdownList.isEmpty());
+    }
+
+    @Test
+    public void testVerifySearchButtonChangesTheLocationShown() {
+
+        final String cityName = "Paris";
+        final String expectedResultLocationDisplayed = "Paris, FR";
+
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
+
+        String currentLocationDisplayed = getText(LOCATION_DISPLAYED, getDriver());
+
+        enterValue(SEARCH_BLOCK_INPUT, cityName, getDriver());
+        waitTillElementIsVisible(SEARCH_DROPDOWN_MENU);
+
+        List<WebElement> searchDropdownList = getDriver().findElements(By.xpath("//ul[@class = 'search-dropdown-menu']/li"));
+
+        clickListElement(searchDropdownList, 0);
+        waitTillTextChanges(LOCATION_DISPLAYED, currentLocationDisplayed);
+
+        String actualResultLocationDisplayed = getText(LOCATION_DISPLAYED, getDriver());
+
+        Assert.assertEquals(actualResultLocationDisplayed, expectedResultLocationDisplayed);
     }
 }
 
