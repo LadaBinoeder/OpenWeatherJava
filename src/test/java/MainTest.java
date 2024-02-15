@@ -812,6 +812,17 @@ public class MainTest extends BaseTest {
 
         Assert.assertEquals(actualResultLocationDisplayed, expectedResultLocationDisplayed);
     }
+
+    @Test
+    public void testVerifySearchButtonEmptySearch() {
+
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
+
+        clickElement(SEARCH_BUTTON);
+
+        Assert.assertFalse(elementIsNotDisplayed(SEARCH_DROPDOWN_MENU, getDriver()));
+    }
 }
 
 
