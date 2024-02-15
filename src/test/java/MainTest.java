@@ -766,7 +766,7 @@ public class MainTest extends BaseTest {
     }
 
     @Test
-    public void "testVerifySearchButtonIsClickableByEnter"() {
+    public void testVerifySearchButtonIsClickableByEnter() {
 
         final String cityName = "Madrid";
 
