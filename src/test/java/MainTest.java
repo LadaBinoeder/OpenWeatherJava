@@ -764,6 +764,24 @@ public class MainTest extends BaseTest {
 
         Assert.assertFalse(searchDropdownList.isEmpty());
     }
+
+    @Test
+    public void testVerifySearchButtonIsClickableByEnter() {
+
+        final String cityName = "Madrid";
+
+        openBaseUrl();
+        waitTillGreyContainerDisappears();
+
+        enterValue(SEARCH_BLOCK_INPUT, cityName, getDriver());
+        clickElement(SEARCH_BUTTON);
+
+        waitTillElementIsVisible(SEARCH_DROPDOWN_MENU);
+
+        List<WebElement> searchDropdownList = getDriver().findElements(By.xpath("//ul[@class = 'search-dropdown-menu']/li"));
+
+        Assert.assertFalse(searchDropdownList.isEmpty());
+    }
 }
 
 
