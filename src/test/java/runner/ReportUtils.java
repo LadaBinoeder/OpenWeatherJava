@@ -27,9 +27,9 @@ public class ReportUtils {
 
         switch (status) {
             case 1:
-                return "PASS";
+                return "\u001B[32m" + "PASS" + "\u001B[0m";
             case 2:
-                return "FAIL";
+                return "\u001B[31m" + "FAIL" + "\u001B[0m";
             default:
                 return "UNDEFINED";
 
@@ -49,7 +49,7 @@ public class ReportUtils {
 
         String header = "\tTest Report\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "\n";
         String currentDate = "\tDate: " + getCurrentDateTime() + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "\n";
-        String projectName = "\tProject " + context.getName() + "\n";
+        String projectName = "\tProject OpenWeatherJava" + "\n";
         String baseUrl = "\tBASE_URL: " + TestUtils.getBaseUrl() + "\t\t\t\t\t\t\t\t\t\t\t" + "\n";
         return H_LINE + header + currentDate + projectName + baseUrl + H_LINE;
 
