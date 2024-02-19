@@ -73,7 +73,7 @@ public class MainTest extends BaseTest {
 
     private void waitTillElementIsVisible(By by) {
 
-        getWait5().until(ExpectedConditions.visibilityOfElementLocated(by));
+        getWait10().until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
     private String getAttribute(By by, String attribute, ChromeDriver driver) {
