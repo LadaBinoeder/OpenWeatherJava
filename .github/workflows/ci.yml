@@ -49,15 +49,24 @@ jobs:
         with:
           path: screenshots
 
-      - name: Build Report
-        uses: simple-elf/allure-report-action@v1.7
+
+      - name: Get Allure history
+        uses: actions/checkout@v2
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Allure Report action from marketplace
+        uses: simple-elf/allure-report-action@master
         if: always()
         with:
-          allure_results: build/allure-result
+          allure_results: allure-results
           allure_history: allure-history
           keep_reports: 20
 
-      - name: Publish Report
+      - name: Deploy report to Github Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v2
         env:
