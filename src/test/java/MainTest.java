@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class MainTest extends BaseTest {
 
     private final static String BASE_URL = "https://openweathermap.org/";
@@ -73,7 +74,7 @@ public class MainTest extends BaseTest {
 
     private void waitTillElementIsVisible(By by) {
 
-        getWait5().until(ExpectedConditions.visibilityOfElementLocated(by));
+        getWait10().until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
     private String getAttribute(By by, String attribute, ChromeDriver driver) {
