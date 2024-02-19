@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class MainTest extends BaseTest {
 
     private final static String BASE_URL = "https://openweathermap.org/";
