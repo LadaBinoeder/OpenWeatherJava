@@ -49,13 +49,6 @@ jobs:
         with:
           path: screenshots
 
-      - name: Copy History
-        uses: actions/checkout@v2
-        if: always()
-        with:
-          ref: gh-pages
-          path: gh-pages
-
       - name: Build Report
         uses: simple-elf/allure-report-action@v1.7
         if: always()
