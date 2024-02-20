@@ -88,18 +88,18 @@ public abstract class BaseTest {
     }
 
     public void waitTillGreyContainerDisappears() {
-        webDriverWait10.until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
     }
 
     public void waitTillTextChanges(By by, String text) {
-        webDriverWait5.until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElementLocated(by, text)));
+        getWait5().until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElementLocated(by, text)));
 
     }
 
     public void waitTillElementIsVisible(By by)  {
 
-        webDriverWait10.until(ExpectedConditions.visibilityOfElementLocated(by));
+        getWait10().until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
     public String getAttribute(By by, String attribute) {
@@ -113,8 +113,8 @@ public abstract class BaseTest {
     }
 
     public void clickElement(By by) {
-        webDriverWait5.until(ExpectedConditions.visibilityOfElementLocated(by));
-        webDriverWait5.until(ExpectedConditions.elementToBeClickable(by)).click();
+        getWait5().until(ExpectedConditions.visibilityOfElementLocated(by));
+        getWait5().until(ExpectedConditions.elementToBeClickable(by)).click();
 
     }
 
