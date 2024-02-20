@@ -6,7 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import runner.BaseTest;
+import base.BaseTest;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -57,144 +57,144 @@ public class MainTest extends BaseTest {
     private final By ERROR_WIDGET_CITY_NOT_FOUND = By.xpath("//div[@class = 'widget-notification']");
     private final By ERROR_WIDGET_CITY_NOT_FOUND_ICON_CLOSE = By.xpath("//div[@class = 'widget-notification']//*[local-name() = 'svg']");
 
-    private void openBaseUrl() {
-        getDriver().get(BASE_URL);
-
-    }
-
-    private void waitTillGreyContainerDisappears() {
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
-
-    }
-
-    private void waitTillTextChanges(By by, String text) {
-        getWait5().until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElementLocated(by, text)));
-
-    }
-
-    private void waitTillElementIsVisible(By by) {
-
-        getWait10().until(ExpectedConditions.visibilityOfElementLocated(by));
-    }
-
-    private String getAttribute(By by, String attribute, ChromeDriver driver) {
-
-        return driver.findElement(by).getAttribute(attribute);
-    }
-
-    private String getText(By by, ChromeDriver driver) {
-        return driver.findElement(by).getText();
-
-    }
-
-    private void clickElement(By by) {
-        getWait5().until(ExpectedConditions.visibilityOfElementLocated(by));
-        getWait5().until(ExpectedConditions.elementToBeClickable(by)).click();
-
-    }
-
-    private void clickListElement(List<WebElement> elements, int index) {
-
-        elements.get(index).click();
-    }
-
-    private void enterValue(By by, String value, ChromeDriver driver) {
-
-        driver.findElement(by).sendKeys(value);
-        driver.findElement(by).sendKeys(Keys.ENTER);
-    }
-
-    private void putInValue(By by, String value, ChromeDriver driver) {
-
-        driver.findElement(by).sendKeys(value);
-    }
-    private boolean elementIsDisplayed(By by, ChromeDriver driver) {
-
-        boolean isDisplayed = driver.findElement(by).isDisplayed();
-        return isDisplayed;
-
-    }
-
-    private boolean elementIsNotDisplayed(By by, ChromeDriver driver) {
-        try {
-            driver.findElement(by);
-            return true;
-
-        } catch (NoSuchElementException e) {
-            return false;
-
-        }
-    }
-
-    private boolean verifyNewPageOpen(ChromeDriver driver) {
-        boolean newPageIsOpened = true;
-        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
-            newPageIsOpened = false;
-
-        }
-        return newPageIsOpened;
-
-    }
-
-    private void switchToSecondWindow(ChromeDriver driver) {
-        String handle = getDriver().getWindowHandles().toArray()[1].toString();
-        getDriver().switchTo().window(handle);
-
-    }
-
-    private boolean verifyNeededUnitsDisplayed(By by, String units, ChromeDriver driver) {
-        String text = getText(by, driver);
-        if(text.contains(units)){
-            return true;
-
-        };
-        return false;
-
-    }
-
-    public boolean verifyArrayContainsNeededUnits(List<WebElement> array, String units) {
-
-        for(int i = 0; i < array.size(); i++) {
-            if(array.get(i).getText().contains(units)) {
-                return true;
-
-            }
-        }
-        return false;
-
-    }
-
-    private int convertCelsiusToFahrenheit(int temperatureInCelsius) {
-
-        int temperatureInFahrenheit = (int)(temperatureInCelsius * 1.8 + 32);
-        return temperatureInFahrenheit;
-
-    }
-
-    private boolean celsiusToFahrenheitConvertingCorresponds(int temperatureInCelsius, int temperatureInFahrenheit) {
-
-        if(temperatureInFahrenheit == convertCelsiusToFahrenheit(temperatureInCelsius)
-                || temperatureInFahrenheit == convertCelsiusToFahrenheit(temperatureInCelsius) + 1)
-        {
-            return true;
-
-        }
-        return false;
-
-    }
-
-    public int getTemperatureFigureFromText(By by) {
-
-        String currentTemp = getText(by, getDriver());
-        char[] arrayCurrentTemp = currentTemp.toCharArray();
-        currentTemp = "";
-
-        for(int i = 0; i < arrayCurrentTemp.length - 2; i++) {
-            currentTemp = currentTemp + arrayCurrentTemp[i];
-        }
-        return Integer.valueOf(currentTemp);
-
-    }
+//    private void openBaseUrl() {
+//        getDriver().get(BASE_URL);
+//
+//    }
+//
+//    private void waitTillGreyContainerDisappears() {
+//        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
+//
+//    }
+//
+//    private void waitTillTextChanges(By by, String text) {
+//        getWait5().until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElementLocated(by, text)));
+//
+//    }
+//
+//    private void waitTillElementIsVisible(By by) {
+//
+//        getWait10().until(ExpectedConditions.visibilityOfElementLocated(by));
+//    }
+//
+//    private String getAttribute(By by, String attribute, ChromeDriver driver) {
+//
+//        return driver.findElement(by).getAttribute(attribute);
+//    }
+//
+//    private String getText(By by, ChromeDriver driver) {
+//        return driver.findElement(by).getText();
+//
+//    }
+//
+//    private void clickElement(By by) {
+//        getWait5().until(ExpectedConditions.visibilityOfElementLocated(by));
+//        getWait5().until(ExpectedConditions.elementToBeClickable(by)).click();
+//
+//    }
+//
+//    private void clickListElement(List<WebElement> elements, int index) {
+//
+//        elements.get(index).click();
+//    }
+//
+//    private void enterValue(By by, String value, ChromeDriver driver) {
+//
+//        driver.findElement(by).sendKeys(value);
+//        driver.findElement(by).sendKeys(Keys.ENTER);
+//    }
+//
+//    private void putInValue(By by, String value, ChromeDriver driver) {
+//
+//        driver.findElement(by).sendKeys(value);
+//    }
+//    private boolean elementIsDisplayed(By by, ChromeDriver driver) {
+//
+//        boolean isDisplayed = driver.findElement(by).isDisplayed();
+//        return isDisplayed;
+//
+//    }
+//
+//    private boolean elementIsNotDisplayed(By by, ChromeDriver driver) {
+//        try {
+//            driver.findElement(by);
+//            return true;
+//
+//        } catch (NoSuchElementException e) {
+//            return false;
+//
+//        }
+//    }
+//
+//    private boolean verifyNewPageOpen(ChromeDriver driver) {
+//        boolean newPageIsOpened = true;
+//        if (getDriver().getCurrentUrl().equals(BASE_URL)) {
+//            newPageIsOpened = false;
+//
+//        }
+//        return newPageIsOpened;
+//
+//    }
+//
+//    private void switchToSecondWindow(ChromeDriver driver) {
+//        String handle = getDriver().getWindowHandles().toArray()[1].toString();
+//        getDriver().switchTo().window(handle);
+//
+//    }
+//
+//    private boolean verifyNeededUnitsDisplayed(By by, String units, ChromeDriver driver) {
+//        String text = getText(by, driver);
+//        if(text.contains(units)){
+//            return true;
+//
+//        };
+//        return false;
+//
+//    }
+//
+//    public boolean verifyArrayContainsNeededUnits(List<WebElement> array, String units) {
+//
+//        for(int i = 0; i < array.size(); i++) {
+//            if(array.get(i).getText().contains(units)) {
+//                return true;
+//
+//            }
+//        }
+//        return false;
+//
+//    }
+//
+//    private int convertCelsiusToFahrenheit(int temperatureInCelsius) {
+//
+//        int temperatureInFahrenheit = (int)(temperatureInCelsius * 1.8 + 32);
+//        return temperatureInFahrenheit;
+//
+//    }
+//
+//    private boolean celsiusToFahrenheitConvertingCorresponds(int temperatureInCelsius, int temperatureInFahrenheit) {
+//
+//        if(temperatureInFahrenheit == convertCelsiusToFahrenheit(temperatureInCelsius)
+//                || temperatureInFahrenheit == convertCelsiusToFahrenheit(temperatureInCelsius) + 1)
+//        {
+//            return true;
+//
+//        }
+//        return false;
+//
+//    }
+//
+//    public int getTemperatureFigureFromText(By by)  {
+//
+//        String currentTemp = getText(by, getDriver());
+//        char[] arrayCurrentTemp = currentTemp.toCharArray();
+//        currentTemp = "";
+//
+//        for(int i = 0; i < arrayCurrentTemp.length - 2; i++) {
+//            currentTemp = currentTemp + arrayCurrentTemp[i];
+//        }
+//        return Integer.valueOf(currentTemp);
+//
+//    }
 
     @Test
     public void testURLAndTitle() throws IOException {
@@ -203,7 +203,6 @@ public class MainTest extends BaseTest {
         final String expectedResultTitle = "Сurrent weather and forecast - OpenWeatherMap";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
         String actualResultURL = getDriver().getCurrentUrl();
         String actualResultTitle = getDriver().getTitle();
@@ -233,9 +232,8 @@ public class MainTest extends BaseTest {
     public void testLogoIsDisplayed() {
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
-        boolean logoIsDisplayed = elementIsDisplayed(LOGO, getDriver());
+        boolean logoIsDisplayed = elementIsDisplayed(LOGO);
 
         Assert.assertTrue(logoIsDisplayed);
     }
@@ -243,10 +241,9 @@ public class MainTest extends BaseTest {
     @Test
     public void testPlaceholderIsDisplayed() {
 
-        getDriver().get(BASE_URL);
-        waitTillGreyContainerDisappears();
+        openBaseUrl();
 
-        boolean placeholderIsDisplayed = elementIsDisplayed(PLACEHOLDER, getDriver());
+        boolean placeholderIsDisplayed = elementIsDisplayed(PLACEHOLDER);
 
         Assert.assertTrue(placeholderIsDisplayed);
     }
@@ -257,7 +254,6 @@ public class MainTest extends BaseTest {
         final int expectedResultNumber = 12;
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
         List<WebElement> desktopMenuElements = getDriver().findElements(By.xpath("//li[@id = 'desktop-menu']/ul/li"));
 
@@ -285,7 +281,6 @@ public class MainTest extends BaseTest {
         );
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
         List<WebElement> desktopMenuElements = getDriver().findElements(By.xpath("//li[@id = 'desktop-menu']/ul/li"));
         List<String> actualDesktopMenuNames = new ArrayList<>();
@@ -304,12 +299,11 @@ public class MainTest extends BaseTest {
         final String expectedResultImage = "https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
         clickElement(LOGO);
 
         String actualResultURL = getDriver().getCurrentUrl();
-        String actualResultHref = getAttribute(LOGO_LINK, "href", getDriver());
-        String actualResultImage = getAttribute(LOGO_IMAGE, "src", getDriver());
+        String actualResultHref = getAttribute(LOGO_LINK, "href");
+        String actualResultImage = getAttribute(LOGO_IMAGE, "src");
 
         Assert.assertEquals(actualResultURL, BASE_URL);
         Assert.assertEquals(actualResultHref, expectedResultLink);
@@ -325,13 +319,12 @@ public class MainTest extends BaseTest {
         final String expectedResultPage = expectedResultLink + "?q=" + city;
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
-        String actualResultLink = getAttribute(WEATHER_IN_YOUR_CITY_PLACEHOLDER_LINK,"action", getDriver());
-        String actualResultText = getAttribute(WEATHER_IN_YOUR_CITY_PLACEHOLDER_TEXT, "placeholder", getDriver());
+        String actualResultLink = getAttribute(WEATHER_IN_YOUR_CITY_PLACEHOLDER_LINK,"action");
+        String actualResultText = getAttribute(WEATHER_IN_YOUR_CITY_PLACEHOLDER_TEXT, "placeholder");
 
         clickElement(WEATHER_IN_YOUR_CITY_PLACEHOLDER_LINK);
-        enterValue(WEATHER_IN_YOUR_CITY_PLACEHOLDER_TEXT, city, getDriver());
+        enterValue(WEATHER_IN_YOUR_CITY_PLACEHOLDER_TEXT, city);
 
         String actualResultPage = getDriver().getCurrentUrl();
 
@@ -346,13 +339,12 @@ public class MainTest extends BaseTest {
         final String expectedResultLink = "https://openweathermap.org/guide";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
-        String actualResultLink = getAttribute(GUIDE_MENU, "href", getDriver());
+        String actualResultLink = getAttribute(GUIDE_MENU, "href");
 
         clickElement(GUIDE_MENU);
 
-        boolean newPageIsOpened = verifyNewPageOpen(getDriver());
+        boolean newPageIsOpened = verifyNewPageOpen();
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpened);
@@ -364,13 +356,12 @@ public class MainTest extends BaseTest {
         final String expectedResultLink = "https://openweathermap.org/api";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
-        String actualResultLink = getAttribute(API_MENU, "href", getDriver());
+        String actualResultLink = getAttribute(API_MENU, "href");
 
         clickElement(API_MENU);
 
-        boolean newPageIsOpened = verifyNewPageOpen(getDriver());
+        boolean newPageIsOpened = verifyNewPageOpen();
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpened);
@@ -382,13 +373,12 @@ public class MainTest extends BaseTest {
         final String expectedResultLink = "https://openweathermap.org/weather-dashboard";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
-        String actualResultLink = getAttribute(DASHBOARD_MENU, "href", getDriver());
+        String actualResultLink = getAttribute(DASHBOARD_MENU, "href");
 
         clickElement(DASHBOARD_MENU);
 
-        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
+        boolean newPageIsOpen = verifyNewPageOpen();
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -400,14 +390,13 @@ public class MainTest extends BaseTest {
         final String expectedResultLink = "https://home.openweathermap.org/marketplace";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
-        String actualResultLink = getAttribute(MARKETPLACE_MENU, "href", getDriver());
+        String actualResultLink = getAttribute(MARKETPLACE_MENU, "href");
 
         clickElement(MARKETPLACE_MENU);
-        switchToSecondWindow(getDriver());
+        switchToSecondWindow();
 
-        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
+        boolean newPageIsOpen = verifyNewPageOpen();
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -419,13 +408,12 @@ public class MainTest extends BaseTest {
         final String expectedResultLink = "https://openweathermap.org/price";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
-        String actualResultLink = getAttribute(PRICING_MENU, "href", getDriver());
+        String actualResultLink = getAttribute(PRICING_MENU, "href");
 
         clickElement(PRICING_MENU);
 
-        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
+        boolean newPageIsOpen = verifyNewPageOpen();
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -437,13 +425,12 @@ public class MainTest extends BaseTest {
         final String expectedResultLink = "https://openweathermap.org/weathermap";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
-        String actualResultLink = getAttribute(MAPS_MENU, "href", getDriver());
+        String actualResultLink = getAttribute(MAPS_MENU, "href");
 
         clickElement(MAPS_MENU);
 
-        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
+        boolean newPageIsOpen = verifyNewPageOpen();
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -455,13 +442,12 @@ public class MainTest extends BaseTest {
         final String expectedResultLink = "https://openweathermap.org/our-initiatives";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
-        String actualResultLink = getAttribute(OUR_INITIATIVES_MENU, "href", getDriver());
+        String actualResultLink = getAttribute(OUR_INITIATIVES_MENU, "href");
 
         clickElement(OUR_INITIATIVES_MENU);
 
-        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
+        boolean newPageIsOpen = verifyNewPageOpen();
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -473,13 +459,12 @@ public class MainTest extends BaseTest {
         final String expectedResultLink = "https://openweathermap.org/examples";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
-        String actualResultLink = getAttribute(PARTNERS_MENU, "href", getDriver());
+        String actualResultLink = getAttribute(PARTNERS_MENU, "href");
 
         clickElement(PARTNERS_MENU);
 
-        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
+        boolean newPageIsOpen = verifyNewPageOpen();
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -491,14 +476,13 @@ public class MainTest extends BaseTest {
         final String expectedResultLink = "https://openweather.co.uk/blog/category/weather";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
-        String actualResultLink = getAttribute(BLOG_MENU, "href", getDriver());
+        String actualResultLink = getAttribute(BLOG_MENU, "href");
 
         clickElement(BLOG_MENU);
-        switchToSecondWindow(getDriver());
+        switchToSecondWindow();
 
-        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
+        boolean newPageIsOpen = verifyNewPageOpen();
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -510,14 +494,13 @@ public class MainTest extends BaseTest {
         final String expectedResultLink = "https://openweather.co.uk/";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
-        String actualResultLink = getAttribute(FOR_BUSINESS_MENU, "href", getDriver());
+        String actualResultLink = getAttribute(FOR_BUSINESS_MENU, "href");
 
         clickElement(FOR_BUSINESS_MENU);
-        switchToSecondWindow(getDriver());
+        switchToSecondWindow();
 
-        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
+        boolean newPageIsOpen = verifyNewPageOpen();
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -529,13 +512,12 @@ public class MainTest extends BaseTest {
         final String expectedResultLink = "https://openweathermap.org/home/sign_in";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
-        String actualResultLink = getAttribute(SIGN_IN_MENU, "href", getDriver());
+        String actualResultLink = getAttribute(SIGN_IN_MENU, "href");
 
         clickElement(SIGN_IN_MENU);
 
-        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
+        boolean newPageIsOpen = verifyNewPageOpen();
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -548,13 +530,11 @@ public class MainTest extends BaseTest {
         final int expectedResultNumberOfSubmenus = 3;
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
-
         clickElement(SUPPORT_MENU);
 
         List<WebElement> submenus = getDriver().findElements(By.xpath("//ul[@class = \"dropdown-menu dropdown-visible\"]/li"));
 
-        String actualResultClass = getAttribute(SUPPORT_DROPDOWN_MENU, "class", getDriver());
+        String actualResultClass = getAttribute(SUPPORT_DROPDOWN_MENU, "class");
 
         int actualResultNumberOfSubmenus = submenus.size();
 
@@ -568,15 +548,13 @@ public class MainTest extends BaseTest {
         final String expectedResultLink = "https://openweathermap.org/faq";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
-
         clickElement(SUPPORT_MENU);
 
-        String actualResultLink = getAttribute(FAQ_SUBMENU, "href", getDriver());
+        String actualResultLink = getAttribute(FAQ_SUBMENU, "href");
 
         clickElement(FAQ_SUBMENU);
 
-        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
+        boolean newPageIsOpen = verifyNewPageOpen();
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -588,15 +566,13 @@ public class MainTest extends BaseTest {
         final String expectedResultLink = "https://openweathermap.org/appid";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
-
         clickElement(SUPPORT_MENU);
 
-        String actualResultLink = getAttribute(HOW_TO_START_SUBMENU, "href", getDriver());
+        String actualResultLink = getAttribute(HOW_TO_START_SUBMENU, "href");
 
         clickElement(HOW_TO_START_SUBMENU);
 
-        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
+        boolean newPageIsOpen = verifyNewPageOpen();
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -608,16 +584,14 @@ public class MainTest extends BaseTest {
         final String expectedResultLink = "https://home.openweathermap.org/questions";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
-
         clickElement(SUPPORT_MENU);
 
-        String actualResultLink = getAttribute(ASK_A_QUESTION_SUBMENU, "href", getDriver());
+        String actualResultLink = getAttribute(ASK_A_QUESTION_SUBMENU, "href");
 
         clickElement(ASK_A_QUESTION_SUBMENU);
-        switchToSecondWindow(getDriver());
+        switchToSecondWindow();
 
-        boolean newPageIsOpen = verifyNewPageOpen(getDriver());
+        boolean newPageIsOpen = verifyNewPageOpen();
 
         Assert.assertEquals(actualResultLink, expectedResultLink);
         Assert.assertTrue(newPageIsOpen);
@@ -630,7 +604,7 @@ public class MainTest extends BaseTest {
 
         openBaseUrl();
 
-        String actualResultHeader = getText(HEADER, getDriver());
+        String actualResultHeader = getText(HEADER);
 
         Assert.assertEquals(actualResultHeader, expectedResultHeader);
     }
@@ -642,7 +616,7 @@ public class MainTest extends BaseTest {
 
         openBaseUrl();
 
-        String actualResultSubtitle = getText(SUBTITLE, getDriver());
+        String actualResultSubtitle = getText(SUBTITLE);
 
         Assert.assertEquals(actualResultSubtitle, expectedResultSubtitle);
     }
@@ -671,15 +645,14 @@ public class MainTest extends BaseTest {
     public void testDifferentWeatherPopupOpensAndCloses() throws NoSuchElementException {
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
         clickElement(DIFFERENT_WEATHER_BUTTON);
 
-        boolean isVisible = elementIsDisplayed(DIFFERENT_WEATHER_POPUP, getDriver());
+        boolean isVisible = elementIsDisplayed(DIFFERENT_WEATHER_POPUP);
 
         clickElement(CLOSE_ICON_DIFFERENT_WEATHER_POPUP);
         getWait5().until(ExpectedConditions.invisibilityOfElementLocated(DIFFERENT_WEATHER_POPUP));
 
-        boolean isNotVisible = elementIsNotDisplayed(DIFFERENT_WEATHER_POPUP, getDriver());
+        boolean isNotVisible = elementIsNotDisplayed(DIFFERENT_WEATHER_POPUP);
 
         Assert.assertTrue(isVisible);
         Assert.assertFalse(isNotVisible);
@@ -692,14 +665,12 @@ public class MainTest extends BaseTest {
         final String expectedResultFahrenheitSelected = "slideRight";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
-        String actualResultCelsiusSelected = getAttribute(SELECTED_UNIT, "style", getDriver());
+        String actualResultCelsiusSelected = getAttribute(SELECTED_UNIT, "style");
 
         clickElement(FAHRENHEIT_UNIT);
 
-        String actualResultFahrenheitSelected = getAttribute(SELECTED_UNIT, "className",
-                getDriver());
+        String actualResultFahrenheitSelected = getAttribute(SELECTED_UNIT, "className");
 
         Assert.assertEquals(actualResultCelsiusSelected, expectedResultCelsiusSelected);
         Assert.assertEquals(actualResultFahrenheitSelected, expectedResultFahrenheitSelected);
@@ -709,15 +680,14 @@ public class MainTest extends BaseTest {
     public void testUnitsSwitcherChangesCurrentWeather() {
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
-        boolean unitsDisplayedInCelsius = verifyNeededUnitsDisplayed(CURRENT_TEMPERATURE, "C", getDriver());
+        boolean unitsDisplayedInCelsius = verifyNeededUnitsDisplayed(CURRENT_TEMPERATURE, "C");
         int valueDisplayedInCelsius = getTemperatureFigureFromText(CURRENT_TEMPERATURE);
 
         clickElement(FAHRENHEIT_UNIT);
         waitTillTextChanges(CURRENT_TEMPERATURE, String.valueOf(valueDisplayedInCelsius));
 
-        boolean unitsDisplayedInFahrenheit = verifyNeededUnitsDisplayed(CURRENT_TEMPERATURE, "F", getDriver());
+        boolean unitsDisplayedInFahrenheit = verifyNeededUnitsDisplayed(CURRENT_TEMPERATURE, "F");
         int valueDisplayedInFahrenheit = getTemperatureFigureFromText(CURRENT_TEMPERATURE);
         boolean temperatureHasChanged = celsiusToFahrenheitConvertingCorresponds(valueDisplayedInCelsius, valueDisplayedInFahrenheit);
 
@@ -730,7 +700,6 @@ public class MainTest extends BaseTest {
     public void testUnitsSwitcherChangesEightDayForecast() {
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
         List<WebElement> eightDayForecast = getDriver().findElements(By.xpath("//div[@class = 'day-list-values']/div/span"));
 
@@ -750,9 +719,8 @@ public class MainTest extends BaseTest {
         final String expectedResultPlaceholderText = "Search city";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
-        String actualResultPlaceholderText = getAttribute(SEARCH_BLOCK_INPUT, "placeholder", getDriver());
+        String actualResultPlaceholderText = getAttribute(SEARCH_BLOCK_INPUT, "placeholder");
 
         Assert.assertEquals(actualResultPlaceholderText, expectedResultPlaceholderText);
     }
@@ -763,11 +731,8 @@ public class MainTest extends BaseTest {
         final String cityName = "Madrid";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
-
-        putInValue(SEARCH_BLOCK_INPUT, cityName, getDriver());
+        putInValue(SEARCH_BLOCK_INPUT, cityName);
         clickElement(SEARCH_BUTTON);
-
         waitTillElementIsVisible(SEARCH_DROPDOWN_MENU);
 
         List<WebElement> searchDropdownList = getDriver().findElements(By.xpath("//ul[@class = 'search-dropdown-menu']/li"));
@@ -781,11 +746,8 @@ public class MainTest extends BaseTest {
         final String cityName = "Madrid";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
-
-        enterValue(SEARCH_BLOCK_INPUT, cityName, getDriver());
+        enterValue(SEARCH_BLOCK_INPUT, cityName);
         clickElement(SEARCH_BUTTON);
-
         waitTillElementIsVisible(SEARCH_DROPDOWN_MENU);
 
         List<WebElement> searchDropdownList = getDriver().findElements(By.xpath("//ul[@class = 'search-dropdown-menu']/li"));
@@ -800,11 +762,10 @@ public class MainTest extends BaseTest {
         final String expectedResultLocationDisplayed = "Paris, FR";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
 
-        String currentLocationDisplayed = getText(LOCATION_DISPLAYED, getDriver());
+        String currentLocationDisplayed = getText(LOCATION_DISPLAYED);
 
-        enterValue(SEARCH_BLOCK_INPUT, cityName, getDriver());
+        enterValue(SEARCH_BLOCK_INPUT, cityName);
         waitTillElementIsVisible(SEARCH_DROPDOWN_MENU);
 
         List<WebElement> searchDropdownList = getDriver().findElements(By.xpath("//ul[@class = 'search-dropdown-menu']/li"));
@@ -812,7 +773,7 @@ public class MainTest extends BaseTest {
         clickListElement(searchDropdownList, 0);
         waitTillTextChanges(LOCATION_DISPLAYED, currentLocationDisplayed);
 
-        String actualResultLocationDisplayed = getText(LOCATION_DISPLAYED, getDriver());
+        String actualResultLocationDisplayed = getText(LOCATION_DISPLAYED);
 
         Assert.assertEquals(actualResultLocationDisplayed, expectedResultLocationDisplayed);
     }
@@ -821,11 +782,9 @@ public class MainTest extends BaseTest {
     public void testVerifySearchButtonEmptySearch() {
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
-
         clickElement(SEARCH_BUTTON);
 
-        Assert.assertFalse(elementIsNotDisplayed(SEARCH_DROPDOWN_MENU, getDriver()));
+        Assert.assertFalse(elementIsNotDisplayed(SEARCH_DROPDOWN_MENU));
     }
 
     @Test
@@ -837,14 +796,11 @@ public class MainTest extends BaseTest {
         final String expectedResultErrorWidgetText = "No results for " + invalidInput;
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
-
-        enterValue(SEARCH_BLOCK_INPUT, invalidInput, getDriver());
-
+        enterValue(SEARCH_BLOCK_INPUT, invalidInput);
         waitTillElementIsVisible(ERROR_WIDGET_CITY_NOT_FOUND);
 
-        String actualResultErrorText = getText(ERROR_CITY_NOT_FOUND, getDriver());
-        String actualResultErrorWidgetText = getText(ERROR_WIDGET_CITY_NOT_FOUND, getDriver());
+        String actualResultErrorText = getText(ERROR_CITY_NOT_FOUND);
+        String actualResultErrorWidgetText = getText(ERROR_WIDGET_CITY_NOT_FOUND);
 
         Assert.assertEquals(actualResultErrorText, expectedResultErrorText);
         Assert.assertEquals(actualResultErrorWidgetText, expectedResultErrorWidgetText);
@@ -856,13 +812,11 @@ public class MainTest extends BaseTest {
         String invalidInput = "lmmslg";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
-
-        enterValue(SEARCH_BLOCK_INPUT, invalidInput, getDriver());
+        enterValue(SEARCH_BLOCK_INPUT, invalidInput);
         waitTillElementIsVisible(ERROR_WIDGET_CITY_NOT_FOUND);
         clickElement(ERROR_WIDGET_CITY_NOT_FOUND_ICON_CLOSE);
 
-        Assert.assertFalse(elementIsNotDisplayed(ERROR_WIDGET_CITY_NOT_FOUND, getDriver()));
+        Assert.assertFalse(elementIsNotDisplayed(ERROR_WIDGET_CITY_NOT_FOUND));
     }
 
     @Test
@@ -871,11 +825,8 @@ public class MainTest extends BaseTest {
         final String cityName = "Madrid";
 
         openBaseUrl();
-        waitTillGreyContainerDisappears();
-
-        putInValue(SEARCH_BLOCK_INPUT, cityName, getDriver());
+        putInValue(SEARCH_BLOCK_INPUT, cityName);
         clickElement(SEARCH_BUTTON);
-
         waitTillElementIsVisible(SEARCH_DROPDOWN_MENU);
 
         List<WebElement> searchDropdownList = getDriver().findElements(By.xpath("//ul[@class = 'search-dropdown-menu']/li"));

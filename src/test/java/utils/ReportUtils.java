@@ -1,7 +1,8 @@
-package runner;
+package utils;
 
 import org.testng.ITestResult;
 import org.testng.ITestContext;
+
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
