@@ -99,7 +99,7 @@ public abstract class BaseTest {
 
     public void waitTillElementIsVisible(By by)  {
 
-        getWait10().until(ExpectedConditions.visibilityOfElementLocated(by));
+        getWait20().until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
     public String getAttribute(By by, String attribute) {
