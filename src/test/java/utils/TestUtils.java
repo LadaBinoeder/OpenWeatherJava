@@ -1,4 +1,4 @@
-package runner;
+package utils;
 
 public class TestUtils {
 
@@ -6,6 +6,6 @@ public class TestUtils {
     public static String getBaseUrl() {
 
         return BASE_URL;
-
+ 
     }
 }
