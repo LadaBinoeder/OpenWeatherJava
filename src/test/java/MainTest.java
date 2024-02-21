@@ -1,8 +1,6 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -17,7 +15,6 @@ import java.util.List;
 
 public class MainTest extends BaseTest {
 
-    private final static String BASE_URL = "https://openweathermap.org/";
     private final By LOGO = By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']");
     private final By LOGO_LINK = By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']/a");
     private final By LOGO_IMAGE = By.xpath("//ul[@id = 'first-level-nav']/li[@class = 'logo']/a/img");
