@@ -1,24 +1,24 @@
 package base;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import pages.MainPage;
 import utils.ReportUtils;
 import utils.TestUtils;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.List;
+
+import static base.BaseUtils.isElementExists;
 
 public abstract class BaseTest {
 
@@ -85,71 +85,46 @@ public abstract class BaseTest {
     public void openBaseUrl() {
         driver.get(BASE_URL);
         waitTillGreyContainerDisappears();
+
+        if(reloadPageIfElementNoFound(By.xpath("//div[id = 'weather-widget']//h2"))) {
+            Reporter.log("Base URL page was loaded successfully");
+        } else {
+            Reporter.log("!!!!! ERROR !!!!! Base URL page was NOT loaded. \n"
+                    + "Cancel current run and rerun jobs\n", true);
+        }
+    }
+
+    public MainPage openBaseUrl_ReturnMainPage() {
+        driver.get(BASE_URL);
+        waitTillGreyContainerDisappears();
+
+        if(reloadPageIfElementNoFound(By.xpath("//div[id = 'weather-widget']//h2"))) {
+            Reporter.log("Base URL page was loaded successfully");
+        } else {
+            Reporter.log("!!!!! ERROR !!!!! Base URL page was NOT loaded. \n"
+                    + "Cancel current run and rerun jobs\n", true);
+        }
+
+        return new MainPage(getDriver());
+    }
+
+    private boolean reloadPageIfElementNoFound(By by) {
+
+        int count = 0;
+
+        while(count <= 3 && !(isElementExists(driver, by))) {
+            getDriver().navigate().refresh();
+            Reporter.log("Reloading BaseURL page", true);
+            waitTillGreyContainerDisappears();
+            count++;
+        }
+
+        return isElementExists(driver, by);
     }
 
     public void waitTillGreyContainerDisappears() {
         getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
-    }
-
-    public void waitTillTextChanges(By by, String text) {
-        getWait5().until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElementLocated(by, text)));
-
-    }
-
-    public void waitTillElementIsVisible(By by)  {
-
-        getWait20().until(ExpectedConditions.visibilityOfElementLocated(by));
-    }
-
-    public String getAttribute(By by, String attribute) {
-
-        return driver.findElement(by).getAttribute(attribute);
-    }
-
-    public String getText(By by) {
-        return driver.findElement(by).getText();
-
-    }
-
-    public void clickElement(By by) {
-        getWait5().until(ExpectedConditions.visibilityOfElementLocated(by));
-        getWait5().until(ExpectedConditions.elementToBeClickable(by)).click();
-
-    }
-
-    public void clickListElement(List<WebElement> elements, int index) {
-
-        elements.get(index).click();
-    }
-
-    public void enterValue(By by, String value) {
-
-        driver.findElement(by).sendKeys(value);
-        driver.findElement(by).sendKeys(Keys.ENTER);
-    }
-
-    public void putInValue(By by, String value) {
-
-        driver.findElement(by).sendKeys(value);
-    }
-
-    public boolean elementIsDisplayed(By by) {
-
-        boolean isDisplayed = driver.findElement(by).isDisplayed();
-        return isDisplayed;
-
-    }
-
-    public boolean elementIsNotDisplayed(By by) {
-        try {
-            driver.findElement(by);
-            return true;
-
-        } catch (NoSuchElementException e) {
-            return false;
-
-        }
     }
 
     public boolean verifyNewPageOpen() {
@@ -165,60 +140,6 @@ public abstract class BaseTest {
     public void switchToSecondWindow() {
         String handle = driver.getWindowHandles().toArray()[1].toString();
         driver.switchTo().window(handle);
-
-    }
-
-    public boolean verifyNeededUnitsDisplayed(By by, String units) {
-        String text = getText(by);
-        if(text.contains(units)){
-            return true;
-
-        };
-        return false;
-
-    }
-
-    public boolean verifyArrayContainsNeededUnits(List<WebElement> array, String units) {
-
-        for(int i = 0; i < array.size(); i++) {
-            if(array.get(i).getText().contains(units)) {
-                return true;
-
-            }
-        }
-        return false;
-
-    }
-
-    public int convertCelsiusToFahrenheit(int temperatureInCelsius) {
-
-        int temperatureInFahrenheit = (int)(temperatureInCelsius * 1.8 + 32);
-        return temperatureInFahrenheit;
-
-    }
-
-    public boolean celsiusToFahrenheitConvertingCorresponds(int temperatureInCelsius, int temperatureInFahrenheit) {
-
-        if(temperatureInFahrenheit == convertCelsiusToFahrenheit(temperatureInCelsius)
-                || temperatureInFahrenheit == convertCelsiusToFahrenheit(temperatureInCelsius) + 1)
-        {
-            return true;
-
-        }
-        return false;
-
-    }
-
-    public int getTemperatureFigureFromText(By by) {
-
-        String currentTemp = getText(by);
-        char[] arrayCurrentTemp = currentTemp.toCharArray();
-        currentTemp = "";
-
-        for(int i = 0; i < arrayCurrentTemp.length - 2; i++) {
-            currentTemp = currentTemp + arrayCurrentTemp[i];
-        }
-        return Integer.valueOf(currentTemp);
 
     }
 }
