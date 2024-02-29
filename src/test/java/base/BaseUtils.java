@@ -1,6 +1,9 @@
 package base;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -62,5 +65,16 @@ public final class BaseUtils {
         ChromeDriver driver = new ChromeDriver(chromeOptions);
         return driver;
 
+    }
+
+    public static boolean isElementExists(WebDriver driver, By by) {
+        boolean isExists = true;
+        try {
+            driver.findElement(by);
+        } catch (NoSuchElementException e) {
+            isExists = false;
+        }
+
+        return isExists;
     }
 }
