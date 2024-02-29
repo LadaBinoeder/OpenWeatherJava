@@ -88,20 +88,4 @@ public abstract class BaseTest {
         return new MainPage(getDriver());
 
     }
-
-    public boolean verifyNewPageOpen() {
-        boolean newPageIsOpened = true;
-        if (driver.getCurrentUrl().equals(BASE_URL)) {
-            newPageIsOpened = false;
-
-        }
-        return newPageIsOpened;
-
-    }
-
-    public void switchToSecondWindow() {
-        String handle = driver.getWindowHandles().toArray()[1].toString();
-        driver.switchTo().window(handle);
-
-    }
 }

@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import utils.TestUtils;
 
 import java.util.List;
 
@@ -127,21 +128,21 @@ public class TopMenuPage extends BasePage {
     public TopMenuPage clickGuideMenu() {
 
         clickElement(guideMenu);
-        return this;
+        return new GuidePage(getDriver());
 
     }
 
     public TopMenuPage clickAPIMenu() {
 
         clickElement(apiMenu);
-        return this;
+        return new ApiPage(getDriver());
 
     }
 
     public TopMenuPage clickDashboardMenu() {
 
         clickElement(dashboardMenu);
-        return this;
+        return new DashboardPage(getDriver());
 
     }
 
@@ -155,28 +156,28 @@ public class TopMenuPage extends BasePage {
     public TopMenuPage clickPricingMenu() {
 
         clickElement(pricingMenu);
-        return this;
+        return new PricePage(getDriver());
 
     }
 
     public TopMenuPage clickMapsMenu() {
 
         clickElement(mapsMenu);
-        return this;
+        return new MapsPage(getDriver());
 
     }
 
     public TopMenuPage clickOurInitiativesMenu() {
 
         clickElement(ourInitiativesMenu);
-        return this;
+        return new OurInitiativesPage(getDriver());
 
     }
 
     public TopMenuPage clickPartnersMenu() {
 
         clickElement(partnersMenu);
-        return this;
+        return new PartnersPage(getDriver());
 
     }
 
@@ -211,14 +212,14 @@ public class TopMenuPage extends BasePage {
     public TopMenuPage clickFAQSubmenu() {
 
         clickElement(faqSubmenu);
-        return this;
+        return new FaqPage(getDriver());
 
     }
 
     public TopMenuPage clickHowToStartSubmenu() {
 
         clickElement(howToStartSubmenu);
-        return this;
+        return new HowToStartPage(getDriver());
 
     }
 
@@ -329,5 +330,22 @@ public class TopMenuPage extends BasePage {
     public String getAskAQuestionSubmenuLink() {
 
         return getAttribute(askAQuestionSubmenu, "href");
+    }
+
+    public boolean verifyNewPageOpen() {
+        boolean newPageIsOpened = true;
+        if (getDriver().getCurrentUrl().equals(TestUtils.getBaseUrl())) {
+            newPageIsOpened = false;
+
+        }
+        return newPageIsOpened;
+
+    }
+
+    public TopMenuPage switchToSecondWindowTopMenu() {
+        String handle = getDriver().getWindowHandles().toArray()[1].toString();
+        getDriver().switchTo().window(handle);
+        return this;
+
     }
 }
