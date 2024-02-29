@@ -20,30 +20,15 @@ public class MainTest extends BaseTest {
         final String expectedURL = "https://openweathermap.org/";
         final String expectedTitle = "Сurrent weather and forecast - OpenWeatherMap";
 
-        openBaseUrl();
+        MainPage mainPage = openBaseURL();
 
         String actualURL = getDriver().getCurrentUrl();
         String actualTitle = getDriver().getTitle();
 
-        WebElement anyElement = getDriver().findElement(By.xpath("//*"));
-        boolean pageIsNotEmpty = false;
-        if (anyElement != null) {
-            pageIsNotEmpty = true;
-        }
-
-        URL url = new URL(BASE_URL);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        int responseCode = connection.getResponseCode();
-        boolean noErrors = true;
-        if (responseCode >= 400 && responseCode < 600) {
-            noErrors = false;
-        }
-
         Assert.assertEquals(actualURL, expectedURL);
         Assert.assertEquals(actualTitle, expectedTitle);
-        Assert.assertTrue(pageIsNotEmpty);
-        Assert.assertTrue(noErrors);
+        Assert.assertTrue(mainPage.verifyPageIsNotEmpty());
+        Assert.assertTrue(mainPage.verifyErrorsAtPage());
     }
 
     @Test
@@ -51,10 +36,7 @@ public class MainTest extends BaseTest {
 
         final String expectedHeader = "OpenWeather";
 
-        openBaseUrl();
-
-        MainPage mainPage = new MainPage(getDriver());
-
+        MainPage mainPage = openBaseURL();
         String actualHeader = mainPage.getHeaderText();
 
         Assert.assertEquals(actualHeader, expectedHeader);
@@ -65,9 +47,7 @@ public class MainTest extends BaseTest {
 
         final String expectedSubtitle = "Weather forecasts, nowcasts and history in a fast and elegant way";
 
-        openBaseUrl();
-
-        MainPage mainPage = new MainPage(getDriver());
+        MainPage mainPage = openBaseURL();
 
         String actualSubtitle = mainPage.getSubtitleText();
 
@@ -77,9 +57,7 @@ public class MainTest extends BaseTest {
     @Test
     public void testVerifySearchBlockIsDisplayed() {
 
-        openBaseUrl();
-
-        MainPage mainPage = new MainPage(getDriver());
+        MainPage mainPage = openBaseURL();;
 
         Assert.assertTrue(mainPage.searchBlockContainerIsDisplayed());
     }
@@ -87,9 +65,7 @@ public class MainTest extends BaseTest {
     @Test
     public void testVerifyForecastSectionIsDisplayed() {
 
-        openBaseUrl();
-
-        MainPage mainPage = new MainPage(getDriver());
+        MainPage mainPage = openBaseURL();
 
         Assert.assertTrue(mainPage.forecastSectionIsDisplayed());
     }
@@ -97,18 +73,14 @@ public class MainTest extends BaseTest {
     @Test
     public void testDifferentWeatherPopupOpensAndCloses() throws NoSuchElementException {
 
-        openBaseUrl();
+        MainPage mainPage = openBaseURL();
 
-        MainPage mainPage = new MainPage(getDriver());
+        boolean isVisible = mainPage.clickDifferentWeatherButton()
+                                    .differentWeatherPopupIsDisplayed();
 
-        mainPage.clickDifferentWeatherButton();
-
-        boolean isVisible = mainPage.differentWeatherPopupIsDisplayed();
-
-        mainPage.clickCloseIconDifferentWeatherPopup();
-        mainPage.waitTillDifferentWeatherPopupIsNotVisible();
-
-        boolean isNotVisible = mainPage.differentWeatherPopupIsNotDisplayed();
+        boolean isNotVisible = mainPage.clickCloseIconDifferentWeatherPopup()
+                                       .waitTillDifferentWeatherPopupIsNotVisible()
+                                       .differentWeatherPopupIsNotDisplayed();
 
         Assert.assertTrue(isVisible);
         Assert.assertFalse(isNotVisible);
@@ -120,15 +92,12 @@ public class MainTest extends BaseTest {
         final String expectedCelsiusSelected = "left: 2pt;";
         final String expectedFahrenheitSelected = "slideRight";
 
-        openBaseUrl();
-
-        MainPage mainPage = new MainPage(getDriver());
+        MainPage mainPage = openBaseURL();
 
         String actualCelsiusSelected = mainPage.getSelectedUnitAttribute("style");
 
-        mainPage.clickFahrenheitUnit();
-
-        String actualFahrenheitSelected = mainPage.getSelectedUnitAttribute("className");
+        String actualFahrenheitSelected = mainPage.clickFahrenheitUnit()
+                                                  .getSelectedUnitAttribute("className");
 
         Assert.assertEquals(actualCelsiusSelected, expectedCelsiusSelected);
         Assert.assertEquals(actualFahrenheitSelected, expectedFahrenheitSelected);
@@ -137,15 +106,13 @@ public class MainTest extends BaseTest {
     @Test
     public void testUnitsSwitcherChangesCurrentWeather() {
 
-        openBaseUrl();
-
-        MainPage mainPage = new MainPage(getDriver());
+        MainPage mainPage = openBaseURL();
 
         boolean unitsDisplayedInCelsius = mainPage.verifyNeededUnitsDisplayed( "C");
         int valueDisplayedInCelsius = mainPage.getCurrentTemperatureFigureFromText();
 
-        mainPage.clickFahrenheitUnit();
-        mainPage.waitTillCurrentTemperatureTextChanges(String.valueOf(valueDisplayedInCelsius));
+        mainPage.clickFahrenheitUnit()
+                .waitTillCurrentTemperatureTextChanges(String.valueOf(valueDisplayedInCelsius));
 
         boolean unitsDisplayedInFahrenheit = mainPage.verifyNeededUnitsDisplayed("F");
         int valueDisplayedInFahrenheit = mainPage.getCurrentTemperatureFigureFromText();
@@ -159,15 +126,12 @@ public class MainTest extends BaseTest {
     @Test
     public void testUnitsSwitcherChangesEightDayForecast() {
 
-        openBaseUrl();
-
-        MainPage mainPage = new MainPage(getDriver());
+        MainPage mainPage = openBaseURL();
 
         boolean unitsDisplayedInCelsius = mainPage.verifyEightDayForecastContainsNeededUnits("C");
 
-        mainPage.clickFahrenheitUnit();
-
-        boolean unitsDisplayedInFahrenheit = mainPage.verifyEightDayForecastContainsNeededUnits("F");;
+        boolean unitsDisplayedInFahrenheit = mainPage.clickFahrenheitUnit()
+                                                     .verifyEightDayForecastContainsNeededUnits("F");;
 
         Assert.assertTrue(unitsDisplayedInCelsius);
         Assert.assertTrue(unitsDisplayedInFahrenheit);
@@ -178,9 +142,7 @@ public class MainTest extends BaseTest {
 
         final String expectedPlaceholderText = "Search city";
 
-        openBaseUrl();
-
-        MainPage mainPage = new MainPage(getDriver());
+        MainPage mainPage = openBaseURL();
 
         String actualPlaceholderText = mainPage.getSearchBlockInputAttribute("placeholder");
 
@@ -192,13 +154,11 @@ public class MainTest extends BaseTest {
 
         final String cityName = "Madrid";
 
-        openBaseUrl();
+        MainPage mainPage = openBaseURL();
 
-        MainPage mainPage = new MainPage(getDriver());
-
-        mainPage.putInValueSearchBlock(cityName);
-        mainPage.clickSearchButton();
-        mainPage.waitTillSearchDropdownMenuIsVisible();
+        mainPage.putInValueSearchBlock(cityName)
+                .clickSearchButton()
+                .waitTillSearchDropdownMenuIsVisible();
 
         Assert.assertFalse(mainPage.verifySearchDropdownListIsEmpty());
     }
@@ -208,12 +168,10 @@ public class MainTest extends BaseTest {
 
         final String cityName = "Madrid";
 
-        openBaseUrl();
+        MainPage mainPage = openBaseURL();
 
-        MainPage mainPage = new MainPage(getDriver());
-
-        mainPage.enterValueSearchBlock(cityName);
-        mainPage.waitTillSearchDropdownMenuIsVisible();
+        mainPage.enterValueSearchBlock(cityName)
+                .waitTillSearchDropdownMenuIsVisible();
 
         Assert.assertFalse(mainPage.verifySearchDropdownListIsEmpty());
     }
@@ -224,18 +182,15 @@ public class MainTest extends BaseTest {
         final String cityName = "Paris";
         final String expectedLocationDisplayed = "Paris, FR";
 
-        openBaseUrl();
-
-        MainPage mainPage = new MainPage(getDriver());
+        MainPage mainPage = openBaseURL();
 
         String currentLocationDisplayed = mainPage.getDisplayedLocationText();
 
-        mainPage.enterValueSearchBlock(cityName);
-        mainPage.waitTillSearchDropdownMenuIsVisible();
-        mainPage.clickSearchDropdownListElement(0);
-        mainPage.waitTillDisplayedLocationTextChanges(currentLocationDisplayed);
-
-        String actualLocationDisplayed = mainPage.getDisplayedLocationText();
+        String actualLocationDisplayed = mainPage.enterValueSearchBlock(cityName)
+                .waitTillSearchDropdownMenuIsVisible()
+                .clickSearchDropdownListElement(0)
+                .waitTillDisplayedLocationTextChanges(currentLocationDisplayed)
+                .getDisplayedLocationText();
 
         Assert.assertEquals(actualLocationDisplayed, expectedLocationDisplayed);
     }
@@ -243,9 +198,7 @@ public class MainTest extends BaseTest {
     @Test
     public void testVerifySearchButtonEmptySearch() {
 
-        openBaseUrl();
-
-        MainPage mainPage = new MainPage(getDriver());
+        MainPage mainPage = openBaseURL();
 
         mainPage.clickSearchButton();
 
@@ -260,14 +213,11 @@ public class MainTest extends BaseTest {
         final String expectedErrorText = "Not found. To make search more precise put the city's name, comma, 2-letter country code (ISO3166).";
         final String expectedErrorWidgetText = "No results for " + invalidInput;
 
-        openBaseUrl();
+        MainPage mainPage = openBaseURL();
 
-        MainPage mainPage = new MainPage(getDriver());
-
-        mainPage.enterValueSearchBlock(invalidInput);
-        mainPage.waitErrorWidgetCityNotFoundIsVisible();
-
-        String actualErrorText = mainPage.getErrorCityNotFoundText();
+        String actualErrorText = mainPage.enterValueSearchBlock(invalidInput)
+                                         .waitErrorWidgetCityNotFoundIsVisible()
+                                         .getErrorCityNotFoundText();
         String actualErrorWidgetText = mainPage.getErrorCityWidgetNotFoundText();
 
         Assert.assertEquals(actualErrorText, expectedErrorText);
@@ -279,13 +229,11 @@ public class MainTest extends BaseTest {
 
         String invalidInput = "lmmslg";
 
-        openBaseUrl();
+        MainPage mainPage = openBaseURL();
 
-        MainPage mainPage = new MainPage(getDriver());
-
-        mainPage.enterValueSearchBlock(invalidInput);
-        mainPage.waitErrorWidgetCityNotFoundIsVisible();
-        mainPage.clickErrorWidgetCityNotFoundIconClose();
+        mainPage.enterValueSearchBlock(invalidInput)
+                .waitErrorWidgetCityNotFoundIsVisible()
+                .clickErrorWidgetCityNotFoundIconClose();
 
         Assert.assertFalse(mainPage.errorWidgetCityNotFoundIsNotDisplayed());
     }
@@ -295,13 +243,11 @@ public class MainTest extends BaseTest {
 
         final String cityName = "Madrid";
 
-        openBaseUrl();
+        MainPage mainPage = openBaseURL();
 
-        MainPage mainPage = new MainPage(getDriver());
-
-        mainPage.putInValueSearchBlock(cityName);
-        mainPage.clickSearchButton();
-        mainPage.waitTillSearchDropdownMenuIsVisible();
+        mainPage.putInValueSearchBlock(cityName)
+                .clickSearchButton()
+                .waitTillSearchDropdownMenuIsVisible();
 
         Assert.assertTrue(mainPage.verifySearchDropdownListShowsCorrespondingResults(cityName));
     }

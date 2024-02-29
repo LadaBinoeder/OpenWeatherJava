@@ -1,8 +1,6 @@
 package base;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
@@ -16,9 +14,6 @@ import utils.TestUtils;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
-import java.util.List;
-
-import static base.BaseUtils.isElementExists;
 
 public abstract class BaseTest {
 
@@ -82,48 +77,15 @@ public abstract class BaseTest {
 
     }
 
-    public void openBaseUrl() {
-        driver.get(BASE_URL);
-        waitTillGreyContainerDisappears();
+    public MainPage openBaseURL() {
+        TestUtils.loadBaseUrlPage(getDriver(), getWait10());
 
-        if(reloadPageIfElementNoFound(By.xpath("//div[id = 'weather-widget']//h2"))) {
-            Reporter.log("Base URL page was loaded successfully");
+        if (TestUtils.isH2HeaderExists(getDriver())) {
+            Reporter.log("BaseURL page was loaded successfully ", true);
         } else {
-            Reporter.log("!!!!! ERROR !!!!! Base URL page was NOT loaded. \n"
-                    + "Cancel current run and rerun jobs\n", true);
+            TestUtils.reLoadBaseUrlPage(getDriver(), getWait10());
         }
-    }
-
-    public MainPage openBaseUrl_ReturnMainPage() {
-        driver.get(BASE_URL);
-        waitTillGreyContainerDisappears();
-
-        if(reloadPageIfElementNoFound(By.xpath("//div[id = 'weather-widget']//h2"))) {
-            Reporter.log("Base URL page was loaded successfully");
-        } else {
-            Reporter.log("!!!!! ERROR !!!!! Base URL page was NOT loaded. \n"
-                    + "Cancel current run and rerun jobs\n", true);
-        }
-
         return new MainPage(getDriver());
-    }
-
-    private boolean reloadPageIfElementNoFound(By by) {
-
-        int count = 0;
-
-        while(count <= 3 && !(isElementExists(driver, by))) {
-            getDriver().navigate().refresh();
-            Reporter.log("Reloading BaseURL page", true);
-            waitTillGreyContainerDisappears();
-            count++;
-        }
-
-        return isElementExists(driver, by);
-    }
-
-    public void waitTillGreyContainerDisappears() {
-        getWait10().until(ExpectedConditions.invisibilityOfElementLocated(By.className("owm-loader-container")));
 
     }
 

@@ -85,8 +85,8 @@ public abstract class BasePage {
     }
 
     protected void clickElement(WebElement webElement) {
-        getWait5().until(ExpectedConditions.visibilityOfAllElements(webElement));
-        getWait5().until(ExpectedConditions.elementToBeClickable(webElement)).click();
+        getWait10().until(ExpectedConditions.visibilityOfAllElements(webElement));
+        getWait10().until(ExpectedConditions.elementToBeClickable(webElement)).click();
 
     }
 

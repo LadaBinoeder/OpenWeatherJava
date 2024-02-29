@@ -1,12 +1,13 @@
 package pages;
 
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import utils.TestUtils;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class MainPage extends FooterMenuPage {
@@ -115,44 +116,53 @@ public class MainPage extends FooterMenuPage {
         return errorWidgetCityNotFound.getText();
     }
 
-    public void putInValueSearchBlock(String value) {
+    public MainPage putInValueSearchBlock(String value) {
 
         searchBlockInput.sendKeys(value);
+        return this;
+
     }
 
-    public void enterValueSearchBlock(String value) {
+    public MainPage enterValueSearchBlock(String value) {
 
         searchBlockInput.sendKeys(value);
         searchBlockInput.sendKeys(Keys.ENTER);
+        return this;
+
     }
 
-    public void clickDifferentWeatherButton() {
+    public MainPage clickDifferentWeatherButton() {
         getWait5().until(ExpectedConditions.visibilityOfAllElements(differentWeatherButton));
         getWait5().until(ExpectedConditions.elementToBeClickable(differentWeatherButton)).click();
 
+        return this;
     }
 
-    public void clickCloseIconDifferentWeatherPopup() {
+    public MainPage clickCloseIconDifferentWeatherPopup() {
         getWait5().until(ExpectedConditions.visibilityOfAllElements(closeIconDifferentWeatherPopup));
         getWait5().until(ExpectedConditions.elementToBeClickable(closeIconDifferentWeatherPopup)).click();
 
+        return this;
     }
 
-    public void clickFahrenheitUnit() {
+    public MainPage clickFahrenheitUnit() {
         getWait5().until(ExpectedConditions.visibilityOfAllElements(fahrenheitUnit));
         getWait5().until(ExpectedConditions.elementToBeClickable(fahrenheitUnit)).click();
+        return this;
 
     }
 
-    public void clickSearchButton() {
+    public MainPage clickSearchButton() {
         getWait5().until(ExpectedConditions.visibilityOfAllElements(searchButton));
         getWait5().until(ExpectedConditions.elementToBeClickable(searchButton)).click();
+        return this;
 
     }
 
-    public void clickErrorWidgetCityNotFoundIconClose() {
+    public MainPage clickErrorWidgetCityNotFoundIconClose() {
         getWait5().until(ExpectedConditions.visibilityOfAllElements(errorWidgetCityNotFoundIconClose));
         getWait5().until(ExpectedConditions.elementToBeClickable(errorWidgetCityNotFoundIconClose)).click();
+        return this;
 
     }
 
@@ -166,33 +176,41 @@ public class MainPage extends FooterMenuPage {
         return forecastSection.isDisplayed();
     }
 
-    public boolean differentWeatherPopupIsDisplayed() {
+    public boolean  differentWeatherPopupIsDisplayed() {
 
         return differentWeatherPopup.isDisplayed();
     }
 
-    public void waitTillSearchDropdownMenuIsVisible()  {
+    public MainPage waitTillSearchDropdownMenuIsVisible()  {
 
         getWait10().until(ExpectedConditions.visibilityOf(searchDropdownMenu));
+        return this;
+
     }
 
-    public void waitErrorWidgetCityNotFoundIsVisible()  {
+    public MainPage waitErrorWidgetCityNotFoundIsVisible()  {
 
         getWait10().until(ExpectedConditions.visibilityOf(errorWidgetCityNotFound));
+        return this;
+
     }
 
-    public void waitTillDifferentWeatherPopupIsNotVisible()  {
+    public MainPage waitTillDifferentWeatherPopupIsNotVisible()  {
 
         getWait10().until(ExpectedConditions.invisibilityOf(differentWeatherPopup));
+        return this;
+
     }
 
-    public void waitTillCurrentTemperatureTextChanges(String text) {
+    public MainPage waitTillCurrentTemperatureTextChanges(String text) {
         getWait5().until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(currentTemperature, text)));
+        return this;
 
     }
 
-    public void waitTillDisplayedLocationTextChanges(String text) {
+    public MainPage waitTillDisplayedLocationTextChanges(String text) {
         getWait5().until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(locationDisplayed, text)));
+        return this;
 
     }
 
@@ -291,9 +309,11 @@ public class MainPage extends FooterMenuPage {
         return searchDropdownList.isEmpty();
     }
 
-    public void clickSearchDropdownListElement(int index) {
+    public MainPage clickSearchDropdownListElement(int index) {
 
         searchDropdownList.get(index).click();
+        return this;
+
     }
 
     public boolean verifySearchDropdownListShowsCorrespondingResults(String cityName) {
@@ -313,5 +333,30 @@ public class MainPage extends FooterMenuPage {
         }
 
         return cityNameCorresponds;
+    }
+
+    public boolean verifyPageIsNotEmpty() {
+
+        WebElement anyElement = getDriver().findElement(By.xpath("//*"));
+        boolean pageIsEmpty = true;
+
+        if (anyElement == null) {
+            pageIsEmpty = false;
+        }
+        return pageIsEmpty;
+    }
+
+    public boolean verifyErrorsAtPage() throws IOException {
+
+        URL url = new URL(TestUtils.getBaseUrl());
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        int responseCode = connection.getResponseCode();
+        boolean noErrors = true;
+        if (responseCode >= 400 && responseCode < 600) {
+            noErrors = false;
+        }
+
+        return noErrors;
     }
 }

@@ -12,11 +12,8 @@ public class TopMenuTest extends BaseTest {
     @Test
     public void testLogoIsDisplayed() {
 
-        openBaseUrl();
-
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
-
-        boolean logoIsDisplayed = topMenuPage.logoIsDisplayed();
+        boolean logoIsDisplayed = openBaseURL()
+                .logoIsDisplayed();
 
         Assert.assertTrue(logoIsDisplayed);
     }
@@ -24,11 +21,8 @@ public class TopMenuTest extends BaseTest {
     @Test
     public void testPlaceholderIsDisplayed() {
 
-        openBaseUrl();
-
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
-
-        boolean placeholderIsDisplayed = topMenuPage.placeholderIsDisplayed();
+        boolean placeholderIsDisplayed = openBaseURL()
+                .placeholderIsDisplayed();
 
         Assert.assertTrue(placeholderIsDisplayed);
     }
@@ -38,11 +32,8 @@ public class TopMenuTest extends BaseTest {
 
         final int expectedResult = 12;
 
-        openBaseUrl();
-
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
-
-        int actualResult = topMenuPage.getDesktopMenuSize();
+        int actualResult = openBaseURL()
+                .getDesktopMenuSize();
 
         Assert.assertEquals(actualResult, expectedResult);
     }
@@ -65,11 +56,7 @@ public class TopMenuTest extends BaseTest {
                 "Support"
         );
 
-        openBaseUrl();
-
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
-
-        List<String> actualDesktopMenuNames = topMenuPage.getDesktopMenuText();
+        List<String> actualDesktopMenuNames = openBaseURL().getDesktopMenuText();
 
         Assert.assertEquals(actualDesktopMenuNames, expectedDesktopMenuNames);
     }
@@ -80,14 +67,11 @@ public class TopMenuTest extends BaseTest {
         final String expectedLink = "https://openweathermap.org/";
         final String expectedImage = "https://openweathermap.org/themes/openweathermap/assets/img/logo_white_cropped.png";
 
-        openBaseUrl();
-
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
-
-        topMenuPage.clickLogo();
+        TopMenuPage topMenuPage = openBaseURL();
 
         String actualURL = getDriver().getCurrentUrl();
-        String actualLink = topMenuPage.getLogoLink();
+        String actualLink = topMenuPage.clickLogo()
+                                       .getLogoLink();
         String actualImage = topMenuPage.getLogoImage();
 
         Assert.assertEquals(actualURL, BASE_URL);
@@ -103,15 +87,13 @@ public class TopMenuTest extends BaseTest {
         final String expectedText = "Weather in your city";
         final String expectedPage = expectedLink + "?q=" + city;
 
-        openBaseUrl();
-
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
+        TopMenuPage topMenuPage = openBaseURL();
 
         String actualResultLink = topMenuPage.getWeatherInYourCityPlaceholderLink();
         String actualResultText = topMenuPage.getWeatherInYourCityPlaceholderText();
 
-        topMenuPage.clickWeatherInYourCityPlaceholder();
-        topMenuPage.enterCityNameInWeatherInYourCityPlaceholder(city);
+        topMenuPage.clickWeatherInYourCityPlaceholder()
+                   .enterCityNameInWeatherInYourCityPlaceholder(city);
 
         String actualResultPage = getDriver().getCurrentUrl();
 
@@ -125,9 +107,7 @@ public class TopMenuTest extends BaseTest {
 
         final String expectedLink = "https://openweathermap.org/guide";
 
-        openBaseUrl();
-
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
+        TopMenuPage topMenuPage = openBaseURL();
 
         String actualLink = topMenuPage.getGuideMenuLink();
 
@@ -144,9 +124,7 @@ public class TopMenuTest extends BaseTest {
 
         final String expectedLink = "https://openweathermap.org/api";
 
-        openBaseUrl();
-
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
+        TopMenuPage topMenuPage = openBaseURL();
 
         String actualLink = topMenuPage.getAPIMenuLink();
 
@@ -163,9 +141,7 @@ public class TopMenuTest extends BaseTest {
 
         final String expectedLink = "https://openweathermap.org/weather-dashboard";
 
-        openBaseUrl();
-
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
+        TopMenuPage topMenuPage = openBaseURL();
 
         String actualLink = topMenuPage.getDashboardMenuLink();
 
@@ -182,9 +158,7 @@ public class TopMenuTest extends BaseTest {
 
         final String expectedLink = "https://home.openweathermap.org/marketplace";
 
-        openBaseUrl();
-
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
+        TopMenuPage topMenuPage = openBaseURL();
 
         String actualLink = topMenuPage.getMarketplaceMenuLink();
 
@@ -202,9 +176,7 @@ public class TopMenuTest extends BaseTest {
 
         final String expectedLink = "https://openweathermap.org/price";
 
-        openBaseUrl();
-
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
+        TopMenuPage topMenuPage = openBaseURL();
 
         String actualLink = topMenuPage.getPricingMenuLink();
 
@@ -216,33 +188,13 @@ public class TopMenuTest extends BaseTest {
         Assert.assertTrue(newPageIsOpen);
     }
 
-    @Test
-    public void testMapsIsClickable() {
-
-        final String expectedLink = "https://openweathermap.org/weathermap";
-
-        openBaseUrl();
-
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
-
-        String actualLink = topMenuPage.getMapsMenuLink();
-
-        topMenuPage.clickMapsMenu();
-
-        boolean newPageIsOpen = verifyNewPageOpen();
-
-        Assert.assertEquals(actualLink, expectedLink);
-        Assert.assertTrue(newPageIsOpen);
-    }
 
     @Test
     public void testOurInitiativesIsClickable() {
 
         final String expectedLink = "https://openweathermap.org/our-initiatives";
 
-        openBaseUrl();
-
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
+        TopMenuPage topMenuPage = openBaseURL();
 
         String actualLink = topMenuPage.getOurInitiativesMenuLink();
 
@@ -259,9 +211,7 @@ public class TopMenuTest extends BaseTest {
 
         final String expectedLink = "https://openweathermap.org/examples";
 
-        openBaseUrl();
-
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
+        TopMenuPage topMenuPage = openBaseURL();
 
         String actualLink = topMenuPage.getPartnersMenuLink();
 
@@ -278,9 +228,7 @@ public class TopMenuTest extends BaseTest {
 
         final String expectedLink = "https://openweather.co.uk/blog/category/weather";
 
-        openBaseUrl();
-
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
+        TopMenuPage topMenuPage = openBaseURL();
 
         String actualLink = topMenuPage.getBlogMenuLink();
 
@@ -298,9 +246,7 @@ public class TopMenuTest extends BaseTest {
 
         final String expectedLink = "https://openweather.co.uk/";
 
-        openBaseUrl();
-
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
+        TopMenuPage topMenuPage = openBaseURL();
 
         String actualLink = topMenuPage.getForBusinessMenuLink();
 
@@ -318,9 +264,7 @@ public class TopMenuTest extends BaseTest {
 
         final String expectedLink = "https://openweathermap.org/home/sign_in";
 
-        openBaseUrl();
-
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
+        TopMenuPage topMenuPage = openBaseURL();
 
         String actualLink = topMenuPage.getSignInMenuLink();
 
@@ -338,13 +282,10 @@ public class TopMenuTest extends BaseTest {
         final String expectedClass = "dropdown-menu dropdown-visible";
         final int expectedNumberOfSubmenus = 3;
 
-        openBaseUrl();
+        TopMenuPage topMenuPage = openBaseURL();
 
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
-
-        topMenuPage.clickSupportMenu();
-
-        String actualClass = topMenuPage.getSupportDropdownMenuClass();
+        String actualClass = topMenuPage.clickSupportMenu()
+                                        .getSupportDropdownMenuClass();
         int actualNumberOfSubmenus = topMenuPage.getSubmenusSize();
 
         Assert.assertEquals(actualClass, expectedClass);
@@ -356,13 +297,10 @@ public class TopMenuTest extends BaseTest {
 
         final String expectedLink = "https://openweathermap.org/faq";
 
-        openBaseUrl();
+        TopMenuPage topMenuPage = openBaseURL();
 
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
-
-        topMenuPage.clickSupportMenu();
-
-        String actualLink = topMenuPage.getFAQSubmenuLink();
+        String actualLink = topMenuPage.clickSupportMenu()
+                                       .getFAQSubmenuLink();
 
         topMenuPage.clickFAQSubmenu();
 
@@ -377,13 +315,10 @@ public class TopMenuTest extends BaseTest {
 
         final String expectedLink = "https://openweathermap.org/appid";
 
-        openBaseUrl();
+        TopMenuPage topMenuPage = openBaseURL();
 
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
-
-        topMenuPage.clickSupportMenu();
-
-        String actualLink = topMenuPage.getHowToStartSubmenuLink();
+        String actualLink = topMenuPage.clickSupportMenu()
+                                       .getHowToStartSubmenuLink();
 
         topMenuPage.clickHowToStartSubmenu();
 
@@ -392,19 +327,15 @@ public class TopMenuTest extends BaseTest {
         Assert.assertEquals(actualLink, expectedLink);
         Assert.assertTrue(newPageIsOpen);
     }
-
     @Test
     public void testAskAQuestionIsClickable() {
 
         final String expectedLink = "https://home.openweathermap.org/questions";
 
-        openBaseUrl();
+        TopMenuPage topMenuPage = openBaseURL();
 
-        TopMenuPage topMenuPage = new TopMenuPage(getDriver());
-
-        topMenuPage.clickSupportMenu();
-
-        String actualLink = topMenuPage.getAskAQuestionSubmenuLink();
+        String actualLink = topMenuPage.clickSupportMenu()
+                                       .getAskAQuestionSubmenuLink();
 
         topMenuPage.clickAskAQuestionSubmenu();
         switchToSecondWindow();

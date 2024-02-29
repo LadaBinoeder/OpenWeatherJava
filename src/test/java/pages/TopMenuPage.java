@@ -3,7 +3,6 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
@@ -111,94 +110,130 @@ public class TopMenuPage extends BasePage {
         return getListTexts(desktopMenuElements);
     }
 
-    public void clickLogo() {
+    public TopMenuPage clickLogo() {
 
         clickElement(logo);
+        return this;
+
     }
 
-    public void clickWeatherInYourCityPlaceholder() {
+    public TopMenuPage clickWeatherInYourCityPlaceholder() {
 
         clickElement(weatherInYourCityPlaceholderLink);
+        return this;
+
     }
 
-    public void clickGuideMenu() {
+    public TopMenuPage clickGuideMenu() {
 
         clickElement(guideMenu);
+        return this;
+
     }
 
-    public void clickAPIMenu() {
+    public TopMenuPage clickAPIMenu() {
 
         clickElement(apiMenu);
+        return this;
+
     }
 
-    public void clickDashboardMenu() {
+    public TopMenuPage clickDashboardMenu() {
 
         clickElement(dashboardMenu);
+        return this;
+
     }
 
-    public void clickMarketplaceMenu() {
+    public TopMenuPage clickMarketplaceMenu() {
 
         clickElement(marketplaceMenu);
+        return this;
+
     }
 
-    public void clickPricingMenu() {
+    public TopMenuPage clickPricingMenu() {
 
         clickElement(pricingMenu);
+        return this;
+
     }
 
-    public void clickMapsMenu() {
+    public TopMenuPage clickMapsMenu() {
 
         clickElement(mapsMenu);
+        return this;
+
     }
 
-    public void clickOurInitiativesMenu() {
+    public TopMenuPage clickOurInitiativesMenu() {
 
         clickElement(ourInitiativesMenu);
+        return this;
+
     }
 
-    public void clickPartnersMenu() {
+    public TopMenuPage clickPartnersMenu() {
 
         clickElement(partnersMenu);
+        return this;
+
     }
 
-    public void clickBlogMenu() {
+    public TopMenuPage clickBlogMenu() {
 
         clickElement(blogMenu);
+        return this;
+
     }
 
-    public void clickForBusinessMenu() {
+    public TopMenuPage clickForBusinessMenu() {
 
         clickElement(forBusinessMenu);
+        return this;
+
     }
 
-    public void clickSignInMenu() {
+    public TopMenuPage clickSignInMenu() {
 
         clickElement(signInMenu);
+        return this;
+
     }
 
-    public void clickSupportMenu() {
+    public TopMenuPage clickSupportMenu() {
 
         clickElement(supportMenu);
+        return this;
+
     }
 
-    public void clickFAQSubmenu() {
+    public TopMenuPage clickFAQSubmenu() {
 
         clickElement(faqSubmenu);
+        return this;
+
     }
 
-    public void clickHowToStartSubmenu() {
+    public TopMenuPage clickHowToStartSubmenu() {
 
         clickElement(howToStartSubmenu);
+        return this;
+
     }
 
-    public void clickAskAQuestionSubmenu() {
+    public TopMenuPage clickAskAQuestionSubmenu() {
 
         clickElement(askAQuestionSubmenu);
+        return this;
+
     }
 
-    public void enterCityNameInWeatherInYourCityPlaceholder(String city) {
+    public TopMenuPage enterCityNameInWeatherInYourCityPlaceholder(String city) {
 
         enterValue(weatherInYourCityPlaceholderText, city);
+        return this;
+
     }
 
     public String getLogoLink() {
