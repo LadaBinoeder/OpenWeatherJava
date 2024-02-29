@@ -5,6 +5,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.TestUtils;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -184,6 +185,22 @@ public abstract class BasePage {
     protected void clickListElement(List<WebElement> webElements, int index) {
 
         webElements.get(index).click();
+    }
+
+    protected boolean verifyNewPageOpen() {
+        boolean newPageIsOpened = true;
+        if (driver.getCurrentUrl().equals(TestUtils.getBaseUrl())) {
+            newPageIsOpened = false;
+
+        }
+        return newPageIsOpened;
+
+    }
+
+    protected void switchToSecondWindow() {
+        String handle = driver.getWindowHandles().toArray()[1].toString();
+        driver.switchTo().window(handle);
+
     }
 
 }

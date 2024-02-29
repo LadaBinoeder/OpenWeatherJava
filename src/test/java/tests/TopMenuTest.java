@@ -111,9 +111,8 @@ public class TopMenuTest extends BaseTest {
 
         String actualLink = topMenuPage.getGuideMenuLink();
 
-        topMenuPage.clickGuideMenu();
-
-        boolean newPageIsOpened = verifyNewPageOpen();
+        boolean newPageIsOpened = topMenuPage.clickGuideMenu()
+                                             .verifyNewPageOpen();
 
         Assert.assertEquals(actualLink, expectedLink);
         Assert.assertTrue(newPageIsOpened);
@@ -128,9 +127,8 @@ public class TopMenuTest extends BaseTest {
 
         String actualLink = topMenuPage.getAPIMenuLink();
 
-        topMenuPage.clickAPIMenu();
-
-        boolean newPageIsOpened = verifyNewPageOpen();
+        boolean newPageIsOpened = topMenuPage.clickAPIMenu()
+                                             .verifyNewPageOpen();
 
         Assert.assertEquals(actualLink, expectedLink);
         Assert.assertTrue(newPageIsOpened);
@@ -145,9 +143,8 @@ public class TopMenuTest extends BaseTest {
 
         String actualLink = topMenuPage.getDashboardMenuLink();
 
-        topMenuPage.clickDashboardMenu();
-
-        boolean newPageIsOpen = verifyNewPageOpen();
+        boolean newPageIsOpen = topMenuPage.clickDashboardMenu()
+                                           .verifyNewPageOpen();
 
         Assert.assertEquals(actualLink, expectedLink);
         Assert.assertTrue(newPageIsOpen);
@@ -162,10 +159,9 @@ public class TopMenuTest extends BaseTest {
 
         String actualLink = topMenuPage.getMarketplaceMenuLink();
 
-        topMenuPage.clickMarketplaceMenu();
-        switchToSecondWindow();
-
-        boolean newPageIsOpen = verifyNewPageOpen();
+        boolean newPageIsOpen = topMenuPage.clickMarketplaceMenu()
+                                           .switchToSecondWindowTopMenu()
+                                           .verifyNewPageOpen();
 
         Assert.assertEquals(actualLink, expectedLink);
         Assert.assertTrue(newPageIsOpen);
@@ -180,13 +176,29 @@ public class TopMenuTest extends BaseTest {
 
         String actualLink = topMenuPage.getPricingMenuLink();
 
-        topMenuPage.clickPricingMenu();
-
-        boolean newPageIsOpen = verifyNewPageOpen();
+        boolean newPageIsOpen = topMenuPage.clickPricingMenu().verifyNewPageOpen();
 
         Assert.assertEquals(actualLink, expectedLink);
         Assert.assertTrue(newPageIsOpen);
     }
+
+    @Test
+    public void testMapsIsClickable() {
+
+        final String expectedLink = "https://openweathermap.org/weathermap";
+
+        TopMenuPage topMenuPage = openBaseURL();
+
+        String actualLink = topMenuPage.getMapsMenuLink();
+
+        boolean newPageIsOpen = topMenuPage.clickMapsMenu()
+                                           .verifyNewPageOpen();
+
+        Assert.assertEquals(actualLink, expectedLink);
+        Assert.assertTrue(newPageIsOpen);
+    }
+
+
 
 
     @Test
@@ -198,9 +210,7 @@ public class TopMenuTest extends BaseTest {
 
         String actualLink = topMenuPage.getOurInitiativesMenuLink();
 
-        topMenuPage.clickOurInitiativesMenu();
-
-        boolean newPageIsOpen = verifyNewPageOpen();
+        boolean newPageIsOpen = topMenuPage.clickOurInitiativesMenu().verifyNewPageOpen();
 
         Assert.assertEquals(actualLink, expectedLink);
         Assert.assertTrue(newPageIsOpen);
@@ -215,9 +225,7 @@ public class TopMenuTest extends BaseTest {
 
         String actualLink = topMenuPage.getPartnersMenuLink();
 
-        topMenuPage.clickPartnersMenu();
-
-        boolean newPageIsOpen = verifyNewPageOpen();
+        boolean newPageIsOpen = topMenuPage.clickPartnersMenu().verifyNewPageOpen();
 
         Assert.assertEquals(actualLink, expectedLink);
         Assert.assertTrue(newPageIsOpen);
@@ -232,10 +240,9 @@ public class TopMenuTest extends BaseTest {
 
         String actualLink = topMenuPage.getBlogMenuLink();
 
-        topMenuPage.clickBlogMenu();
-        switchToSecondWindow();
-
-        boolean newPageIsOpen = verifyNewPageOpen();
+        boolean newPageIsOpen = topMenuPage.clickBlogMenu()
+                                           .switchToSecondWindowTopMenu()
+                                           .verifyNewPageOpen();
 
         Assert.assertEquals(actualLink, expectedLink);
         Assert.assertTrue(newPageIsOpen);
@@ -250,10 +257,9 @@ public class TopMenuTest extends BaseTest {
 
         String actualLink = topMenuPage.getForBusinessMenuLink();
 
-        topMenuPage.clickForBusinessMenu();
-        switchToSecondWindow();
-
-        boolean newPageIsOpen = verifyNewPageOpen();
+        boolean newPageIsOpen = topMenuPage.clickForBusinessMenu()
+                                           .switchToSecondWindowTopMenu()
+                                           .verifyNewPageOpen();
 
         Assert.assertEquals(actualLink, expectedLink);
         Assert.assertTrue(newPageIsOpen);
@@ -268,9 +274,7 @@ public class TopMenuTest extends BaseTest {
 
         String actualLink = topMenuPage.getSignInMenuLink();
 
-        topMenuPage.clickSignInMenu();
-
-        boolean newPageIsOpen = verifyNewPageOpen();
+        boolean newPageIsOpen = topMenuPage.clickSignInMenu().verifyNewPageOpen();
 
         Assert.assertEquals(actualLink, expectedLink);
         Assert.assertTrue(newPageIsOpen);
@@ -302,9 +306,7 @@ public class TopMenuTest extends BaseTest {
         String actualLink = topMenuPage.clickSupportMenu()
                                        .getFAQSubmenuLink();
 
-        topMenuPage.clickFAQSubmenu();
-
-        boolean newPageIsOpen = verifyNewPageOpen();
+        boolean newPageIsOpen = topMenuPage.clickFAQSubmenu().verifyNewPageOpen();
 
         Assert.assertEquals(actualLink, expectedLink);
         Assert.assertTrue(newPageIsOpen);
@@ -320,13 +322,12 @@ public class TopMenuTest extends BaseTest {
         String actualLink = topMenuPage.clickSupportMenu()
                                        .getHowToStartSubmenuLink();
 
-        topMenuPage.clickHowToStartSubmenu();
-
-        boolean newPageIsOpen = verifyNewPageOpen();
+        boolean newPageIsOpen = topMenuPage.clickHowToStartSubmenu().verifyNewPageOpen();
 
         Assert.assertEquals(actualLink, expectedLink);
         Assert.assertTrue(newPageIsOpen);
     }
+
     @Test
     public void testAskAQuestionIsClickable() {
 
@@ -337,10 +338,7 @@ public class TopMenuTest extends BaseTest {
         String actualLink = topMenuPage.clickSupportMenu()
                                        .getAskAQuestionSubmenuLink();
 
-        topMenuPage.clickAskAQuestionSubmenu();
-        switchToSecondWindow();
-
-        boolean newPageIsOpen = verifyNewPageOpen();
+        boolean newPageIsOpen = topMenuPage.clickAskAQuestionSubmenu().switchToSecondWindowTopMenu().verifyNewPageOpen();
 
         Assert.assertEquals(actualLink, expectedLink);
         Assert.assertTrue(newPageIsOpen);
