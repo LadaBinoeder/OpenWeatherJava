@@ -20,31 +20,15 @@ public class MainTest extends BaseTest {
         final String expectedURL = "https://openweathermap.org/";
         final String expectedTitle = "Сurrent weather and forecast - OpenWeatherMap";
 
+        MainPage mainPage = openBaseURL();
+
         String actualURL = getDriver().getCurrentUrl();
         String actualTitle = getDriver().getTitle();
 
-        MainPage mainPage = new MainPage(getDriver());
-        openBaseURL();
-
-        WebElement anyElement = getDriver().findElement(By.xpath("//*"));
-        boolean pageIsNotEmpty = false;
-        if (anyElement != null) {
-            pageIsNotEmpty = true;
-        }
-
-        URL url = new URL(BASE_URL);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        int responseCode = connection.getResponseCode();
-        boolean noErrors = true;
-        if (responseCode >= 400 && responseCode < 600) {
-            noErrors = false;
-        }
-
         Assert.assertEquals(actualURL, expectedURL);
         Assert.assertEquals(actualTitle, expectedTitle);
-        Assert.assertTrue(pageIsNotEmpty);
-        Assert.assertTrue(noErrors);
+        Assert.assertTrue(mainPage.verifyPageIsNotEmpty());
+        Assert.assertTrue(mainPage.verifyErrorsAtPage());
     }
 
     @Test

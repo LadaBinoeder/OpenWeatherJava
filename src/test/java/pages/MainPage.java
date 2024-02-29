@@ -1,12 +1,13 @@
 package pages;
 
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import utils.TestUtils;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class MainPage extends FooterMenuPage {
@@ -332,5 +333,30 @@ public class MainPage extends FooterMenuPage {
         }
 
         return cityNameCorresponds;
+    }
+
+    public boolean verifyPageIsNotEmpty() {
+
+        WebElement anyElement = getDriver().findElement(By.xpath("//*"));
+        boolean pageIsEmpty = true;
+
+        if (anyElement == null) {
+            pageIsEmpty = false;
+        }
+        return pageIsEmpty;
+    }
+
+    public boolean verifyErrorsAtPage() throws IOException {
+
+        URL url = new URL(TestUtils.getBaseUrl());
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        int responseCode = connection.getResponseCode();
+        boolean noErrors = true;
+        if (responseCode >= 400 && responseCode < 600) {
+            noErrors = false;
+        }
+
+        return noErrors;
     }
 }
