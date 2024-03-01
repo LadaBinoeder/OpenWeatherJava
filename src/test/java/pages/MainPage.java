@@ -203,7 +203,7 @@ public class MainPage extends FooterMenuPage {
     }
 
     public MainPage waitTillCurrentTemperatureTextChanges(String text) {
-        getWait5().until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(currentTemperature, text)));
+        getWait10().until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(currentTemperature, text)));
         return this;
 
     }

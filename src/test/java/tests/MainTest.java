@@ -1,16 +1,11 @@
 package tests;
 
 import base.BaseTest;
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.MainPage;
-
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class MainTest extends BaseTest {
 
