@@ -39,7 +39,7 @@ public abstract class BaseTest {
 
         DesiredCapabilities cap = new DesiredCapabilities();
 
-        cap.setBrowserName("firefox");
+        cap.setBrowserName("chrome");
 
         this.driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), cap);
         Reporter.log(ReportUtils.END_LINE, true);
