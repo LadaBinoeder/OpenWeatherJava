@@ -1,7 +1,6 @@
 package base;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.Browser;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -40,7 +39,7 @@ public abstract class BaseTest {
 
         DesiredCapabilities cap = new DesiredCapabilities();
 
-        cap.setBrowserName(Browser.FIREFOX.browserName());
+        cap.setBrowserName("firefox");
 
         this.driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), cap);
         Reporter.log(ReportUtils.END_LINE, true);
