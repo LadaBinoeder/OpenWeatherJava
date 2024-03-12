@@ -34,7 +34,8 @@ public abstract class BaseTest {
     @BeforeMethod
     protected void beforeMethod(Method method, ITestResult result) throws MalformedURLException {
 
-        BaseUtils.createDriver();
+        driver = BaseUtils.createDriver();
+
         Reporter.log(ReportUtils.END_LINE, true);
         Reporter.log("TEST RUN", true);
         Reporter.log(ReportUtils.getClassNameTestName(method, result), true);
