@@ -1,8 +1,6 @@
 package base;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
@@ -16,7 +14,6 @@ import utils.TestUtils;
 
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.time.Duration;
 
 public abstract class BaseTest {
@@ -37,11 +34,7 @@ public abstract class BaseTest {
     @BeforeMethod
     protected void beforeMethod(Method method, ITestResult result) throws MalformedURLException {
 
-        DesiredCapabilities cap = new DesiredCapabilities();
-
-        cap.setBrowserName("chrome");
-
-        this.driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), cap);
+        BaseUtils.createDriver();
         Reporter.log(ReportUtils.END_LINE, true);
         Reporter.log("TEST RUN", true);
         Reporter.log(ReportUtils.getClassNameTestName(method, result), true);
