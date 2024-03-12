@@ -1,6 +1,6 @@
 package base;
 
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
@@ -13,11 +13,12 @@ import utils.ReportUtils;
 import utils.TestUtils;
 
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.time.Duration;
 
 public abstract class BaseTest {
 
-    private ChromeDriver driver;
+    private WebDriver driver;
     private WebDriverWait webDriverWait5;
     private WebDriverWait webDriverWait10;
     private WebDriverWait webDriverWait20;
@@ -31,9 +32,10 @@ public abstract class BaseTest {
     }
 
     @BeforeMethod
-    protected void beforeMethod(Method method, ITestResult result) {
+    protected void beforeMethod(Method method, ITestResult result) throws MalformedURLException {
 
         driver = BaseUtils.createDriver();
+
         Reporter.log(ReportUtils.END_LINE, true);
         Reporter.log("TEST RUN", true);
         Reporter.log(ReportUtils.getClassNameTestName(method, result), true);
@@ -49,7 +51,7 @@ public abstract class BaseTest {
         webDriverWait20  = null;
 
     }
-    protected ChromeDriver getDriver() {
+    protected WebDriver getDriver() {
         return driver;
 
     }
